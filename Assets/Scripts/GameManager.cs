@@ -1,0 +1,40 @@
+using UnityEngine;
+
+public class GameManager : MonoBehaviour
+
+{
+
+    [SerializeField] private GameObject _largePlayer;
+    [SerializeField] private GameObject _smallPlayer;
+    [SerializeField] private float _cooldown = 1f;
+    private float _cooldownTimer = 0f;
+    // Start is called once before the first execution of Update after the MonoBehaviour is created
+    void Start()
+    {
+        
+    }
+
+    // Update is called once per frame
+    void FixedUpdate()
+    {
+        _cooldownTimer += Time.deltaTime;
+        if (_cooldownTimer < _cooldown) return;
+        // Check if the left controller's trigger (index) button is pressed using XR Input
+        if (UnityEngine.XR.InputDevices.GetDeviceAtXRNode(UnityEngine.XR.XRNode.LeftHand)
+            .TryGetFeatureValue(UnityEngine.XR.CommonUsages.triggerButton, out bool isPressed) && isPressed || Input.GetKeyDown(KeyCode.Space))
+        {
+            if (_largePlayer.activeSelf)
+            {
+                _largePlayer.SetActive(false);
+                _smallPlayer.SetActive(true);
+                _cooldownTimer = 0f;
+            }
+            else
+            {
+                _largePlayer.SetActive(true);
+                _smallPlayer.SetActive(false);
+                _cooldownTimer = 0f;
+            }
+        }
+    }
+}
