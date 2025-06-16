@@ -1,10 +1,15 @@
 using UnityEngine;
 using UnityEngine.Events;
+using UnityEngine.XR.Interaction.Toolkit.Interactables;
 
 namespace ShadowSystem
 {
+    [RequireComponent(typeof(Rigidbody))]
+    [RequireComponent(typeof(XRGrabInteractable))]
     public class ShadowPuzzle : MonoBehaviour
     {
+
+        //require rigidbody
         [Header("Puzzle Identity")]
         [Tooltip("Name of this puzzle")]
         public string puzzleName = "Shadow Puzzle";
@@ -89,11 +94,13 @@ namespace ShadowSystem
         private bool isBeingHitByRaycast = false;
         private Vector3 currentRaycastDirection = Vector3.zero;
         private Vector3 currentRaycastSourcePosition = Vector3.zero;
-        
+        private XRGrabInteractable xrGrabInteractable;
         void Start()
         {
             UpdatePositionsFromGameObjects();
-            Debug.Log($"Shadow Puzzle '{puzzleName}' initialized");
+            xrGrabInteractable = GetComponent<XRGrabInteractable>();
+            xrGrabInteractable.useDynamicAttach = true;
+            
         }
         
         void OnValidate()
