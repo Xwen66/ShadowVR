@@ -8,10 +8,14 @@ public class GameManager : MonoBehaviour
     [SerializeField] private GameObject _smallPlayer;
     [SerializeField] private float _cooldown = 1f;
     private float _cooldownTimer = 0f;
+    [SerializeField] private int _totalMemoryShards = 5;
+    private int _currentMemoryShards = 0;
+    //singleton
+    public static GameManager Instance;
     // Start is called once before the first execution of Update after the MonoBehaviour is created
     void Start()
     {
-        
+        Instance = this;
     }
 
     // Update is called once per frame
@@ -36,5 +40,24 @@ public class GameManager : MonoBehaviour
                 _cooldownTimer = 0f;
             }
         }
+    }
+
+    public void AddMemoryShard()
+    {
+        _currentMemoryShards++;
+        UIManager.Instance.UpdateCurrentMemoryShards(_currentMemoryShards);
+        UIManager.Instance.ShowPopupText($"Memory Shard Collected!");
+        if (_currentMemoryShards >= _totalMemoryShards)
+        {
+            //win
+        }
+    }
+    public int TotalMemoryShards
+    {
+        get { return _totalMemoryShards; }
+    }
+    public int CurrentMemoryShards
+    {
+        get { return _currentMemoryShards; }
     }
 }

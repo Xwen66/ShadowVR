@@ -31,7 +31,7 @@ Transform:
   serializedVersion: 2
   m_LocalRotation: {x: 0.015363466, y: 0.045888033, z: 0.047850635, w: 0.9976816}
   m_LocalPosition: {x: -3.999, y: 1.31, z: 2.03}
-  m_LocalScale: {x: 0.19002153, y: 0.18844342, z: 0.22108239}
+  m_LocalScale: {x: 0.03046235, y: 0.030209364, z: 0.03544172}
   m_ConstrainProportionsScale: 0
   m_Children: []
   m_Father: {fileID: 0}
@@ -159,7 +159,7 @@ MonoBehaviour:
   m_Script: {fileID: 11500000, guid: 63cc5954dea64a14882c8ec35012475a, type: 3}
   m_Name: 
   m_EditorClassIdentifier: 
-  triggerType: 0
+  triggerType: 1
   targetTag: Player
   targetLayer:
     serializedVersion: 2
@@ -181,6 +181,18 @@ MonoBehaviour:
           m_StringArgument: 
           m_BoolArgument: 0
         m_CallState: 2
+      - m_Target: {fileID: 0}
+        m_TargetAssemblyTypeName: GameManager, Assembly-CSharp
+        m_MethodName: AddMemoryShard
+        m_Mode: 1
+        m_Arguments:
+          m_ObjectArgument: {fileID: 0}
+          m_ObjectArgumentAssemblyTypeName: UnityEngine.Object, UnityEngine
+          m_IntArgument: 0
+          m_FloatArgument: 0
+          m_StringArgument: 
+          m_BoolArgument: 0
+        m_CallState: 2
   OnTriggerExited:
     m_PersistentCalls:
       m_Calls: []
@@ -189,4 +201,4 @@ MonoBehaviour:
       m_Calls: []
   showDebugMessages: 0
   showGizmo: 0
-  gizmoColor: {r: 0, g: 1, b: 0, a: 1}
+  gizmoColor: {r: 0.9245283, g: 0.8115033, b: 0.082858644, a: 1}
