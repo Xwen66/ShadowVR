@@ -1,29 +1,30 @@
 using UnityEngine;
 using Unity.XR.CoreUtils;
-using GorillaLocomotion;
 
 public class XRDistanceConstraint : MonoBehaviour
 {
-    [Header("Target Settings")]
-    [Tooltip("The GameObject to maintain distance from")]
+    [Header("Sphere Constraint Settings")]
+    [Tooltip("The GameObject to maintain distance from (center of sphere)")]
     public Transform targetObject;
     
     [Tooltip("Use this object's position as reference point (if null, uses targetObject)")]
     public Transform referencePoint;
     
-    [Header("Distance Constraints")]
-    [Tooltip("Minimum distance from target (0 = no minimum)")]
-    public float minDistance = 0f;
+    [Header("Sphere Range")]
+    [Tooltip("Sphere radius - maximum distance camera can be from target")]
+    [Range(0.1f, 50f)]
+    public float sphereRadius = 5f;
     
-    [Tooltip("Maximum distance from target (0 = no maximum)")]
-    public float maxDistance = 5f;
+    [Tooltip("Inner dead zone radius (0 = no minimum distance)")]
+    [Range(0f, 10f)]
+    public float innerRadius = 0f;
     
-    [Header("Constraint Type")]
+    [Header("Camera Constraint")]
+    [Tooltip("Constrain based on camera position instead of XR Origin position")]
+    public bool useCameraPosition = true;
+    
     [Tooltip("Shape of the constraint boundary")]
     public ConstraintType constraintType = ConstraintType.Sphere;
-    
-    [Tooltip("For cylinder constraints - ignore Y axis distance")]
-    public bool ignoreVerticalDistance = false;
     
     [Header("Movement Correction")]
     [Tooltip("How smoothly to correct position when violating constraints")]
@@ -40,18 +41,12 @@ public class XRDistanceConstraint : MonoBehaviour
     [Tooltip("XR Origin to constrain (auto-detected if null)")]
     public XROrigin xrOrigin;
     
-    [Tooltip("Gorilla Player to constrain (auto-detected if null)")]
-    public Player gorillaPlayer;
-    
     [Tooltip("Apply constraints in LateUpdate for smoother integration")]
     public bool useLateUpdate = true;
     
     [Header("Constraint Modes")]
     [Tooltip("What happens when constraint is violated")]
     public ConstraintMode constraintMode = ConstraintMode.ClampPosition;
-    
-    [Tooltip("Push back force when using Force mode")]
-    public float pushBackForce = 100f;
     
     [Header("Debug")]
     [Tooltip("Show debug information")]
@@ -67,7 +62,6 @@ public class XRDistanceConstraint : MonoBehaviour
     private Transform xrOriginTransform;
     private Transform cameraTransform;
     private CharacterController characterController;
-    private Rigidbody playerRigidbody;
     private Vector3 targetPosition;
     private Vector3 lastValidPosition;
     private bool constraintViolated = false;
@@ -84,8 +78,6 @@ public class XRDistanceConstraint : MonoBehaviour
     public enum ConstraintMode
     {
         ClampPosition,  // Directly modify position
-        Force,          // Apply force to push back
-        Velocity,       // Modify velocity to prevent violation
         Warning         // Only show warnings, don't constrain
     }
     
@@ -109,13 +101,6 @@ public class XRDistanceConstraint : MonoBehaviour
             characterController = xrOrigin.GetComponent<CharacterController>();
         }
         
-        // Auto-detect Gorilla Player if not assigned
-        if (gorillaPlayer == null)
-            gorillaPlayer = Player.Instance;
-        
-        if (gorillaPlayer != null)
-            playerRigidbody = gorillaPlayer.GetComponent<Rigidbody>();
-        
         // Use reference point or target object
         if (referencePoint == null && targetObject != null)
             referencePoint = targetObject;
@@ -124,7 +109,6 @@ public class XRDistanceConstraint : MonoBehaviour
         {
             Debug.Log($"XRDistanceConstraint initialized:");
             Debug.Log($"  XR Origin: {(xrOrigin != null ? xrOrigin.name : "Not found")}");
-            Debug.Log($"  Gorilla Player: {(gorillaPlayer != null ? gorillaPlayer.name : "Not found")}");
             Debug.Log($"  Target: {(targetObject != null ? targetObject.name : "Not assigned")}");
         }
     }
@@ -162,14 +146,6 @@ public class XRDistanceConstraint : MonoBehaviour
                     ApplyPositionCorrection(currentPosition, constrainedPosition);
                     break;
                     
-                case ConstraintMode.Force:
-                    ApplyForceCorrection(currentPosition);
-                    break;
-                    
-                case ConstraintMode.Velocity:
-                    ApplyVelocityCorrection(currentPosition);
-                    break;
-                    
                 case ConstraintMode.Warning:
                     if (showDebugInfo)
                         Debug.LogWarning($"Distance constraint violated! Distance: {currentDistance:F2}");
@@ -185,10 +161,11 @@ public class XRDistanceConstraint : MonoBehaviour
     
     Vector3 GetCurrentPlayerPosition()
     {
-        if (xrOriginTransform != null)
+        // Use camera position when enabled for true VR camera constraint
+        if (useCameraPosition && cameraTransform != null)
+            return cameraTransform.position;
+        else if (xrOriginTransform != null)
             return xrOriginTransform.position;
-        else if (gorillaPlayer != null)
-            return gorillaPlayer.transform.position;
         else
             return transform.position;
     }
@@ -201,18 +178,18 @@ public class XRDistanceConstraint : MonoBehaviour
         Vector3 directionToTarget = currentPos - targetPos;
         float distance = GetDistanceToTarget(currentPos);
         
-        // Apply minimum distance constraint
-        if (minDistance > 0 && distance < minDistance)
+        // Apply minimum distance constraint (inner radius)
+        if (innerRadius > 0 && distance < innerRadius)
         {
             Vector3 correctedDirection = GetConstraintDirection(directionToTarget);
-            return targetPos + correctedDirection.normalized * minDistance;
+            return targetPos + correctedDirection.normalized * innerRadius;
         }
         
-        // Apply maximum distance constraint
-        if (maxDistance > 0 && distance > maxDistance)
+        // Apply maximum distance constraint (sphere radius)
+        if (sphereRadius > 0 && distance > sphereRadius)
         {
             Vector3 correctedDirection = GetConstraintDirection(directionToTarget);
-            return targetPos + correctedDirection.normalized * maxDistance;
+            return targetPos + correctedDirection.normalized * sphereRadius;
         }
         
         return currentPos;
@@ -229,7 +206,7 @@ public class XRDistanceConstraint : MonoBehaviour
                 
             case ConstraintType.Box:
                 // For box constraints, clamp each axis separately
-                direction = Vector3.ClampMagnitude(direction, maxDistance);
+                direction = Vector3.ClampMagnitude(direction, sphereRadius);
                 break;
         }
         
@@ -260,9 +237,9 @@ public class XRDistanceConstraint : MonoBehaviour
     
     bool IsConstraintViolated(float distance)
     {
-        if (minDistance > 0 && distance < minDistance)
+        if (innerRadius > 0 && distance < innerRadius)
             return true;
-        if (maxDistance > 0 && distance > maxDistance)
+        if (sphereRadius > 0 && distance > sphereRadius)
             return true;
         return false;
     }
@@ -280,59 +257,28 @@ public class XRDistanceConstraint : MonoBehaviour
             correctionVector *= correctionStrength;
         }
         
-        Vector3 newPosition = currentPosition + correctionVector;
-        
-        // Apply to appropriate system
-        if (xrOriginTransform != null)
+        // For camera-based constraints, adjust XR Origin to compensate for head tracking
+        if (useCameraPosition && cameraTransform != null && xrOriginTransform != null)
         {
-            xrOriginTransform.position = newPosition;
+            // Calculate offset from XR Origin to camera
+            Vector3 headOffset = cameraTransform.position - xrOriginTransform.position;
+            
+            // Target position for camera
+            Vector3 targetCameraPosition = currentPosition + correctionVector;
+            
+            // Move XR Origin so camera ends up at target position
+            Vector3 newXROriginPosition = targetCameraPosition - headOffset;
+            xrOriginTransform.position = newXROriginPosition;
         }
-        else if (gorillaPlayer != null)
+        else
         {
-            gorillaPlayer.transform.position = newPosition;
-        }
-    }
-    
-    void ApplyForceCorrection(Vector3 currentPosition)
-    {
-        if (playerRigidbody == null)
-            return;
-        
-        Vector3 targetPos = referencePoint.position;
-        Vector3 directionToTarget = (currentPosition - targetPos).normalized;
-        float distance = GetDistanceToTarget(currentPosition);
-        
-        Vector3 forceDirection = Vector3.zero;
-        
-        if (minDistance > 0 && distance < minDistance)
-        {
-            forceDirection = directionToTarget; // Push away from target
-        }
-        else if (maxDistance > 0 && distance > maxDistance)
-        {
-            forceDirection = -directionToTarget; // Pull toward target
-        }
-        
-        if (forceDirection != Vector3.zero)
-        {
-            playerRigidbody.AddForce(forceDirection * pushBackForce * Time.deltaTime, ForceMode.Force);
-        }
-    }
-    
-    void ApplyVelocityCorrection(Vector3 currentPosition)
-    {
-        if (playerRigidbody == null)
-            return;
-        
-        Vector3 velocity = playerRigidbody.linearVelocity;
-        Vector3 targetPos = referencePoint.position;
-        Vector3 directionToTarget = (currentPosition - targetPos).normalized;
-        
-        // If moving away from valid area, reduce velocity in that direction
-        if (Vector3.Dot(velocity.normalized, directionToTarget) > 0)
-        {
-            velocity = Vector3.ProjectOnPlane(velocity, directionToTarget);
-            playerRigidbody.linearVelocity = velocity;
+            // Standard XR Origin constraint
+            Vector3 newPosition = currentPosition + correctionVector;
+            
+            if (xrOriginTransform != null)
+            {
+                xrOriginTransform.position = newPosition;
+            }
         }
     }
     
@@ -345,8 +291,8 @@ public class XRDistanceConstraint : MonoBehaviour
     
     public void SetDistanceConstraints(float min, float max)
     {
-        minDistance = min;
-        maxDistance = max;
+        innerRadius = min;
+        sphereRadius = max;
     }
     
     public void EnableConstraint(bool enable)
@@ -374,27 +320,35 @@ public class XRDistanceConstraint : MonoBehaviour
         Vector3 center = referencePoint.position;
         
         // Draw minimum distance boundary
-        if (minDistance > 0)
+        if (innerRadius > 0)    
         {
             Gizmos.color = Color.red;
-            DrawConstraintShape(center, minDistance);
+            DrawConstraintShape(center, innerRadius);
         }
         
         // Draw maximum distance boundary
-        if (maxDistance > 0)
+        if (sphereRadius > 0)
         {
             Gizmos.color = gizmoColor;
-            DrawConstraintShape(center, maxDistance);
+            DrawConstraintShape(center, sphereRadius);
         }
         
-        // Draw current player position
+        // Draw current player/camera position
         Vector3 playerPos = GetCurrentPlayerPosition();
         Gizmos.color = constraintViolated ? Color.red : Color.green;
         Gizmos.DrawWireSphere(playerPos, 0.1f);
         
-        // Draw line from target to player
+        // Draw line from target to player/camera
         Gizmos.color = Color.white;
         Gizmos.DrawLine(center, playerPos);
+        
+        // If using camera position, also show XR Origin position
+        if (useCameraPosition && cameraTransform != null && xrOriginTransform != null)
+        {
+            Gizmos.color = Color.cyan;
+            Gizmos.DrawWireCube(xrOriginTransform.position, Vector3.one * 0.2f);
+            Gizmos.DrawLine(xrOriginTransform.position, cameraTransform.position);
+        }
     }
     
     void DrawConstraintShape(Vector3 center, float radius)

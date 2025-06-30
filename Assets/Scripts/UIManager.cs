@@ -18,7 +18,6 @@ public class UIManager : MonoBehaviour
 
     void Start()
     {
-        _popupTextOriginalPosition = PopupText.transform.position;
     }
 
 

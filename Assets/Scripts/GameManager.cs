@@ -46,7 +46,6 @@ public class GameManager : MonoBehaviour
     {
         _currentMemoryShards++;
         UIManager.Instance.UpdateCurrentMemoryShards(_currentMemoryShards);
-        UIManager.Instance.ShowPopupText($"Memory Shard Collected!");
         if (_currentMemoryShards >= _totalMemoryShards)
         {
             //win
