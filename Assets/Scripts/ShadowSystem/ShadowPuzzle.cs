@@ -85,6 +85,8 @@ namespace ShadowSystem
         [Tooltip("Called with progress (0-1)")]
         public UnityEvent<float> OnProgressChanged;
         
+        [SerializeField] public bool ShowOnScreenDebug = false;
+        
         // Private variables
         private bool isPuzzleSolved = false;
         private float conditionsMetTime = 0f;

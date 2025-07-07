@@ -5,6 +5,7 @@ public class GameManager : MonoBehaviour
 {
 
     [SerializeField] private GameObject _largePlayer;
+    [SerializeField] public GameObject FoxPrefab;
     [SerializeField] private GameObject _smallPlayer;
     [SerializeField] private float _cooldown = 1f;
     private float _cooldownTimer = 0f;
@@ -27,15 +28,19 @@ public class GameManager : MonoBehaviour
         if (UnityEngine.XR.InputDevices.GetDeviceAtXRNode(UnityEngine.XR.XRNode.LeftHand)
             .TryGetFeatureValue(UnityEngine.XR.CommonUsages.triggerButton, out bool isPressed) && isPressed || Input.GetKeyDown(KeyCode.Space))
         {
+            //small player mode
             if (_largePlayer.activeSelf)
             {
                 _largePlayer.SetActive(false);
+                FoxPrefab.SetActive(true);
                 _smallPlayer.SetActive(true);
                 _cooldownTimer = 0f;
             }
             else
             {
+                //large player mode
                 _largePlayer.SetActive(true);
+                FoxPrefab.SetActive(false);
                 _smallPlayer.SetActive(false);
                 _cooldownTimer = 0f;
             }
