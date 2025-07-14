@@ -45,6 +45,20 @@ public class GameManager : MonoBehaviour
                 _cooldownTimer = 0f;
             }
         }
+        if(UnityEngine.XR.InputDevices.GetDeviceAtXRNode(UnityEngine.XR.XRNode.RightHand)
+            .TryGetFeatureValue(UnityEngine.XR.CommonUsages.triggerButton, out bool isPressedRight) && isPressedRight )
+            {
+                if(_largePlayer.activeSelf )
+                {
+                   UIManager.Instance.ToggleUICanvas(0);
+                   _cooldownTimer = 0f;
+                }
+                else
+                {
+                    UIManager.Instance.ToggleUICanvas(1);
+                    _cooldownTimer = 0f;
+                }
+            }
     }
 
     public void AddMemoryShard()

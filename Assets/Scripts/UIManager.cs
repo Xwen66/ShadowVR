@@ -10,7 +10,8 @@ public class UIManager : MonoBehaviour
     public TextMeshProUGUI MemoryShardsText;
     [SerializeField] private float popupTextDuration = 1f;  
     private Vector2 _popupTextOriginalPosition;
-
+    public GameObject LargePlayerUICanvas;
+    public GameObject SmallPlayerUICanvas;
     private void Awake()
     {
         Instance = this;
@@ -74,6 +75,30 @@ public class UIManager : MonoBehaviour
         MemoryShardsText.text = $"Memory Shards: {currentMemoryShards}/{GameManager.Instance.TotalMemoryShards}";
     }
     
-    
+    public void ToggleUICanvas(int index)
+    {
+        if(index == 0)
+        {
+            if(LargePlayerUICanvas.activeSelf)
+            {
+                LargePlayerUICanvas.SetActive(false);
+            }
+            else
+            {
+                LargePlayerUICanvas.SetActive(true);
+            }
+        }
+        else
+        {
+            if(SmallPlayerUICanvas.activeSelf)
+            {
+                SmallPlayerUICanvas.SetActive(false);
+            }
+            else
+            {
+                SmallPlayerUICanvas.SetActive(true);
+            }
+        }
+    }
 }
 
