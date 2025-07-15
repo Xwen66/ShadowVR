@@ -100,5 +100,14 @@ public class UIManager : MonoBehaviour
             }
         }
     }
+
+    void FixedUpdate()
+    {
+        // if(SmallPlayerUICanvas.activeSelf)
+        // {
+        //    //facing camera
+        //    SmallPlayerUICanvas.transform.LookAt(Camera.main.transform);
+        // }
+    }
 }
 

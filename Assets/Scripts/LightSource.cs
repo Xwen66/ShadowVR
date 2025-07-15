@@ -6,7 +6,7 @@ public class LightSource : MonoBehaviour
     
     [Header("Light Range")]
     [Tooltip("Maximum distance the light can reach")]
-    [Range(1f, 50f)]
+    [Range(0.1f, 50f)]
     public float maxRange = 10f;
     
     [Tooltip("Show the light range in scene view")]
