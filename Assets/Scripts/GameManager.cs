@@ -13,6 +13,7 @@ public class GameManager : MonoBehaviour
     private int _currentMemoryShards = 0;
     //singleton
     public static GameManager Instance;
+    public GameObject ToolBox;
     // Start is called once before the first execution of Update after the MonoBehaviour is created
     void Start()
     {
@@ -59,6 +60,21 @@ public class GameManager : MonoBehaviour
                     _cooldownTimer = 0f;
                 }
             }
+                    if(UnityEngine.XR.InputDevices.GetDeviceAtXRNode(UnityEngine.XR.XRNode.RightHand)
+            .TryGetFeatureValue(UnityEngine.XR.CommonUsages.primaryButton, out bool isPressedRight2) && isPressedRight2 )
+            {
+                if(ToolBox.activeSelf)
+                {
+                    ToolBox.SetActive(false);
+                    _cooldownTimer = 0f;
+                }
+                else
+                {
+                    ToolBox.SetActive(true);
+                    _cooldownTimer = 0f;
+                }
+            }
+        
     }
 
     public void AddMemoryShard()
