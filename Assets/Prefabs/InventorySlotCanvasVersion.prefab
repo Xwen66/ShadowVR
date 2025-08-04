@@ -159,7 +159,7 @@ MonoBehaviour:
   m_EditorClassIdentifier: 
   m_InteractionManager: {fileID: 0}
   m_InteractionLayers:
-    m_Bits: 4294967295
+    m_Bits: 1
   m_Handedness: 0
   m_AttachTransform: {fileID: 9194523947699647894}
   m_KeepSelectedTargetValid: 1
@@ -188,7 +188,7 @@ MonoBehaviour:
   m_RecycleDelayTime: 1
   m_HoverSocketSnapping: 1
   m_SocketSnappingRadius: 0.1
-  m_SocketScaleMode: 1
+  m_SocketScaleMode: 0
   m_FixedScale: {x: 0.25, y: 0.25, z: 0.25}
   m_TargetBoundsSize: {x: 0.05, y: 0.1, z: 0.05}
 --- !u!65 &6998739888781177834
