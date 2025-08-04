@@ -116,6 +116,8 @@ namespace ShadowSystem
             if (positionObjects != null)
             {
                 // Required position from first GameObject
+
+                
                 if (positionObjects.Length > 0 && positionObjects[0] != null)
                 {
                     requiredPosition = positionObjects[0].transform.position;
