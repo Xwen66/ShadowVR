@@ -1,0 +1,111 @@
+%YAML 1.1
+%TAG !u! tag:unity3d.com,2011:
+--- !u!114 &11400000
+MonoBehaviour:
+  m_ObjectHideFlags: 0
+  m_CorrespondingSourceObject: {fileID: 0}
+  m_PrefabInstance: {fileID: 0}
+  m_PrefabAsset: {fileID: 0}
+  m_GameObject: {fileID: 0}
+  m_Enabled: 1
+  m_EditorHideFlags: 0
+  m_Script: {fileID: 11500000, guid: f4d2ad7991328d240842cc781519ee2a, type: 3}
+  m_Name: DialogueDatabase
+  m_EditorClassIdentifier: 
+  dialogueEntries:
+  - dialogNumber: 1
+    characterNameChinese: "\u72D0\u72F8"
+    characterNameEnglish: Fox
+    contentChinese: "\u52A8\u5F39\u4E0D\u5F97\uFF0C\u6211\u597D\u50CF\u88AB\u5C01\u5370\u5728\u8FD9\u5F20\u684C\u5B50\u524D\u9762\u4E86\u3002"
+    contentEnglish: "I\u2019m stuck\u2026 It\u2019s like I\u2019m sealed in front
+      of this table."
+  - dialogNumber: 2
+    characterNameChinese: "\u523A\u732C"
+    characterNameEnglish: Hedgehog
+    contentChinese: "\u72D0\u72F8\uFF0C\u4F60\u9192\u5566\uFF1F\u4ECA\u5929\u4E0D\u662F\u6709\u732B\u8BBE\u8BA1\u5E08\u7684\u65B0\u54C1\u53D1\u5E03\u4F1A\u5417\uFF0C\u6211\u4EE5\u4E3A\u4F60\u4F1A\u5F88\u5FD9\u3002"
+    contentEnglish: You're awake, Fox? Isn't today the cat designer's big product
+      launch? I thought you'd be busy.
+  - dialogNumber: 3
+    characterNameChinese: "\u72D0\u72F8"
+    characterNameEnglish: Fox
+    contentChinese: "\u6211\u52A8\u4E0D\u4E86\uFF0C\u6211\u5FC5\u987B\u5F97\u79BB\u5F00\u8FD9\u91CC\u3002"
+    contentEnglish: I can't move. I need to get out of here.
+  - dialogNumber: 4
+    characterNameChinese: "\u523A\u732C"
+    characterNameEnglish: Hedgehog
+    contentChinese: "\u4F60\u7761\u7740\u524D\uFF0C\u597D\u50CF\u8981\u5E26\u4E0A\u6258\u76D8\u53BB\u53A8\u623F\u627E\u72EE\u5B50\u5988\u5988\u3002"
+    contentEnglish: Before you fell asleep, you said you were bringing the tray to
+      the kitchen to see Mama Lion.
+  - dialogNumber: 5
+    characterNameChinese: "\u72D0\u72F8"
+    characterNameEnglish: Fox
+    contentChinese: "\u54E6\u5BF9\u4E86\uFF0C\u53A8\u623F\u63D0\u793A\u5361\u2026\u2026\u53EF\u662F\u684C\u4E0A\u6CA1\u6709\u66F4\u591A\u7684\u5361\u7247\u4E86\uFF0C\u6211\u8BE5\u600E\u4E48\u529E\uFF1F"
+    contentEnglish: "Oh, right, the kitchen reminder card\u2026 But there aren\u2019t
+      any more cards on the table. What should I do?"
+  - dialogNumber: 6
+    characterNameChinese: "\u523A\u732C"
+    characterNameEnglish: Hedgehog
+    contentChinese: "\u6211\u4E2A\u5B50\u5C0F\uFF0C\u80FD\u53BB\u4F60\u53BB\u4E0D\u4E86\u7684\u5730\u65B9\uFF0C\u4E5F\u80FD\u770B\u5230\u4F60\u770B\u4E0D\u5230\u7684\u4E1C\u897F\u3002\u8BA9\u6211\u6765\u5E2E\u4F60\u5427\u3002"
+    contentEnglish: "I\u2019m small\u2014I can slip into places you can\u2019t and
+      see things you can\u2019t. Let me help you."
+  - dialogNumber: 7
+    characterNameChinese: "\u523A\u732C"
+    characterNameEnglish: Hedgehog
+    contentChinese: "\u4E0D\u884C\uFF0C\u5149\u592A\u4EAE\u4E86\u3002\u6211\u53EA\u80FD\u8D70\u5728\u5F71\u5B50\u91CC\u3002\u5C0F\u72D0\u72F8\uFF0C\u5E2E\u6211\u6321\u4F4F\u706F\u5149\u3002"
+    contentEnglish: "The light\u2019s too bright\u2014I can only travel in the shadows.
+      Fox, block it for me!"
+  - dialogNumber: 8
+    characterNameChinese: "\u523A\u732C"
+    characterNameEnglish: Hedgehog
+    contentChinese: "\u592A\u68D2\u4E86\uFF01\u8FD9\u6837\u662F\u4E0D\u662F\u5C31\u884C\u4E86\uFF1F"
+    contentEnglish: Wonderful! Will this work now?
+  - dialogNumber: 9
+    characterNameChinese: "\u72D0\u72F8"
+    characterNameEnglish: Fox
+    contentChinese: "\u5982\u679C\u662F\u62FF\u7ED9\u72EE\u5B50\u5988\u5988\u7684\u8BDD\uFF0C\u6211\u8FD8\u6709\u4E00\u4EF6\u793C\u7269\u60F3\u62FF\u7ED9\u5979\uFF0C\u6700\u9002\u5408\u6446\u5230\u5C31\u9910\u533A\u4E86\u3002\u554A\u2026\u2026\u5728\u5899\u4E0A\uFF0C\u5C0F\u523A\u732C\u4F60\u80FD\u5E2E\u5E2E\u6211\u5417\uFF1F"
+    contentEnglish: If this is for Mama Lion, I want to give her something special.
+      It would look perfect in the dining area. Ah... it's on the wall. Can you help
+      me, Hedgehog?
+  - dialogNumber: 10
+    characterNameChinese: "\u523A\u732C"
+    characterNameEnglish: Hedgehog
+    contentChinese: "\u597D\u5440\uFF0C\u662F\u4EC0\u4E48\uFF1F"
+    contentEnglish: Sure! What is it?
+  - dialogNumber: 11
+    characterNameChinese: "\u72D0\u72F8"
+    characterNameEnglish: Fox
+    contentChinese: "\u662F\u5F88\u591A\u5E74\u524D\u72EE\u5B50\u5988\u5988\u7684\u53A8\u827A\u5956\u7AE0\u3002\u554A\u2026\u2026\u5B83\u5728\u5899\u4E0A\uFF0C\u5C0F\u523A\u732C\u4F60\u80FD\u5E2E\u5E2E\u6211\u5417\uFF1F"
+    contentEnglish: "It\u2019s the cooking medal Lioness Mother won, many years ago.
+      Ah\u2026 look, it\u2019s on the wall. Can you help me, Hedgehog?"
+  - dialogNumber: 12
+    characterNameChinese: "\u523A\u732C"
+    characterNameEnglish: Hedgehog
+    contentChinese: "\u6211\u4E0A\u4E0D\u53BB\u554A\u2026\u2026\u4F46\u662F\u4E5F\u8BB8\u53EF\u4EE5\u501F\u52A9\u5F71\u5B50\u7684\u9B54\u6CD5\u3002"
+    contentEnglish: "I can\u2019t reach it... but maybe we can use shadow magic."
+  - dialogNumber: 13
+    characterNameChinese: "\u72D0\u72F8"
+    characterNameEnglish: Fox
+    contentChinese: "\u4EC0\u4E48\u662F\u5F71\u5B50\u7684\u9B54\u6CD5\uFF1F"
+    contentEnglish: Shadow magic? What do you mean?
+  - dialogNumber: 14
+    characterNameChinese: "\u523A\u732C"
+    characterNameEnglish: Hedgehog
+    contentChinese: "\u628A\u5F71\u5B50\u6295\u5C04\u5230\u5899\u9762\u4E0A\u540E\uFF0C\u4F1A\u53EC\u5524\u51FA\u6765\u5E76\u4E0D\u5B58\u5728\u7684\u4E8B\u7269\u2026\u2026\u4F60\u8BD5\u8BD5\u7528\u4E66\uFF0C\u642D\u6210\u53F0\u9636\uFF1F"
+    contentEnglish: "Shadows can create things that aren\u2019t really there... Try
+      using books to make some steps?"
+  - dialogNumber: 15
+    characterNameChinese: "\u523A\u732C"
+    characterNameEnglish: Hedgehog
+    contentChinese: "\u5BF9\uFF0C\u5C31\u662F\u8FD9\u6837\uFF01\u6709\u4E86\u5F71\u5B50\u53EC\u5524\u51FA\u7684\u53F0\u9636\uFF0C\u6211\u5C31\u4E0D\u7528\u518D\u5BB3\u6015\u706F\u5149\u4E86\u3002"
+    contentEnglish: "Yes\u2014that\u2019s it! On the steps born of shadow, the light
+      can\u2019t frighten me anymore."
+  - dialogNumber: 16
+    characterNameChinese: "\u523A\u732C"
+    characterNameEnglish: Hedgehog
+    contentChinese: "\u7A7A\u95F4\u5728\u6D41\u8F6C\uFF0C\u5FEB\u62FF\u8D77\u6258\u76D8\uFF01"
+    contentEnglish: "The space is shifting\u2014quick, grab the tray!"
+  characterImages:
+  - characterID: Fox
+    characterSprite: {fileID: 21300000, guid: 28b950f555a1da146afd03f46cc2b016, type: 3}
+  - characterID: Hedgehog
+    characterSprite: {fileID: 21300000, guid: c3f05bba4ae474a4e944b9afe2733130, type: 3}
