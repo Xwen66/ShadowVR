@@ -36,8 +36,8 @@ RectTransform:
   m_LocalEulerAnglesHint: {x: 0, y: 0, z: 0}
   m_AnchorMin: {x: 0.5, y: 0.5}
   m_AnchorMax: {x: 0.5, y: 0.5}
-  m_AnchoredPosition: {x: 0.565, y: -0.196}
-  m_SizeDelta: {x: 1, y: 1}
+  m_AnchoredPosition: {x: 0.495, y: -0.099}
+  m_SizeDelta: {x: 0.5, y: 0.5}
   m_Pivot: {x: 0.5, y: 0.5}
 --- !u!222 &2655151025258369817
 CanvasRenderer:
@@ -383,6 +383,8 @@ MonoBehaviour:
   nextButton: {fileID: 8347715271010475382}
   closeButton: {fileID: 0}
   languageToggleButton: {fileID: 0}
+  fontAssetEnglish: {fileID: 11400000, guid: e506d83e2ed0e664eac32113815266e7, type: 2}
+  fontAssetChinese: {fileID: 11400000, guid: b8960d0800324e24ea4098a4e955fbe2, type: 2}
   typewriterSpeed: 0.05
   useTypewriterEffect: 1
   defaultCharacterSprite: {fileID: 21300000, guid: 28b950f555a1da146afd03f46cc2b016, type: 3}
@@ -453,8 +455,8 @@ MonoBehaviour:
       m_Calls: []
   m_text: hello sdfjh klajsdlkfj laksdjflkd f
   m_isRightToLeft: 0
-  m_fontAsset: {fileID: 11400000, guid: 100cacc6793f3c840ab133cb22c0ab04, type: 2}
-  m_sharedMaterial: {fileID: 2180264, guid: 100cacc6793f3c840ab133cb22c0ab04, type: 2}
+  m_fontAsset: {fileID: 11400000, guid: 8476d85ff6f968743843752bc338555d, type: 2}
+  m_sharedMaterial: {fileID: -3967259006451864222, guid: 8476d85ff6f968743843752bc338555d, type: 2}
   m_fontSharedMaterials: []
   m_fontMaterial: {fileID: 0}
   m_fontMaterials: []
@@ -484,7 +486,7 @@ MonoBehaviour:
   m_enableAutoSizing: 0
   m_fontSizeMin: 18
   m_fontSizeMax: 72
-  m_fontStyle: 0
+  m_fontStyle: 1
   m_HorizontalAlignment: 2
   m_VerticalAlignment: 512
   m_textAlignment: 65535
@@ -569,6 +571,8 @@ MonoBehaviour:
   m_EditorClassIdentifier: 
   dialogueDatabase: {fileID: 11400000, guid: 862a0e29486012343ac614c676da274c, type: 2}
   useChinese: 0
+  fontAssetEnglish: {fileID: 0}
+  fontAssetChinese: {fileID: 0}
   OnDialogueStart:
     m_PersistentCalls:
       m_Calls: []
@@ -750,8 +754,8 @@ RectTransform:
   m_LocalEulerAnglesHint: {x: 0, y: 0, z: 0}
   m_AnchorMin: {x: 0, y: 0}
   m_AnchorMax: {x: 1, y: 1}
-  m_AnchoredPosition: {x: -1.017, y: 0.898}
-  m_SizeDelta: {x: 0, y: 0}
+  m_AnchoredPosition: {x: -1.0935, y: 0.897}
+  m_SizeDelta: {x: -0.15299994, y: -0.09199995}
   m_Pivot: {x: 0.5, y: 0.5}
 --- !u!222 &8886126438217808472
 CanvasRenderer:

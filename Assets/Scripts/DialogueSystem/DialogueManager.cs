@@ -8,8 +8,7 @@ public class DialogueManager : MonoBehaviour
     [Header("Dialogue Settings")]
     [SerializeField] private DialogueDatabase dialogueDatabase;
     [SerializeField] private bool useChinese = true;
-    [SerializeField] private TMP_FontAsset fontAssetEnglish;
-    [SerializeField] private TMP_FontAsset fontAssetChinese;
+
     
     [Header("Events")]
     public UnityEvent<DialogueEntry> OnDialogueStart;

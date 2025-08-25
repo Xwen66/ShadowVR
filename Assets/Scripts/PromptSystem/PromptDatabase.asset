@@ -1,0 +1,35 @@
+%YAML 1.1
+%TAG !u! tag:unity3d.com,2011:
+--- !u!114 &11400000
+MonoBehaviour:
+  m_ObjectHideFlags: 0
+  m_CorrespondingSourceObject: {fileID: 0}
+  m_PrefabInstance: {fileID: 0}
+  m_PrefabAsset: {fileID: 0}
+  m_GameObject: {fileID: 0}
+  m_Enabled: 1
+  m_EditorHideFlags: 0
+  m_Script: {fileID: 11500000, guid: 9dc53276aeecb7e48ac1958551a4f202, type: 3}
+  m_Name: PromptDatabase
+  m_EditorClassIdentifier: 
+  promptEntries:
+  - index: 1
+    progress: n /3
+    contentChinese: "\u6536\u96C6\u53A8\u623F\u63D0\u793A\u5361"
+    contentEnglish: Collect Kitchen Reminder Card
+  - index: 2
+    progress: n /1
+    contentChinese: "\u62FF\u51FA\u4E0D\u53C2\u52A0\u53D1\u5E03\u4F1A\u7684\u4EBA\u7684\u5361\u7247"
+    contentEnglish: Take out the cards of those not attending the launch.
+  - index: 3
+    progress: n /1
+    contentChinese: "\u653E\u5165\u72EE\u5B50\u5988\u5988\u7684\u5956\u7AE0"
+    contentEnglish: Place in the Lioness' medal.
+  - index: 4
+    progress: 
+    contentChinese: "\u6321\u4F4F\u5149\u7EBF\uFF0C\u5E2E\u52A9\u5C0F\u523A\u732C\u5728\u5F71\u5B50\u4E2D\u524D\u884C\u3002"
+    contentEnglish: Cast a shadow to help the hedgehog move on.
+  - index: 5
+    progress: 
+    contentChinese: "\u8BA9\u5899\u4E0A\u7684\u5F71\u5B50\u53D8\u6210\u9636\u68AF\u7684\u5F62\u72B6\u3002"
+    contentEnglish: Shape the shadow into steps on the wall.
