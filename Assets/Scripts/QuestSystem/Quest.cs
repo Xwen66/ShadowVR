@@ -8,4 +8,5 @@ public abstract class Quest : MonoBehaviour
     private bool _isCompleted;
     private string _questHintText;
     public abstract void GetHintText();
+    
 }
