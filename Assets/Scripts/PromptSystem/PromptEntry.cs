@@ -13,7 +13,13 @@ public class PromptEntry
     
     [TextArea(2, 4)]
     public string contentEnglish;
-    
+    public PromptEntry(string contentChinese, string contentEnglish)
+    {
+      
+        this.contentChinese = contentChinese;
+        this.contentEnglish = contentEnglish;
+    }
+
     // Helper method to get prompt content based on language
     public string GetPromptContent(bool isChinese = true)
     {

@@ -10057,6 +10057,10 @@ PrefabInstance:
     serializedVersion: 3
     m_TransformParent: {fileID: 0}
     m_Modifications:
+    - target: {fileID: 853564241785987358, guid: ce833d5e4a42f5c4e8abb7040d842633, type: 3}
+      propertyPath: QuestName
+      value: Tray Quest
+      objectReference: {fileID: 0}
     - target: {fileID: 1374443403092936399, guid: ce833d5e4a42f5c4e8abb7040d842633, type: 3}
       propertyPath: m_Name
       value: Tray
