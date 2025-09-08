@@ -19,7 +19,10 @@ public class PromptEntry
         this.contentChinese = contentChinese;
         this.contentEnglish = contentEnglish;
     }
+    public PromptEntry()
+    {
 
+    }
     // Helper method to get prompt content based on language
     public string GetPromptContent(bool isChinese = true)
     {
