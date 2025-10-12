@@ -50,8 +50,9 @@ public class GameManager : MonoBehaviour
         if (_cooldownTimer < _cooldown) return;
 
         // 检查右手控制器的A按钮是否按下（XR输入）或者空格键是否按下（键盘输入）
-        if (UnityEngine.XR.InputDevices.GetDeviceAtXRNode(UnityEngine.XR.XRNode.RightHand)
+        if ((UnityEngine.XR.InputDevices.GetDeviceAtXRNode(UnityEngine.XR.XRNode.RightHand)
             .TryGetFeatureValue(UnityEngine.XR.CommonUsages.primaryButton, out bool isPressed) && isPressed || Input.GetKeyDown(KeyCode.Space))
+            && canChangePerson)  // 只有在允许切换形态时才执行
         {
             // 小型玩家模式（动物形态）
             if (_largePlayer.activeSelf)
@@ -91,7 +92,8 @@ public class GameManager : MonoBehaviour
 
         // 检查左手控制器的Menu按钮是否按下（用于工具箱切换）
         if (UnityEngine.XR.InputDevices.GetDeviceAtXRNode(UnityEngine.XR.XRNode.LeftHand)
-            .TryGetFeatureValue(UnityEngine.XR.CommonUsages.menuButton, out bool isPressedLeftMenu) && isPressedLeftMenu)
+            .TryGetFeatureValue(UnityEngine.XR.CommonUsages.menuButton, out bool isPressedLeftMenu) && isPressedLeftMenu
+            && canOpenToolBox)  // 只有在允许打开工具箱时才执行
         {
             if (ToolBox.activeSelf)
             {
