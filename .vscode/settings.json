@@ -66,5 +66,9 @@
     "explorer.fileNesting.patterns": {
         "*.sln": "*.csproj"
     },
-    "dotnet.defaultSolution": "ShadowVR.sln"
+    "dotnet.defaultSolution": "shadowVR.sln",
+    "dotrush.roslyn.projectOrSolutionFiles": [
+        "d:\\Project\\shadowVR\\shadowVR.sln",
+        "d:\\Project\\shadowVR\\Library\\com.singularitygroup.hotreload\\Solution\\shadowVR.sln"
+    ]
 }
