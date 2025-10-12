@@ -10,20 +10,24 @@ public class GameManager : MonoBehaviour
     [SerializeField] private GameObject _largePlayer;      // 大型玩家角色（人类形态）
     [SerializeField] public GameObject FoxPrefab;          // 狐狸预制体（可能用于特效或动画）
     [SerializeField] private GameObject _smallPlayer;      // 小型玩家角色（动物形态）
-    
+
     [Header("冷却时间设置")]
     [SerializeField] private float _cooldown = 1f;         // 操作冷却时间（秒）
     private float _cooldownTimer = 0f;                     // 冷却计时器
-    
+
     [Header("记忆碎片收集系统")]
     [SerializeField] private int _totalMemoryShards = 5;   // 总共需要收集的记忆碎片数量
     private int _currentMemoryShards = 0;                  // 当前已收集的记忆碎片数量
-    
+
     [Header("单例实例")]
     public static GameManager Instance;                    // 单例实例，用于全局访问
-    
+
     [Header("工具箱设置")]
     public GameObject ToolBox;                             // 工具箱游戏对象
+
+    [Header("按键启用设置")]
+    public bool canChangePerson = false;
+    public bool canOpenToolBox = false;
 
     /// <summary>
     /// 游戏开始时调用，初始化单例实例
@@ -41,10 +45,10 @@ public class GameManager : MonoBehaviour
     {
         // 更新冷却计时器
         _cooldownTimer += Time.deltaTime;
-        
+
         // 如果还在冷却中，直接返回
         if (_cooldownTimer < _cooldown) return;
-        
+
         // 检查右手控制器的A按钮是否按下（XR输入）或者空格键是否按下（键盘输入）
         if (UnityEngine.XR.InputDevices.GetDeviceAtXRNode(UnityEngine.XR.XRNode.RightHand)
             .TryGetFeatureValue(UnityEngine.XR.CommonUsages.primaryButton, out bool isPressed) && isPressed || Input.GetKeyDown(KeyCode.Space))
@@ -66,12 +70,12 @@ public class GameManager : MonoBehaviour
                 _cooldownTimer = 0f;              // 重置冷却计时器
             }
         }
-        
+
         // 检查右手控制器的扳机按钮是否按下（用于UI画布切换）
-        if(UnityEngine.XR.InputDevices.GetDeviceAtXRNode(UnityEngine.XR.XRNode.RightHand)
-            .TryGetFeatureValue(UnityEngine.XR.CommonUsages.triggerButton, out bool isPressedRight) && isPressedRight )
+        if (UnityEngine.XR.InputDevices.GetDeviceAtXRNode(UnityEngine.XR.XRNode.RightHand)
+            .TryGetFeatureValue(UnityEngine.XR.CommonUsages.triggerButton, out bool isPressedRight) && isPressedRight)
         {
-            if(_largePlayer.activeSelf)
+            if (_largePlayer.activeSelf)
             {
                 // 大型玩家模式下切换UI画布到模式0
                 UIManager.Instance.ToggleUICanvas(0);
@@ -84,12 +88,12 @@ public class GameManager : MonoBehaviour
                 _cooldownTimer = 0f;              // 重置冷却计时器
             }
         }
-        
+
         // 检查左手控制器的Menu按钮是否按下（用于工具箱切换）
-        if(UnityEngine.XR.InputDevices.GetDeviceAtXRNode(UnityEngine.XR.XRNode.LeftHand)
-            .TryGetFeatureValue(UnityEngine.XR.CommonUsages.menuButton, out bool isPressedLeftMenu) && isPressedLeftMenu )
+        if (UnityEngine.XR.InputDevices.GetDeviceAtXRNode(UnityEngine.XR.XRNode.LeftHand)
+            .TryGetFeatureValue(UnityEngine.XR.CommonUsages.menuButton, out bool isPressedLeftMenu) && isPressedLeftMenu)
         {
-            if(ToolBox.activeSelf)
+            if (ToolBox.activeSelf)
             {
                 // 如果工具箱已激活，则隐藏工具箱
                 ToolBox.SetActive(false);
@@ -111,7 +115,7 @@ public class GameManager : MonoBehaviour
     {
         _currentMemoryShards++;  // 增加当前记忆碎片数量
         UIManager.Instance.UpdateCurrentMemoryShards(_currentMemoryShards);  // 更新UI显示
-        
+
         // 检查是否收集了所有记忆碎片
         if (_currentMemoryShards >= _totalMemoryShards)
         {
@@ -119,7 +123,7 @@ public class GameManager : MonoBehaviour
             // 可以在这里添加胜利条件触发的代码
         }
     }
-    
+
     /// <summary>
     /// 获取总共需要的记忆碎片数量
     /// </summary>
@@ -127,7 +131,7 @@ public class GameManager : MonoBehaviour
     {
         get { return _totalMemoryShards; }
     }
-    
+
     /// <summary>
     /// 获取当前已收集的记忆碎片数量
     /// </summary>
