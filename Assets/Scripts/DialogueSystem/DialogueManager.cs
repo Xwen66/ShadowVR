@@ -9,13 +9,13 @@ public class DialogueManager : MonoBehaviour
     [SerializeField] private DialogueDatabase dialogueDatabase;
     [SerializeField] private bool useChinese = true;
 
-    
+
     [Header("Events")]
     public UnityEvent<DialogueEntry> OnDialogueStart;
     public UnityEvent<DialogueEntry> OnDialogueDisplay;
     public UnityEvent OnDialogueEnd;
-    
-    // Singleton instance
+
+    // 单例实例
     private static DialogueManager _instance;
     public static DialogueManager Instance
     {
@@ -34,48 +34,48 @@ public class DialogueManager : MonoBehaviour
             return _instance;
         }
     }
-    
-    // Current dialogue state
+
+    // 当前对话状态
     private int currentDialogueNumber = -1;
     private bool isDialogueActive = false;
-    
-    // Properties
+
+    // 属性
     public bool IsDialogueActive => isDialogueActive;
     public bool IsChinese => useChinese;
     public DialogueEntry CurrentDialogue => dialogueDatabase?.GetDialogueByNumber(currentDialogueNumber);
     
     private void Awake()
     {
-        // Ensure singleton
+        // 确保单例
         if (_instance != null && _instance != this)
         {
             Destroy(gameObject);
             return;
         }
-        
+
         _instance = this;
         DontDestroyOnLoad(gameObject);
     }
-    
+
     private void Start()
     {
-        // Validate database
+        // 验证数据库
         if (dialogueDatabase == null)
         {
             Debug.LogWarning("DialogueManager: No DialogueDatabase assigned!");
         }
     }
-    
+
     /// <summary>
-    /// Set the dialogue database
+    /// 设置对话数据库
     /// </summary>
     public void SetDialogueDatabase(DialogueDatabase database)
     {
         dialogueDatabase = database;
     }
-    
+
     /// <summary>
-    /// Start dialogue from specific dialog number
+    /// 从指定对话编号开始对话
     /// </summary>
     public void StartDialogue(int dialogNumber)
     {
@@ -100,13 +100,13 @@ public class DialogueManager : MonoBehaviour
     }
     
     /// <summary>
-    /// Display current dialogue
+    /// 显示当前对话
     /// </summary>
     public void DisplayCurrentDialogue()
     {
         if (!isDialogueActive || dialogueDatabase == null)
             return;
-        
+
         var dialogue = dialogueDatabase.GetDialogueByNumber(currentDialogueNumber);
         if (dialogue != null)
         {
@@ -114,17 +114,17 @@ public class DialogueManager : MonoBehaviour
             Debug.Log($"Displaying dialogue {currentDialogueNumber}: {dialogue.GetDialogueContent(useChinese)}");
         }
     }
-    
+
     /// <summary>
-    /// Move to next dialogue
+    /// 移动到下一条对话
     /// </summary>
     public void NextDialogue()
     {
         if (!isDialogueActive || dialogueDatabase == null)
             return;
-        
+
         int nextDialogueNumber = dialogueDatabase.GetNextDialogueNumber(currentDialogueNumber);
-        
+
         if (nextDialogueNumber != -1)
         {
             currentDialogueNumber = nextDialogueNumber;
@@ -135,57 +135,57 @@ public class DialogueManager : MonoBehaviour
             EndDialogue();
         }
     }
-    
+
     /// <summary>
-    /// End current dialogue
+    /// 结束当前对话
     /// </summary>
     public void EndDialogue()
     {
         if (!isDialogueActive)
             return;
-        
+
         isDialogueActive = false;
         currentDialogueNumber = -1;
-        
+
         OnDialogueEnd?.Invoke();
         Debug.Log("Dialogue ended");
     }
-    
+
     /// <summary>
-    /// Toggle language between Chinese and English
+    /// 在中文和英文之间切换语言
     /// </summary>
     public void ToggleLanguage()
     {
         useChinese = !useChinese;
-        
-        // Refresh current dialogue if active
+
+        // 如果对话处于活动状态则刷新当前对话
         if (isDialogueActive)
         {
             DisplayCurrentDialogue();
         }
-        
+
         Debug.Log($"Language switched to: {(useChinese ? "Chinese" : "English")}");
     }
-    
+
     /// <summary>
-    /// Set language explicitly
+    /// 显式设置语言
     /// </summary>
     public void SetLanguage(bool chinese)
     {
         if (useChinese != chinese)
         {
             useChinese = chinese;
-            
-            // Refresh current dialogue if active
+
+            // 如果对话处于活动状态则刷新当前对话
             if (isDialogueActive)
             {
                 DisplayCurrentDialogue();
             }
         }
     }
-    
+
     /// <summary>
-    /// Skip to specific dialogue number
+    /// 跳转到指定对话编号
     /// </summary>
     public void GoToDialogue(int dialogNumber)
     {
@@ -207,33 +207,33 @@ public class DialogueManager : MonoBehaviour
     }
     
     /// <summary>
-    /// Get character image for current dialogue
+    /// 获取当前对话的角色图像
     /// </summary>
     public Sprite GetCurrentCharacterImage()
     {
         if (dialogueDatabase == null || !isDialogueActive)
             return null;
-        
+
         var dialogue = dialogueDatabase.GetDialogueByNumber(currentDialogueNumber);
         return dialogue != null ? dialogueDatabase.GetCharacterImage(dialogue.CharacterID) : null;
     }
-    
+
     /// <summary>
-    /// Get character image by character ID
+    /// 根据角色ID获取角色图像
     /// </summary>
     public Sprite GetCharacterImage(string characterID)
     {
         return dialogueDatabase?.GetCharacterImage(characterID);
     }
-    
+
     #region Inspector Test Functions
-    
+
     [Header("Testing & Debug")]
     [SerializeField] private int testDialogueNumber = 1;
     [SerializeField] private bool showDebugLogs = true;
-    
+
     /// <summary>
-    /// Test function: Start dialogue with test number
+    /// 测试功能：使用测试编号开始对话
     /// </summary>
     [ContextMenu("Test Start Dialogue")]
     public void TestStartDialogue()
@@ -243,27 +243,27 @@ public class DialogueManager : MonoBehaviour
             Debug.LogError("No DialogueDatabase assigned! Please assign one in the inspector.");
             return;
         }
-        
+
         StartDialogue(testDialogueNumber);
-        
+
         if (showDebugLogs)
             Debug.Log($"[TEST] Started dialogue #{testDialogueNumber}");
     }
-    
+
     /// <summary>
-    /// Test function: Toggle language
+    /// 测试功能：切换语言
     /// </summary>
     [ContextMenu("Test Toggle Language")]
     public void TestToggleLanguage()
     {
         ToggleLanguage();
-        
+
         if (showDebugLogs)
             Debug.Log($"[TEST] Language switched to: {(useChinese ? "Chinese" : "English")}");
     }
-    
+
     /// <summary>
-    /// Test function: Next dialogue
+    /// 测试功能：下一条对话
     /// </summary>
     [ContextMenu("Test Next Dialogue")]
     public void TestNextDialogue()
@@ -273,15 +273,15 @@ public class DialogueManager : MonoBehaviour
             Debug.LogWarning("[TEST] No dialogue is currently active!");
             return;
         }
-        
+
         NextDialogue();
-        
+
         if (showDebugLogs)
             Debug.Log($"[TEST] Advanced to next dialogue");
     }
-    
+
     /// <summary>
-    /// Test function: End dialogue
+    /// 测试功能：结束对话
     /// </summary>
     [ContextMenu("Test End Dialogue")]
     public void TestEndDialogue()
@@ -291,15 +291,15 @@ public class DialogueManager : MonoBehaviour
             Debug.LogWarning("[TEST] No dialogue is currently active!");
             return;
         }
-        
+
         EndDialogue();
-        
+
         if (showDebugLogs)
             Debug.Log($"[TEST] Dialogue ended manually");
     }
     
     /// <summary>
-    /// Test function: Print system status
+    /// 测试功能：打印系统状态
     /// </summary>
     [ContextMenu("Test Print System Status")]
     public void TestPrintSystemStatus()
@@ -310,7 +310,7 @@ public class DialogueManager : MonoBehaviour
         Debug.Log($"Current Language: {(useChinese ? "Chinese (中文)" : "English")}");
         Debug.Log($"Dialogue Active: {(isDialogueActive ? "✓ Yes" : "✗ No")}");
         Debug.Log($"Current Dialogue Number: {(isDialogueActive ? currentDialogueNumber.ToString() : "None")}");
-        
+
         if (dialogueDatabase != null)
         {
             Debug.Log($"Total Dialogue Entries: {dialogueDatabase.dialogueEntries.Count}");
@@ -318,9 +318,9 @@ public class DialogueManager : MonoBehaviour
         }
         Debug.Log("============================");
     }
-    
+
     /// <summary>
-    /// Test function: Print all dialogues
+    /// 测试功能：打印所有对话
     /// </summary>
     [ContextMenu("Test Print All Dialogues")]
     public void TestPrintAllDialogues()
@@ -330,7 +330,7 @@ public class DialogueManager : MonoBehaviour
             Debug.LogWarning("[TEST] No DialogueDatabase assigned!");
             return;
         }
-        
+
         Debug.Log("=== ALL DIALOGUES ===");
         foreach (var entry in dialogueDatabase.dialogueEntries)
         {
@@ -339,9 +339,9 @@ public class DialogueManager : MonoBehaviour
         }
         Debug.Log("====================");
     }
-    
+
     /// <summary>
-    /// Test function: Print character images
+    /// 测试功能：打印角色图像
     /// </summary>
     [ContextMenu("Test Print Character Images")]
     public void TestPrintCharacterImages()
@@ -351,7 +351,7 @@ public class DialogueManager : MonoBehaviour
             Debug.LogWarning("[TEST] No DialogueDatabase assigned!");
             return;
         }
-        
+
         Debug.Log("=== CHARACTER IMAGES ===");
         if (dialogueDatabase.characterImages.Count == 0)
         {
@@ -367,9 +367,9 @@ public class DialogueManager : MonoBehaviour
         }
         Debug.Log("========================");
     }
-    
+
     /// <summary>
-    /// Test function: Validate dialogue sequence
+    /// 测试功能：验证对话序列
     /// </summary>
     [ContextMenu("Test Validate Dialogue Sequence")]
     public void TestValidateDialogueSequence()
@@ -379,20 +379,20 @@ public class DialogueManager : MonoBehaviour
             Debug.LogWarning("[TEST] No DialogueDatabase assigned!");
             return;
         }
-        
+
         Debug.Log("=== DIALOGUE SEQUENCE VALIDATION ===");
         var allNumbers = dialogueDatabase.GetAllDialogueNumbers();
-        
+
         if (allNumbers.Count == 0)
         {
             Debug.LogWarning("No dialogues found in database!");
             return;
         }
-        
+
         Debug.Log($"Total dialogues: {allNumbers.Count}");
         Debug.Log($"Dialogue range: {allNumbers[0]} to {allNumbers[allNumbers.Count - 1]}");
-        
-        // Check for gaps in sequence
+
+        // 检查序列中的间隙
         for (int i = 0; i < allNumbers.Count - 1; i++)
         {
             if (allNumbers[i + 1] - allNumbers[i] > 1)
@@ -400,27 +400,27 @@ public class DialogueManager : MonoBehaviour
                 Debug.LogWarning($"Gap in dialogue sequence: {allNumbers[i]} → {allNumbers[i + 1]}");
             }
         }
-        
-        // Check for duplicates
+
+        // 检查重复项
         var duplicates = allNumbers.GroupBy(x => x).Where(g => g.Count() > 1).Select(g => g.Key);
         foreach (var duplicate in duplicates)
         {
             Debug.LogError($"Duplicate dialogue number found: {duplicate}");
         }
-        
+
         Debug.Log("===================================");
     }
-    
+
     /// <summary>
-    /// Set test dialogue number from inspector
+    /// 从检查器设置测试对话编号
     /// </summary>
     public void SetTestDialogueNumber(int number)
     {
         testDialogueNumber = number;
-        
+
         if (showDebugLogs)
             Debug.Log($"[TEST] Test dialogue number set to: {number}");
     }
-    
+
     #endregion
 }
