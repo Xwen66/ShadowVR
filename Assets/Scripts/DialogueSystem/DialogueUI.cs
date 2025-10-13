@@ -1,6 +1,9 @@
 using UnityEngine;
 using UnityEngine.UI;
 using TMPro;
+using UnityEngine;
+using UnityEngine.UI;
+using TMPro;
 
 public class DialogueUI : MonoBehaviour
 {
@@ -127,16 +130,23 @@ public class DialogueUI : MonoBehaviour
         }
         else
         {
+            // 获取当前对话编号
+            int currentDialogueNumber = DialogueManager.Instance.CurrentDialogue?.dialogNumber ?? -1;
+            
             // 根据按钮模式执行不同操作
-            if (nextButtonClosesDialog)
+            if (nextButtonClosesDialog) 
             {
                 // 关闭对话框模式
                 DialogueManager.Instance.EndDialogue();
+                // 触发事件，传递当前对话编号
+                GlobalEvent.nextDialogueEvent?.Invoke(currentDialogueNumber);
             }
             else
             {
                 // 下一句对话模式
                 DialogueManager.Instance.NextDialogue();
+                // 触发事件，传递当前对话编号
+                GlobalEvent.nextDialogueEvent?.Invoke(currentDialogueNumber);
             }
         }
     }

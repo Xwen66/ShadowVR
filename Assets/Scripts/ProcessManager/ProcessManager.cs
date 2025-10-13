@@ -40,12 +40,28 @@ public class ProcessManager : MonoBehaviour
     // Start is called once before the first execution of Update after the MonoBehaviour is created
     void Start()
     {
-        
+        // 订阅对话事件
+        GlobalEvent.nextDialogueEvent.AddListener(OnNextDialogue);
     }
 
     // Update is called once per frame
     void Update()
     {
         
+    }
+
+    private void OnDestroy()
+    {
+        // 取消订阅事件
+        GlobalEvent.nextDialogueEvent.RemoveListener(OnNextDialogue);
+    }
+
+    /// <summary>
+    /// 处理下一句对话事件
+    /// </summary>
+    /// <param name="dialogueNumber">对话序号</param>
+    private void OnNextDialogue(int dialogueNumber)
+    {
+        Debug.Log($"ProcessManager: 收到对话事件，对话序号: {dialogueNumber}");
     }
 }
