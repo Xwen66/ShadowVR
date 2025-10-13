@@ -65,6 +65,11 @@ public class XRDistanceConstraint : MonoBehaviour
     private Vector3 targetPosition;
     private Vector3 lastValidPosition;
     private bool constraintViolated = false;
+    private float gameStartTime = 0f;
+    private bool canLogConstraint = false;
+    private bool hasTriggeredDialogue = false;
+    private float constraintTouchTime = 0f;
+    private bool isWaitingForDialogue = false;
     
     // Enums
     public enum ConstraintType
@@ -86,6 +91,9 @@ public class XRDistanceConstraint : MonoBehaviour
         InitializeComponents();
         if (targetObject != null)
             lastValidPosition = GetConstrainedPosition();
+        
+        gameStartTime = Time.time;
+        canLogConstraint = false;
     }
     
     void InitializeComponents()
@@ -117,6 +125,24 @@ public class XRDistanceConstraint : MonoBehaviour
     {
         if (!useLateUpdate)
             ApplyConstraints();
+        
+        // 检查是否已经过了5秒
+        if (!canLogConstraint && Time.time - gameStartTime >= 5f)
+        {
+            canLogConstraint = true;
+            if (showDebugInfo)
+                Debug.Log("距离约束日志功能已启用（游戏开始5秒后）");
+        }
+        
+        // 检查是否等待对话触发且已经过了3秒
+        if (isWaitingForDialogue && Time.time - constraintTouchTime >= 3f)
+        {
+            TriggerDialogue(1);
+            hasTriggeredDialogue = true;
+            isWaitingForDialogue = false;
+            if (showDebugInfo)
+                Debug.Log("3秒等待结束，触发对话");
+        }
     }
     
     void LateUpdate()
@@ -139,6 +165,24 @@ public class XRDistanceConstraint : MonoBehaviour
         if (isViolating)
         {
             constraintViolated = true;
+            
+            // 添加触碰限制时的日志输出（仅在游戏开始5秒后且未触发过对话）
+            if (showDebugInfo && canLogConstraint && !hasTriggeredDialogue && !isWaitingForDialogue)
+            {
+                string violationType = "";
+                if (innerRadius > 0 && currentDistance < innerRadius)
+                    violationType = "太靠近目标";
+                else if (sphereRadius > 0 && currentDistance > sphereRadius)
+                    violationType = "离目标太远";
+                
+                Debug.Log($"玩家触碰到距离限制！类型: {violationType}, 当前距离: {currentDistance:F2}, 限制范围: [{innerRadius:F2}, {sphereRadius:F2}]");
+                
+                // 开始3秒等待计时
+                constraintTouchTime = Time.time;
+                isWaitingForDialogue = true;
+                if (showDebugInfo)
+                    Debug.Log("开始3秒等待，之后将触发对话");
+            }
             
             switch (constraintMode)
             {
@@ -308,6 +352,21 @@ public class XRDistanceConstraint : MonoBehaviour
     public float GetCurrentDistance()
     {
         return GetDistanceToTarget(GetCurrentPlayerPosition());
+    }
+
+    // 触发对话方法
+    private void TriggerDialogue(int dialogueNumber)
+    {
+        DialogueManager dialogueManager = FindObjectOfType<DialogueManager>();
+        if (dialogueManager != null)
+        {
+            dialogueManager.GoToDialogue(dialogueNumber);
+            Debug.Log($"触发了对话 #{dialogueNumber}");
+        }
+        else
+        {
+            Debug.LogWarning("未找到 DialogueManager 组件");
+        }
     }
     
     // Gizmo visualization
