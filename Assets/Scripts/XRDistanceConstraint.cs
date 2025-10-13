@@ -138,6 +138,7 @@ public class XRDistanceConstraint : MonoBehaviour
         if (isWaitingForDialogue && Time.time - constraintTouchTime >= 3f)
         {
             TriggerDialogue(1);
+            DialogueManager.Instance.SetNextButtonMode(true);//关闭对话框模式
             hasTriggeredDialogue = true;
             isWaitingForDialogue = false;
             if (showDebugInfo)

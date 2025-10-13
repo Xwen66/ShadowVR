@@ -38,11 +38,13 @@ public class DialogueManager : MonoBehaviour
     // 当前对话状态
     private int currentDialogueNumber = -1;
     private bool isDialogueActive = false;
+    private bool nextButtonClosesDialog = false; // 按钮模式：false=下一句对话，true=关闭对话框
 
     // 属性
     public bool IsDialogueActive => isDialogueActive;
     public bool IsChinese => useChinese;
     public DialogueEntry CurrentDialogue => dialogueDatabase?.GetDialogueByNumber(currentDialogueNumber);
+    public bool NextButtonClosesDialog => nextButtonClosesDialog; // 只读属性，获取当前按钮模式
     
     private void Awake()
     {
@@ -224,6 +226,41 @@ public class DialogueManager : MonoBehaviour
     public Sprite GetCharacterImage(string characterID)
     {
         return dialogueDatabase?.GetCharacterImage(characterID);
+    }
+
+    /// <summary>
+    /// 设置右下角按钮的模式
+    /// </summary>
+    /// <param name="closeDialogMode">true=关闭对话框模式，false=下一句对话模式</param>
+    public void SetNextButtonMode(bool closeDialogMode)
+    {
+        nextButtonClosesDialog = closeDialogMode;
+        
+        // 通知UI更新按钮状态
+        var dialogueUI = FindObjectOfType<DialogueUI>();
+        if (dialogueUI != null)
+        {
+            dialogueUI.SetNextButtonMode(closeDialogMode);
+        }
+        
+        Debug.Log($"Next button mode set to: {(closeDialogMode ? "Close Dialog" : "Next Dialogue")}");
+    }
+
+    /// <summary>
+    /// 切换右下角按钮的模式
+    /// </summary>
+    public void ToggleNextButtonMode()
+    {
+        SetNextButtonMode(!nextButtonClosesDialog);
+    }
+
+    /// <summary>
+    /// 获取当前按钮模式
+    /// </summary>
+    /// <returns>true=关闭对话框模式，false=下一句对话模式</returns>
+    public bool GetNextButtonMode()
+    {
+        return nextButtonClosesDialog;
     }
 
     #region Inspector Test Functions

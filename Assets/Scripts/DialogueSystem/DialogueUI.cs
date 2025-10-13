@@ -25,6 +25,7 @@ public class DialogueUI : MonoBehaviour
     // Private variables
     private bool isTyping = false;
     private Coroutine typewriterCoroutine;
+    private bool nextButtonClosesDialog = false; // 按钮模式：false=下一句对话，true=关闭对话框
     
     private void Start()
     {
@@ -126,8 +127,17 @@ public class DialogueUI : MonoBehaviour
         }
         else
         {
-            // Move to next dialogue
-            DialogueManager.Instance.NextDialogue();
+            // 根据按钮模式执行不同操作
+            if (nextButtonClosesDialog)
+            {
+                // 关闭对话框模式
+                DialogueManager.Instance.EndDialogue();
+            }
+            else
+            {
+                // 下一句对话模式
+                DialogueManager.Instance.NextDialogue();
+            }
         }
     }
     
@@ -343,6 +353,44 @@ public class DialogueUI : MonoBehaviour
         fontAssetEnglish = englishFont;
         fontAssetChinese = chineseFont;
         RefreshFonts();
+    }
+
+    /// <summary>
+    /// 设置右下角按钮的模式
+    /// </summary>
+    /// <param name="closeDialogMode">true=关闭对话框模式，false=下一句对话模式</param>
+    public void SetNextButtonMode(bool closeDialogMode)
+    {
+        nextButtonClosesDialog = closeDialogMode;
+        
+        // 可选：更新按钮文本以反映当前模式
+        if (nextButton != null)
+        {
+            var buttonText = nextButton.GetComponentInChildren<TextMeshProUGUI>();
+            if (buttonText != null)
+            {
+                buttonText.text = closeDialogMode ? "关闭" : "下一句";
+            }
+        }
+        
+        Debug.Log($"Next button mode set to: {(closeDialogMode ? "Close Dialog" : "Next Dialogue")}");
+    }
+
+    /// <summary>
+    /// 切换右下角按钮的模式
+    /// </summary>
+    public void ToggleNextButtonMode()
+    {
+        SetNextButtonMode(!nextButtonClosesDialog);
+    }
+
+    /// <summary>
+    /// 获取当前按钮模式
+    /// </summary>
+    /// <returns>true=关闭对话框模式，false=下一句对话模式</returns>
+    public bool GetNextButtonMode()
+    {
+        return nextButtonClosesDialog;
     }
     
     #endregion
