@@ -4,7 +4,7 @@ using VInspector;
 
 public class DialogueManagerTest : MonoBehaviour
 {
-    public int dialogueNumberToStart = 1;
+    public int dialogueNumberToStart = 4;
     // Start is called once before the first execution of Update after the MonoBehaviour is created
     void Start()
     {
@@ -24,7 +24,7 @@ public class DialogueManagerTest : MonoBehaviour
         if (DialogueManager.Instance != null)
         {
             DialogueManager.Instance.GoToDialogue(dialogueNumberToStart);
-            Debug.Log("正在显示第二条对话内容");
+            Debug.Log("正在显示第四条对话内容");
         }
         else
         {

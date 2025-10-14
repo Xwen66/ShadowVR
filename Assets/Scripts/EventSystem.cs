@@ -13,5 +13,12 @@ public static class GlobalEvent
 
     //apple event
     public static UnityEvent<int> nextDialogueEvent = new UnityEvent<int>();
+    public static UnityEvent firstDialogueCloseEvent = new UnityEvent();
+
+
+
+
+
+    
 
 }
