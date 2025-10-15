@@ -308,7 +308,7 @@ public class PromptManager : MonoBehaviour
     #region Inspector Test Functions
     
     [Header("Testing & Debug")]
-    [SerializeField] private int testPromptIndex = 0;
+    [SerializeField] private int testPromptIndex = 2;
     [SerializeField] private bool showDebugLogs = true;
     
     /// <summary>

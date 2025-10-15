@@ -197,7 +197,7 @@ MonoBehaviour:
   OnPromptHide:
     m_PersistentCalls:
       m_Calls: []
-  testPromptIndex: 0
+  testPromptIndex: 1
   showDebugLogs: 1
 --- !u!1 &4454631148391283683
 GameObject:
