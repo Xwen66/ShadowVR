@@ -20,6 +20,16 @@ public class PromptMove : MonoBehaviour
     [Tooltip("是否启用平滑追踪模式")]
     public bool useSmoothTracking = false;
     
+    // 跟随状态枚举
+    public enum FollowState
+    {
+        Following,    // 跟随状态：使用插值平滑追踪
+        NotFollowing  // 不跟随状态：直接设置位置，不使用偏移
+    }
+    
+    // 当前跟随状态（默认为不跟随状态）
+    private FollowState currentState = FollowState.NotFollowing;
+    
     // 平滑追踪相关变量
     private bool shouldResetPosition = false;
 
@@ -51,20 +61,29 @@ public class PromptMove : MonoBehaviour
             shouldResetPosition = false;
         }
         
-        // 处理位置更新
+        // 根据当前状态处理位置更新
         if (positionTarget != null)
         {
-            Vector3 targetPos = positionTarget.position + positionOffset;
-            
-            if (useSmoothTracking)
+            if (currentState == FollowState.Following)
             {
-                // 持续使用Lerp平滑追踪目标位置
-                transform.position = Vector3.Lerp(transform.position, targetPos, smoothSpeed * Time.deltaTime);
+                // 跟随状态：使用插值平滑追踪
+                Vector3 targetPos = positionTarget.position + positionOffset;
+                
+                if (useSmoothTracking)
+                {
+                    // 持续使用Lerp平滑追踪目标位置
+                    transform.position = Vector3.Lerp(transform.position, targetPos, smoothSpeed * Time.deltaTime);
+                }
+                else
+                {
+                    // 直接设置位置：等于positionTarget的位置 + 偏移量
+                    transform.position = targetPos;
+                }
             }
-            else
+            else if (currentState == FollowState.NotFollowing)
             {
-                // 直接设置位置：等于positionTarget的位置 + 偏移量
-                transform.position = targetPos;
+                // 不跟随状态：直接设置为目标位置（不使用偏移）
+                transform.position = positionTarget.position;
             }
         }
         
@@ -108,6 +127,37 @@ public class PromptMove : MonoBehaviour
     public void ToggleSmoothTracking()
     {
         useSmoothTracking = !useSmoothTracking;
+    }
+    
+    /// <summary>
+    /// 进入跟随状态
+    /// 在此状态下，物体会使用插值平滑追踪目标位置（根据useSmoothTracking设置）
+    /// </summary>
+    [ContextMenu("进入跟随状态")]
+    public void EnterFollowingState()
+    {
+        currentState = FollowState.Following;
+        Debug.Log("进入跟随状态：物体将使用插值平滑追踪目标位置");
+    }
+    
+    /// <summary>
+    /// 进入不跟随状态
+    /// 在此状态下，物体会直接设置为目标位置（不使用偏移量），不进行插值跟随
+    /// </summary>
+    [ContextMenu("进入不跟随状态")]
+    public void EnterNotFollowingState()
+    {
+        currentState = FollowState.NotFollowing;
+        Debug.Log("进入不跟随状态：物体将直接设置为目标位置（不使用偏移量）");
+    }
+    
+    /// <summary>
+    /// 获取当前跟随状态
+    /// </summary>
+    /// <returns>当前的跟随状态</returns>
+    public FollowState GetCurrentState()
+    {
+        return currentState;
     }
     
 }

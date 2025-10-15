@@ -87,6 +87,13 @@ public class ProcessManager : MonoBehaviour
 
     }
 
+
+
+
+
+
+
+
     /// <summary>
     /// 延迟生成物体的协程
     /// </summary>
@@ -102,8 +109,6 @@ public class ProcessManager : MonoBehaviour
         // 生成后再等待2秒
         yield return new WaitForSeconds(2f);
 
-        // 输出哈哈哈
-        Debug.Log("哈哈哈");
 
         // 触发第四个对话条目
         if (DialogueManager.Instance != null)
