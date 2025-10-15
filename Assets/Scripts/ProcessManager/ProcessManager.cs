@@ -12,7 +12,9 @@ public class ProcessManager : MonoBehaviour
     public GameObject fox;
     public PromptManager promptManager;
     public PromptMove promptMove;
-    public Transform hedgehogCreatePosition;
+    // public Transform hedgehogCreatePosition;
+    public GameManager gameManager;
+    public GameObject pressAUI;
 
 
 
@@ -87,9 +89,19 @@ public class ProcessManager : MonoBehaviour
         if (dialogueNumber == 4)
         {
             //第二步  小刺猬说完“你睡着前，好像要带上托盘去厨房找狮子妈妈。”，后生成托盘上的任务UI
-            DialogueManager.Instance.SetNextButtonMode(true);
+            DialogueManager.Instance.SetNextButtonMode(false);
             promptManager.ShowPrompt(1);
             promptMove.EnterFollowingState();
+
+        }
+
+        if (dialogueNumber == 5)// 说完第五句时（切换到第六句）
+        {
+            //第二步  小刺猬开始说“我体型小。。。”出现“按A切换视角”
+            Debug.LogError("按A切换视角");
+            gameManager.canChangePerson = true;
+            pressAUI.SetActive(true);            
+
         }
 
     }
@@ -130,4 +142,6 @@ public class ProcessManager : MonoBehaviour
             Debug.LogWarning("DialogueManager实例未找到");
         }
     }
+
+
 }
