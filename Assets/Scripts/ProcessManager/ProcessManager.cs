@@ -1,6 +1,7 @@
 using UnityEngine;
 using System.Collections;
 
+
 public class ProcessManager : MonoBehaviour
 {
 
@@ -9,6 +10,9 @@ public class ProcessManager : MonoBehaviour
     public GameObject hedgehogModel;
     public GameObject hedgehogCreateVFXPrefab;
     public GameObject fox;
+    public PromptManager promptManager;
+    public PromptMove promptMove;
+    public Transform hedgehogCreatePosition;
 
 
 
@@ -80,9 +84,12 @@ public class ProcessManager : MonoBehaviour
             StartCoroutine(DelayedSpawn(2f));
         }
 
-        if (dialogueNumber == 3)
+        if (dialogueNumber == 4)
         {
+            //第二步  小刺猬说完“你睡着前，好像要带上托盘去厨房找狮子妈妈。”，后生成托盘上的任务UI
             DialogueManager.Instance.SetNextButtonMode(true);
+            promptManager.ShowPrompt(1);
+            promptMove.EnterFollowingState();
         }
 
     }

@@ -830,6 +830,9 @@ MonoBehaviour:
   hedgehogModel: {fileID: 1422363078}
   hedgehogCreateVFXPrefab: {fileID: 2031695294858245857, guid: ba7e0fb900e1e9d48911e181d91ee1d1, type: 3}
   fox: {fileID: 0}
+  promptManager: {fileID: 1182972482}
+  promptMove: {fileID: 1182972484}
+  hedgehogCreatePosition: {fileID: 0}
 --- !u!114 &528447120 stripped
 MonoBehaviour:
   m_CorrespondingSourceObject: {fileID: 2139932205667224776, guid: 01fb95f91f7fd674d98ef6dafb450313, type: 3}
@@ -13369,8 +13372,8 @@ SceneRoots:
   - {fileID: 1055977321}
   - {fileID: 1444346766}
   - {fileID: 441993064}
-  - {fileID: 1024996578}
   - {fileID: 525930236}
+  - {fileID: 1024996578}
   - {fileID: 9072852267302988959}
   - {fileID: 6699791157505400964}
   - {fileID: 1175069016}
