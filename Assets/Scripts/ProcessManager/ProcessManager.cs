@@ -14,7 +14,7 @@ public class ProcessManager : MonoBehaviour
     public PromptMove promptMove;
     // public Transform hedgehogCreatePosition;
     public GameManager gameManager;
-    public GameObject pressAUI;
+    // public GameObject pressAUI;
 
 
 
@@ -100,7 +100,8 @@ public class ProcessManager : MonoBehaviour
             //第二步  小刺猬开始说“我体型小。。。”出现“按A切换视角”
             Debug.LogError("按A切换视角");
             gameManager.canChangePerson = true;
-            pressAUI.SetActive(true);            
+            // pressAUI.SetActive(true);            
+            GlobalEvent.OnPressAUIEvent.Invoke();
 
         }
 
