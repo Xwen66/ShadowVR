@@ -1,6 +1,8 @@
 using System;
 using UnityEngine;
 
+
+//控制玩家移动教学事件   完成移动之后触发事件  让UI消失
 public class GorillaRigEvent : MonoBehaviour
 {
     public Vector3 startPosition;

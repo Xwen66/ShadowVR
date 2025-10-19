@@ -28,6 +28,9 @@ public static class GlobalEvent
     //玩家完成移动教学事件
     public static UnityEvent OnCompleteMoveTeachingEvent = new UnityEvent();
 
+    //白色闪光结束
+    public static UnityEvent OnWhiteFlashEndEvent = new UnityEvent();
+
 
 
 
