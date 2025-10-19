@@ -19,7 +19,7 @@ public class CWRunTipsUI : MonoBehaviour
     public float rotationSmoothTime = 0.1f; // 旋转平滑时间
     
     private bool useChinese = true; // 默认使用中文
-    private bool isInitialized = false; // 标记是否已初始化
+    private bool shouldShowUI = false; // 控制UI是否显示
     
     private Vector3 positionVelocity = Vector3.zero;
     private float rotationVelocity = 0f;
@@ -28,7 +28,7 @@ public class CWRunTipsUI : MonoBehaviour
     {
         // 监听语言切换事件
         GlobalEvent.OnLanguageChangeEvent.AddListener(OnLanguageChanged);
-        GlobalEvent.OnPressAUIEvent.AddListener(OnPressAUIEvent);
+        GlobalEvent.OnChangePersonEvent.AddListener(OnChangePersonEvent);
         
         // 游戏开始时，确保两个UI都是不显示的
         if (pressAUIChinese != null)
@@ -38,21 +38,17 @@ public class CWRunTipsUI : MonoBehaviour
     }
 
 
-    private void OnPressAUIEvent()
+    private void OnChangePersonEvent(bool showUI)
     {
-        // 只有在第一次接收到事件时才进行初始化
-        if (!isInitialized)
-        {
-            isInitialized = true;
-            UpdateUIVisibility();
-        }
+        shouldShowUI = showUI;
+        UpdateUIVisibility();
     }
 
     void OnDestroy()
     {
         // 移除事件监听，避免内存泄漏
         GlobalEvent.OnLanguageChangeEvent.RemoveListener(OnLanguageChanged);
-        GlobalEvent.OnPressAUIEvent.RemoveListener(OnPressAUIEvent);
+        GlobalEvent.OnChangePersonEvent.RemoveListener(OnChangePersonEvent);
     }
 
     // Update is called once per frame
@@ -104,11 +100,7 @@ public class CWRunTipsUI : MonoBehaviour
     private void OnLanguageChanged(bool isChinese)
     {
         useChinese = isChinese;
-        // 只有在已经初始化的情况下才更新UI显示状态
-        if (isInitialized)
-        {
-            UpdateUIVisibility();
-        }
+        UpdateUIVisibility();
     }
     
     /// <summary>
@@ -117,10 +109,10 @@ public class CWRunTipsUI : MonoBehaviour
     private void UpdateUIVisibility()
     {
         if (pressAUIChinese != null)
-            pressAUIChinese.gameObject.SetActive(useChinese);
+            pressAUIChinese.gameObject.SetActive(shouldShowUI && useChinese);
             
         if (pressAUIEnglish != null)
-            pressAUIEnglish.gameObject.SetActive(!useChinese);
+            pressAUIEnglish.gameObject.SetActive(shouldShowUI && !useChinese);
     }
 
 
@@ -136,6 +128,6 @@ public class CWRunTipsUI : MonoBehaviour
     [Button]
     public void Test()
     {
-        GlobalEvent.OnPressAUIEvent.Invoke();
+        GlobalEvent.OnChangePersonEvent.Invoke(true);
     }
 }
