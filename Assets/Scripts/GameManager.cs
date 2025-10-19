@@ -35,6 +35,18 @@ public class GameManager : MonoBehaviour
     void Start()
     {
         Instance = this;  // 设置单例实例为当前对象
+
+        GlobalEvent.OnPressAUIEvent.AddListener(OnPressAUIEvent);
+    }
+
+    private void OnPressAUIEvent()
+    {
+        canChangePerson = true;
+    }
+
+    private void OnDestroy()
+    {
+        GlobalEvent.OnPressAUIEvent.RemoveListener(OnPressAUIEvent);
     }
 
     /// <summary>
@@ -61,6 +73,7 @@ public class GameManager : MonoBehaviour
                 FoxPrefab.SetActive(true);        // 启用狐狸预制体
                 _smallPlayer.SetActive(true);     // 启用小型玩家
                 _cooldownTimer = 0f;              // 重置冷却计时器
+                GlobalEvent.OnChangePersonEvent.Invoke(true);  // 触发角色切换事件，参数为true，代表刺猬模式
             }
             else
             {
@@ -69,6 +82,7 @@ public class GameManager : MonoBehaviour
                 FoxPrefab.SetActive(false);       // 禁用狐狸预制体
                 _smallPlayer.SetActive(false);    // 禁用小型玩家
                 _cooldownTimer = 0f;              // 重置冷却计时器
+                GlobalEvent.OnChangePersonEvent.Invoke(false);  // 触发角色切换事件，参数为false，代表狐狸模式
             }
         }
 

@@ -1,3 +1,4 @@
+using System;
 using UnityEngine;
 using VInspector;
 
@@ -8,21 +9,35 @@ public class PressAUI : MonoBehaviour
     public Vector3 offset;
     public Transform lookTarget;
     public Transform followTarget;
+    public bool isFoxMode;
     
     private bool useChinese = true; // 默认使用中文
     private bool isInitialized = false; // 标记是否已初始化
+    private bool changePersonEventValue = false; // 存储OnChangePersonEvent传入的值
     
     void Start()
     {
         // 监听语言切换事件
         GlobalEvent.OnLanguageChangeEvent.AddListener(OnLanguageChanged);
         GlobalEvent.OnPressAUIEvent.AddListener(OnPressAUIEvent);
+        GlobalEvent.OnChangePersonEvent.AddListener(OnChangePersonEvent);
         
         // 游戏开始时，确保两个UI都是不显示的
         if (pressAUIChinese != null)
             pressAUIChinese.gameObject.SetActive(false);
         if (pressAUIEnglish != null)
             pressAUIEnglish.gameObject.SetActive(false);
+    }
+
+    private void OnChangePersonEvent(bool arg0)
+    {
+        // 存储传入的值
+        changePersonEventValue = arg0;
+        // 更新UI显示状态
+        if (isInitialized)
+        {
+            UpdateUIVisibility();
+        }
     }
 
     private void OnPressAUIEvent()
@@ -73,11 +88,14 @@ public class PressAUI : MonoBehaviour
     /// </summary>
     private void UpdateUIVisibility()
     {
+        // 判断是否应该显示UI
+        bool shouldShowUI = (changePersonEventValue != isFoxMode);
+        
         if (pressAUIChinese != null)
-            pressAUIChinese.gameObject.SetActive(useChinese);
+            pressAUIChinese.gameObject.SetActive(shouldShowUI && useChinese);
             
         if (pressAUIEnglish != null)
-            pressAUIEnglish.gameObject.SetActive(!useChinese);
+            pressAUIEnglish.gameObject.SetActive(shouldShowUI && !useChinese);
     }
 
 
