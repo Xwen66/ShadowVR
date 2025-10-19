@@ -1083,7 +1083,7 @@ MonoBehaviour:
   offset: {x: 0, y: 0.07, z: 0}
   lookTarget: {fileID: 1190451963}
   followTarget: {fileID: 1742056755}
-  isFoxMode: 1
+  isFoxMode: 0
 --- !u!1001 &666221367
 PrefabInstance:
   m_ObjectHideFlags: 0
@@ -1712,10 +1712,9 @@ MonoBehaviour:
   pressAUIChinese: {fileID: 1098830353}
   pressAUIEnglish: {fileID: 1127087242}
   offset: {x: 0, y: 0.07, z: 0}
-  lookTarget: {fileID: 1460664845}
-  followTarget: {fileID: 7054144469359369010}
-  isFoxMode: 1
-  distanceFromTarget: 0
+  lookTarget: {fileID: 1190451963}
+  followTarget: {fileID: 1190451963}
+  distanceFromTarget: 0.18
   yOffset: 0
   positionSmoothTime: 0.1
   rotationSmoothTime: 0.1
@@ -4151,8 +4150,8 @@ MonoBehaviour:
   pressAUIEnglish: {fileID: 1527691492}
   offset: {x: 0, y: 0.07, z: 0}
   lookTarget: {fileID: 1460664845}
-  followTarget: {fileID: 7054144469359369010}
-  isFoxMode: 0
+  followTarget: {fileID: 1703089501}
+  isFoxMode: 1
 --- !u!1001 &1413265882
 PrefabInstance:
   m_ObjectHideFlags: 0
@@ -4944,6 +4943,11 @@ Transform:
 GameObject:
   m_CorrespondingSourceObject: {fileID: 1340857787106649673, guid: 05b5f60bd9215a34084800c2ef089954, type: 3}
   m_PrefabInstance: {fileID: 740985202}
+  m_PrefabAsset: {fileID: 0}
+--- !u!4 &1703089501 stripped
+Transform:
+  m_CorrespondingSourceObject: {fileID: -287556858294141431, guid: 4f6d006eb48a7b14cbb7d648c2ee55cd, type: 3}
+  m_PrefabInstance: {fileID: 553055229}
   m_PrefabAsset: {fileID: 0}
 --- !u!4 &1742056755 stripped
 Transform:
@@ -11937,11 +11941,6 @@ MonoBehaviour:
   m_EditorClassIdentifier: 
   isInTray: 0
   isInToolbox: 0
---- !u!4 &7054144469359369010 stripped
-Transform:
-  m_CorrespondingSourceObject: {fileID: 5852527108306231040, guid: 63cd7bdff5293c54c904807350e73633, type: 3}
-  m_PrefabInstance: {fileID: 7477013217847140731}
-  m_PrefabAsset: {fileID: 0}
 --- !u!23 &7152520435472290318
 MeshRenderer:
   m_ObjectHideFlags: 0
