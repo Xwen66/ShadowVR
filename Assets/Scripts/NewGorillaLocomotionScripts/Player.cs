@@ -30,7 +30,7 @@
         public float velocityLimit;
         public float maxJumpSpeed;
         public float jumpMultiplier;
-        public float minimumRaycastDistance = 0.05f;
+        public float minimumRaycastDistance = 0.01f;
         public float defaultSlideFactor = 0.03f;
         public float defaultPrecision = 0.995f;
 
@@ -50,6 +50,10 @@
         public bool wasRightHandTouching;
 
         public bool disableMovement = false;
+        
+        [Header("调试可视化")]
+        public bool showHandColliders = false;
+        public Color handColliderColor = Color.green;
 
         private void Awake()
         {
@@ -253,6 +257,36 @@
 
             wasLeftHandTouching = leftHandColliding;
             wasRightHandTouching = rightHandColliding;
+            
+            // 绘制调试可视化
+            if (showHandColliders)
+            {
+                DrawHandColliders(leftHandColliding, rightHandColliding);
+            }
+        }
+        
+        private void DrawHandColliders(bool leftColliding, bool rightColliding)
+        {
+            // 绘制左手碰撞体
+            Gizmos.color = leftColliding ? Color.red : handColliderColor;
+            Gizmos.DrawWireSphere(lastLeftHandPosition, minimumRaycastDistance);
+            
+            // 绘制右手碰撞体
+            Gizmos.color = rightColliding ? Color.red : handColliderColor;
+            Gizmos.DrawWireSphere(lastRightHandPosition, minimumRaycastDistance);
+            
+            // 绘制实际手部位置（较小球体）
+            Gizmos.color = Color.yellow;
+            Gizmos.DrawWireSphere(CurrentLeftHandPosition(), minimumRaycastDistance * 0.5f);
+            Gizmos.DrawWireSphere(CurrentRightHandPosition(), minimumRaycastDistance * 0.5f);
+        }
+        
+        private void OnDrawGizmos()
+        {
+            if (showHandColliders && Application.isPlaying)
+            {
+                DrawHandColliders(wasLeftHandTouching, wasRightHandTouching);
+            }
         }
 
         private bool IterativeCollisionSphereCast(Vector3 startPosition, float sphereRadius, Vector3 movementVector, float precision, out Vector3 endPosition, bool singleHand)
