@@ -25,6 +25,10 @@ public static class GlobalEvent
     //角色切换事件（bool = true  代表刺猬模式   false 代表狐狸模式）
     public static UnityEvent<bool> OnChangePersonEvent = new UnityEvent<bool>();
 
+    //玩家完成移动教学事件
+    public static UnityEvent OnCompleteMoveTeachingEvent = new UnityEvent();
+
+
 
 
 

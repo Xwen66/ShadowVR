@@ -29,6 +29,9 @@ public class CWRunTipsUI : MonoBehaviour
         // 监听语言切换事件
         GlobalEvent.OnLanguageChangeEvent.AddListener(OnLanguageChanged);
         GlobalEvent.OnChangePersonEvent.AddListener(OnChangePersonEvent);
+
+        //监听玩家完成移动教学事件
+        GlobalEvent.OnCompleteMoveTeachingEvent.AddListener(OnCompleteMoveTeachingEvent);
         
         // 游戏开始时，确保两个UI都是不显示的
         if (pressAUIChinese != null)
@@ -37,6 +40,10 @@ public class CWRunTipsUI : MonoBehaviour
             pressAUIEnglish.gameObject.SetActive(false);
     }
 
+    private void OnCompleteMoveTeachingEvent()
+    {
+        Destroy(gameObject);
+    }
 
     private void OnChangePersonEvent(bool showUI)
     {
@@ -49,6 +56,7 @@ public class CWRunTipsUI : MonoBehaviour
         // 移除事件监听，避免内存泄漏
         GlobalEvent.OnLanguageChangeEvent.RemoveListener(OnLanguageChanged);
         GlobalEvent.OnChangePersonEvent.RemoveListener(OnChangePersonEvent);
+        GlobalEvent.OnCompleteMoveTeachingEvent.RemoveListener(OnCompleteMoveTeachingEvent);
     }
 
     // Update is called once per frame
