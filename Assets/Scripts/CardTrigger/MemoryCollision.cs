@@ -1,6 +1,6 @@
 using UnityEngine;
 
-public class ItemCollision : MonoBehaviour
+public class MemoryCollision : MonoBehaviour
 {
     public GameObject effectObject;
     private GameObject instantiatedEffectObject;
@@ -92,22 +92,22 @@ public class ItemCollision : MonoBehaviour
         }
 
         // 确保插槽列表已初始化
-        if (toolBoxManager.itemSocketInteractorList == null || toolBoxManager.itemSocketInteractorList.Count == 0)
+        if (toolBoxManager.memorySocketInteractorList == null || toolBoxManager.memorySocketInteractorList.Count == 0)
         {
-            Debug.LogWarning("插槽列表为空，正在搜索所有插槽...");
+            Debug.LogWarning("memory插槽列表为空，正在搜索所有插槽...");
             toolBoxManager.SearchAllSocketInteractors();
         }
 
-        // 使用ToolBoxManager的强制插入方法，将当前游戏对象插入到可用插槽中
-        bool success = toolBoxManager.ForceInsertToAvailableSocket(this.gameObject);
+        // 使用ToolBoxManager的强制插入方法，将当前游戏对象插入到可用memory插槽中
+        bool success = toolBoxManager.ForceInsertToAvailableMemorySocket(this.gameObject);
 
         if (success)
         {
-            Debug.Log($"成功将 {this.gameObject.name} 插入到工具箱插槽中");
+            Debug.Log($"成功将 {this.gameObject.name} 插入到memory插槽中");
         }
         else
         {
-            Debug.LogWarning($"无法将 {this.gameObject.name} 插入到工具箱插槽中，可能没有可用插槽");
+            Debug.LogWarning($"无法将 {this.gameObject.name} 插入到memory插槽中，可能没有可用插槽");
         }
     }
 }
