@@ -1,4 +1,5 @@
 using System;
+using Unity.VisualScripting;
 using UnityEngine;
 using VInspector;
 
@@ -20,15 +21,14 @@ public class ItemUIMove : MonoBehaviour
     private Vector3 positionVelocity = Vector3.zero;
     private float rotationVelocity = 0f;
 
-    void Start()
+    void Awake()
     {
         uiTransform = this.transform;
     }
 
-
-    void OnDestroy()
+    void OnEnable()
     {
-
+        TeleportToTarget();
     }
 
     // Update is called once per frame

@@ -6375,6 +6375,7 @@ MonoBehaviour:
   ItemDescriptionText: {fileID: 1539001236}
   ItemDescription2Text: {fileID: 747667273}
   ItemImageUI: {fileID: 1767798192}
+  GetUICanvas: {fileID: 2137704761}
 --- !u!4 &1742056755 stripped
 Transform:
   m_CorrespondingSourceObject: {fileID: 1328729458746786603, guid: 05b5f60bd9215a34084800c2ef089954, type: 3}
@@ -7278,7 +7279,7 @@ GameObject:
   m_Icon: {fileID: 0}
   m_NavMeshLayer: 0
   m_StaticEditorFlags: 0
-  m_IsActive: 1
+  m_IsActive: 0
 --- !u!224 &2137704762
 RectTransform:
   m_ObjectHideFlags: 0
@@ -7380,8 +7381,7 @@ MonoBehaviour:
   m_Script: {fileID: 11500000, guid: aad59b79259ca604597013c03ae70f20, type: 3}
   m_Name: 
   m_EditorClassIdentifier: 
-  pressAUIChinese: {fileID: 0}
-  pressAUIEnglish: {fileID: 0}
+  uiTransform: {fileID: 0}
   offset: {x: 0, y: 0.07, z: 0}
   lookTarget: {fileID: 1190451963}
   followTarget: {fileID: 1190451963}
