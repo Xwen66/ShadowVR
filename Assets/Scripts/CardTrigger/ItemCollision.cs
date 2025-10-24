@@ -71,6 +71,9 @@ public class ItemCollision : MonoBehaviour
         {
             instantiatedEffectObject.GetComponent<ItemEffectObject>().OnGet();
         }
+        
+        // 将当前物品插入到插槽中
+        SetSelfToSock();
 
         Debug.LogError("物品信息传递完成，UI已更新");
     }
@@ -81,23 +84,23 @@ public class ItemCollision : MonoBehaviour
     {
         // 获取ToolBoxManager单例实例
         ToolBoxManager toolBoxManager = ToolBoxManager.Instance;
-        
+
         if (toolBoxManager == null)
         {
             Debug.LogError("无法获取ToolBoxManager实例");
             return;
         }
-        
+
         // 确保插槽列表已初始化
         if (toolBoxManager.socketInteractorList == null || toolBoxManager.socketInteractorList.Count == 0)
         {
             Debug.LogWarning("插槽列表为空，正在搜索所有插槽...");
             toolBoxManager.SearchAllSocketInteractors();
         }
-        
+
         // 使用ToolBoxManager的强制插入方法，将当前游戏对象插入到可用插槽中
         bool success = toolBoxManager.ForceInsertToAvailableSocket(this.gameObject);
-        
+
         if (success)
         {
             Debug.Log($"成功将 {this.gameObject.name} 插入到工具箱插槽中");
