@@ -1,0 +1,74 @@
+using UnityEngine;
+
+public class ItemCollision : MonoBehaviour
+{
+    public GameObject effectObject;
+    private GameObject instantiatedEffectObject;
+    public string ItemType;
+    public string ItemName;
+    public string ItemDescription;
+    public string ItemDescription2;
+    public Sprite ItemImage;
+    // Start is called once before the first execution of Update after the MonoBehaviour is created
+    void Start()
+    {
+        // 保存实例化后的对象引用
+        instantiatedEffectObject = Instantiate(effectObject, transform.position, transform.rotation);
+        instantiatedEffectObject.GetComponent<ItemEffectObject>().moveTarget = transform;
+    }
+
+    // Update is called once per frame
+    void Update()
+    {
+
+    }
+
+    void OnCollisionEnter(Collision other)
+    {
+        Debug.LogError("collider碰到东西了");
+        // TransferItemToUIManager();
+
+        //检测layer 是不是"GorillaRig"
+        if (other.gameObject.layer == LayerMask.NameToLayer("GorillaRig"))
+        {
+            Debug.LogError("collider玩家碰撞到卡片");
+            TransferItemToUIManager();
+        }
+    }
+
+
+    void OnTriggerEnter(Collider other)
+    {
+        Debug.LogError("trigger碰到东西了");
+        //检测layer 是不是"GorillaRig"
+        if (other.gameObject.layer == LayerMask.NameToLayer("GorillaRig"))
+        {
+            Debug.LogError("trigger玩家碰撞到卡片");
+            TransferItemToUIManager();
+        }
+    }
+
+    void TransferItemToUIManager()
+    {
+        Debug.LogError("正在传递物品信息到UI管理器");
+        GetUIManager uiManager = GetUIManager.Instance;
+
+        // 将当前物品的信息赋值给UI管理器
+        uiManager.ItemType = this.ItemType;
+        uiManager.ItemName = this.ItemName;
+        uiManager.ItemDescription = this.ItemDescription;
+        uiManager.ItemDescription2 = this.ItemDescription2;
+        uiManager.ItemImage = this.ItemImage;
+
+        // 刷新UI显示
+        uiManager.UpdateUI();
+
+        // 触发特效对象
+        if (instantiatedEffectObject != null)
+        {
+            instantiatedEffectObject.GetComponent<ItemEffectObject>().OnGet();
+        }
+
+        Debug.LogError("物品信息传递完成，UI已更新");
+    }
+}
