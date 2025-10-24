@@ -1,5 +1,6 @@
 using UnityEngine;
 
+
 /// <summary>
 /// 游戏管理器类，负责管理游戏的核心逻辑和状态
 /// 使用单例模式确保全局只有一个实例
@@ -9,6 +10,9 @@ public class GameManager : MonoBehaviour
     [Header("玩家角色设置")]
     [SerializeField] private GameObject _largePlayer;      // 大型玩家角色（人类形态）
     [SerializeField] public GameObject FoxPrefab;          // 狐狸预制体（可能用于特效或动画）
+    public Transform FoxLeftHand;                         // 狐狸左手位置
+    public Transform FoxRightHand;                        // 狐狸右手位置
+    public ToolBoxMove toolBoxMove;
     [SerializeField] private GameObject _smallPlayer;      // 小型玩家角色（动物形态）
 
     [Header("冷却时间设置")]
@@ -111,17 +115,15 @@ public class GameManager : MonoBehaviour
             .TryGetFeatureValue(UnityEngine.XR.CommonUsages.menuButton, out bool isPressedLeftMenu) && isPressedLeftMenu
             && canOpenToolBox)  // 只有在允许打开工具箱时才执行
         {
-            if (ToolBox.activeSelf)
+            // 使用ToolBoxMove脚本切换工具箱状态
+            if (toolBoxMove != null)
             {
-                // 如果工具箱已激活，则隐藏工具箱
-                ToolBox.SetActive(false);
+                toolBoxMove.ToggleState();
                 _cooldownTimer = 0f;              // 重置冷却计时器
             }
             else
             {
-                // 如果工具箱未激活，则显示工具箱
-                ToolBox.SetActive(true);
-                _cooldownTimer = 0f;              // 重置冷却计时器
+                Debug.LogWarning("ToolBoxMove脚本未设置，无法切换工具箱状态");
             }
         }
     }
