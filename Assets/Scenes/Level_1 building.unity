@@ -18118,6 +18118,26 @@ PrefabInstance:
       value: 0
       objectReference: {fileID: 0}
     - target: {fileID: 5842527963831548600, guid: ce833d5e4a42f5c4e8abb7040d842633, type: 3}
+      propertyPath: m_TrackRotation
+      value: 0
+      objectReference: {fileID: 0}
+    - target: {fileID: 5842527963831548600, guid: ce833d5e4a42f5c4e8abb7040d842633, type: 3}
+      propertyPath: m_UseDynamicAttach
+      value: 1
+      objectReference: {fileID: 0}
+    - target: {fileID: 5842527963831548600, guid: ce833d5e4a42f5c4e8abb7040d842633, type: 3}
+      propertyPath: m_MatchAttachPosition
+      value: 1
+      objectReference: {fileID: 0}
+    - target: {fileID: 5842527963831548600, guid: ce833d5e4a42f5c4e8abb7040d842633, type: 3}
+      propertyPath: m_MatchAttachRotation
+      value: 0
+      objectReference: {fileID: 0}
+    - target: {fileID: 5842527963831548600, guid: ce833d5e4a42f5c4e8abb7040d842633, type: 3}
+      propertyPath: m_SnapToColliderVolume
+      value: 0
+      objectReference: {fileID: 0}
+    - target: {fileID: 5842527963831548600, guid: ce833d5e4a42f5c4e8abb7040d842633, type: 3}
       propertyPath: m_SelectExited.m_PersistentCalls.m_Calls.Array.size
       value: 0
       objectReference: {fileID: 0}
