@@ -165,6 +165,11 @@ public class ProcessManager : MonoBehaviour
             // 检查当前对话是否是第七号对话
             Debug.Log("哈哈哈");
         }
+        else if (currentDialogueNumber == 13)
+        {
+            // 检查当前对话是否是第十三号对话，关闭执行的一瞬间
+            Debug.Log("哈哈哈hahahahahaha");
+        }
         else
         {
             Debug.LogError("对话结束，当前对话编号: " + currentDialogueNumber);

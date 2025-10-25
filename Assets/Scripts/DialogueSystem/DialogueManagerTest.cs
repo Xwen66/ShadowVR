@@ -31,4 +31,34 @@ public class DialogueManagerTest : MonoBehaviour
             Debug.LogWarning("DialogueManager实例未找到");
         }
     }
+
+    [Button("change button to next")]
+    void ChangeButtonToNext()
+    {
+        // 将按钮功能设置为"下一步"
+        if (DialogueManager.Instance != null)
+        {
+            DialogueManager.Instance.SetNextButtonMode(false);
+            Debug.Log("按钮已设置为下一步模式");
+        }
+        else
+        {
+            Debug.LogWarning("DialogueManager实例未找到");
+        }
+    }
+
+    [Button("change button to close")]
+    void ChangeButtonToClose()
+    {
+        // 将按钮功能设置为"关闭"
+        if (DialogueManager.Instance != null)
+        {
+            DialogueManager.Instance.SetNextButtonMode(true);
+            Debug.Log("按钮已设置为关闭模式");
+        }
+        else
+        {
+            Debug.LogWarning("DialogueManager实例未找到");
+        }
+    }
 }
