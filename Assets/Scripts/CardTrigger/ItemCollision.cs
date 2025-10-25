@@ -26,7 +26,7 @@ public class ItemCollision : MonoBehaviour
     void OnCollisionEnter(Collision other)
     {
         Debug.LogError("collider碰到东西了");
-        TransferItemToUIManager();
+        // TransferItemToUIManager();
 
         //检测layer 是不是"GorillaRig"
         if (other.gameObject.layer == LayerMask.NameToLayer("GorillaRig"))

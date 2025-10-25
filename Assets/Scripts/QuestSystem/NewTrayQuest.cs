@@ -5,10 +5,22 @@ using UnityEngine.XR.Interaction.Toolkit;
 using UnityEngine.XR.Interaction.Toolkit.Interactors;
 using UnityEngine.XR.Interaction.Toolkit.Interactables;
 
+public enum QuestStage
+{
+    Stage1,
+    Stage2,
+    Stage3
+}
+
 public class NewTrayQuest : MonoBehaviour
 {
     // define a list of XRSocketInteractor
     public List<XRSocketInteractor> sockets;
+    public QuestStage currentStage = QuestStage.Stage1;
+    // define list of string
+    public List<string> stage1Items = new List<string>() {"Item1", "Item2", "Item3"};
+    public List<string> stage2Items = new List<string>() {"Item2"};
+    public List<string> stage3Items = new List<string>() {"Item7", "Item8", "Item9"};
     
     // Start is called once before the first execution of Update after the MonoBehaviour is created
     void Start()
@@ -57,6 +69,9 @@ public class NewTrayQuest : MonoBehaviour
         {
             Debug.Log($"Item placed in socket: {GetInteractableName(args.interactableObject)}");
             LogAllSocketContents();
+            
+            // Check stage conditions when item is placed
+            CheckStageConditions();
         }
     }
     
@@ -68,6 +83,9 @@ public class NewTrayQuest : MonoBehaviour
         {
             Debug.Log($"Item removed from socket: {GetInteractableName(args.interactableObject)}");
             LogAllSocketContents();
+            
+            // Check stage conditions when item is removed
+            CheckStageConditions();
         }
     }
     
@@ -127,6 +145,77 @@ public class NewTrayQuest : MonoBehaviour
             }
         }
         Debug.Log("==============================");
+    }
+    
+    // Method to check stage conditions based on current stage
+    private void CheckStageConditions()
+    {
+        switch (currentStage)
+        {
+            case QuestStage.Stage1:
+                CheckStage1Conditions();
+                break;
+            case QuestStage.Stage2:
+                // TODO: Implement Stage2 conditions
+                break;
+            case QuestStage.Stage3:
+                // TODO: Implement Stage3 conditions
+                break;
+        }
+    }
+    
+    // Method to check Stage1 conditions
+    private void CheckStage1Conditions()
+    {
+        // Get all current item names from all sockets
+        var allCurrentItems = GetAllCurrentItemNames();
+        
+        // Check if all required items are present (contains check, not exact match)
+        bool hasItem1 = false;
+        bool hasItem2 = false;
+        bool hasItem3 = false;
+        
+        foreach (string itemName in allCurrentItems)
+        {
+            if (itemName.Contains("Item1"))
+                hasItem1 = true;
+            if (itemName.Contains("Item2"))
+                hasItem2 = true;
+            if (itemName.Contains("Item3"))
+                hasItem3 = true;
+        }
+        
+        // If all three items are present, call the success method
+        if (hasItem1 && hasItem2 && hasItem3)
+        {
+            Hahaha();
+        }
+    }
+    
+    // Helper method to get all current item names from all sockets
+    private List<string> GetAllCurrentItemNames()
+    {
+        var allItems = new List<string>();
+        
+        if (sockets != null)
+        {
+            foreach (var socket in sockets)
+            {
+                if (socket != null)
+                {
+                    var socketItems = GetSocketItemNames(socket);
+                    allItems.AddRange(socketItems);
+                }
+            }
+        }
+        
+        return allItems;
+    }
+    
+    // Success method called when Stage1 conditions are met
+    private void Hahaha()
+    {
+        Debug.Log("哈哈哈");
     }
 
     // Method to log names of all items in sockets
