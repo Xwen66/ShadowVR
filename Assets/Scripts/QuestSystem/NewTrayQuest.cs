@@ -24,7 +24,7 @@ public class NewTrayQuest : MonoBehaviour
     public QuestStage currentStage = QuestStage.Stage1;
     // 定义字符串列表
     public List<string> stage1Items = new List<string>() {"Item1", "Item2", "Item3"};
-    public List<string> stage2Items = new List<string>() {"Item2"};
+    public List<string> stage2Items = new List<string>() {"Item3"};
     public List<string> stage3Items = new List<string>() {"Item4"};
     
     #endregion
@@ -305,6 +305,9 @@ public class NewTrayQuest : MonoBehaviour
     {
         Debug.Log("哈哈哈");
         
+        // 立即更新提示显示为1/1
+        UpdatePromptDisplay();
+        
         StartCoroutine(SwitchToStage3AfterDelay());
     }
     
@@ -384,6 +387,13 @@ public class NewTrayQuest : MonoBehaviour
     {
         yield return new WaitForSeconds(3f);
         Debug.Log("所有阶段完成!");
+        
+        // 显示完成消息
+        if (promptManager != null)
+        {
+            promptManager.SetPromptText("都已经完成");
+            Debug.Log("显示完成消息: 都已经完成");
+        }
     }
     
     #endregion
@@ -435,16 +445,16 @@ public class NewTrayQuest : MonoBehaviour
     {
         var allCurrentItems = GetAllCurrentItemNames();
         
-        // 检查Item2是否还在插槽中
-        bool hasItem2 = false;
+        // 检查Item3是否还在插槽中
+        bool hasItem3 = false;
         foreach (string itemName in allCurrentItems)
         {
-            if (itemName.Contains("Item2"))
-                hasItem2 = true;
+            if (itemName.Contains("Item3"))
+                hasItem3 = true;
         }
         
-        // 如果Item2还在插槽中，显示0/1，如果已移除，显示1/1
-        int removedCount = hasItem2 ? 0 : 1;
+        // 如果Item3还在插槽中，显示0/1，如果已移除，显示1/1
+        int removedCount = hasItem3 ? 0 : 1;
         string promptText = $"拿出指定的对象，然后是一个{removedCount}分之1";
         promptManager.SetPromptText(promptText);
     }
