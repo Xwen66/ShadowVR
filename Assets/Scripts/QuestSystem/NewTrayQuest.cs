@@ -1,3 +1,4 @@
+using System.Collections;
 using System.Collections.Generic;
 using UnityEngine;
 using VInspector;
@@ -216,6 +217,61 @@ public class NewTrayQuest : MonoBehaviour
     private void Hahaha()
     {
         Debug.Log("哈哈哈");
+        
+        // Disable Item1 and Item2 grab interaction from sockets
+        DisableItemGrabInteractionInSockets("Item1");
+        DisableItemGrabInteractionInSockets("Item2");
+
+        StartCoroutine(SwitchToStage2AfterDelay());
+    }
+    
+    // Helper method to disable grab interaction of items with specific name from sockets
+    private void DisableItemGrabInteractionInSockets(string itemName)
+    {
+        if (sockets != null)
+        {
+            foreach (var socket in sockets)
+            {
+                if (socket != null && socket.hasSelection)
+                {
+                    foreach (var interactable in socket.interactablesSelected)
+                    {
+                        if (interactable != null && interactable.transform != null)
+                        {
+                            GameObject obj = interactable.transform.gameObject;
+                            if (obj.name.Contains(itemName))
+                            {
+                                // Set Unity layer to 4 for this object and all its children
+                                SetLayersForObjectAndChildren(obj, 4);
+                                Debug.Log($"Disabled grab interaction on {obj.name} and all its children by setting Unity layer to 4");
+                            }
+                        }
+                    }
+                }
+            }
+        }
+    }
+    
+    // Helper method to set Unity layers for an object and all its children
+    private void SetLayersForObjectAndChildren(GameObject obj, int layerValue)
+    {
+        // Set layer for the main object
+        obj.layer = layerValue;
+        
+        // Set layer for all child objects
+        Transform[] children = obj.GetComponentsInChildren<Transform>();
+        foreach (Transform child in children)
+        {
+            child.gameObject.layer = layerValue;
+        }
+    }
+    
+    // Coroutine to wait 3 seconds then switch to Stage2
+    private IEnumerator SwitchToStage2AfterDelay()
+    {
+        yield return new WaitForSeconds(3f);
+        currentStage = QuestStage.Stage2;
+        Debug.Log("Switched to Stage2");
     }
 
     // Method to log names of all items in sockets
