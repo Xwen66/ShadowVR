@@ -123,6 +123,13 @@ public class ProcessManager : MonoBehaviour
 
         }
 
+        if (dialogueNumber == 5)// 第六条对话开始时
+        {
+            // 将按钮功能从"跳到下一页"变成"关闭"
+            DialogueManager.Instance.SetNextButtonMode(true);
+            Debug.Log("第六条对话开始，按钮模式设置为关闭");
+        }
+
     }
     
     /// <summary>
@@ -130,12 +137,32 @@ public class ProcessManager : MonoBehaviour
     /// </summary>
     private void OnDialogueEnd()
     {
-        // 检查当前对话是否是第七号对话
-        if (currentDialogueNumber == 7)
+        // 检查当前对话是否是第六号对话
+        if (currentDialogueNumber == 6)
         {
+            Debug.Log("当前对话是第六号对话，对话结束");
+            
+            // 触发QuestUIManager中的SetShadowQuest1Text方法
+            if (QuestUIManager.Instance != null)
+            {
+                QuestUIManager.Instance.SetShadowQuest1Text();
+                Debug.Log("已触发SetShadowQuest1Text方法");
+            }
+            else
+            {
+                Debug.LogWarning("QuestUIManager实例未找到");
+            }
+        }
+        else if (currentDialogueNumber == 7)
+        {
+            // 检查当前对话是否是第七号对话
             Debug.Log("哈哈哈");
         }
-        
+        else
+        {
+            Debug.LogError("对话结束，当前对话编号: " + currentDialogueNumber);
+        }
+
         // 重置对话编号
         currentDialogueNumber = -1;
     }
