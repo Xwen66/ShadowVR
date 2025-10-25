@@ -23,7 +23,7 @@ public class NewTrayQuest : MonoBehaviour
     // 定义字符串列表
     public List<string> stage1Items = new List<string>() {"Item1", "Item2", "Item3"};
     public List<string> stage2Items = new List<string>() {"Item2"};
-    public List<string> stage3Items = new List<string>() {"Item7", "Item8", "Item9"};
+    public List<string> stage3Items = new List<string>() {"Item4"};
     
     #endregion
     
@@ -178,7 +178,7 @@ public class NewTrayQuest : MonoBehaviour
                 CheckStage2Conditions();
                 break;
             case QuestStage.Stage3:
-                // TODO: 实现阶段3条件
+                CheckStage3Conditions();
                 break;
         }
     }
@@ -234,6 +234,29 @@ public class NewTrayQuest : MonoBehaviour
         }
     }
     
+    // 检查阶段3条件的方法
+    private void CheckStage3Conditions()
+    {
+        // 获取所有插槽中的当前物品名称
+        var allCurrentItems = GetAllCurrentItemNames();
+        
+        // 检查Item4是否存在
+        bool hasItem4 = false;
+        
+        foreach (string itemName in allCurrentItems)
+        {
+            if (itemName.Contains("Item4"))
+                hasItem4 = true;
+        }
+        
+        // 如果Item4存在，调用成功方法
+        if (hasItem4)
+        {
+            Debug.Log("阶段3完成: Item4已放入插槽!");
+            HahahaStage3();
+        }
+    }
+    
     // 获取所有插槽中当前物品名称的辅助方法
     private List<string> GetAllCurrentItemNames()
     {
@@ -272,6 +295,14 @@ public class NewTrayQuest : MonoBehaviour
         Debug.Log("哈哈哈");
         
         StartCoroutine(SwitchToStage3AfterDelay());
+    }
+    
+    // 阶段3条件满足时调用的成功方法
+    private void HahahaStage3()
+    {
+        Debug.Log("哈哈哈");
+        
+        StartCoroutine(SwitchToStageCompleteAfterDelay());
     }
     
     // 禁用插槽中特定名称物品抓取交互的辅助方法
@@ -331,6 +362,13 @@ public class NewTrayQuest : MonoBehaviour
         Debug.Log("已切换到阶段3");
     }
     
+    // 等待3秒后切换到阶段完成的协程
+    private IEnumerator SwitchToStageCompleteAfterDelay()
+    {
+        yield return new WaitForSeconds(3f);
+        Debug.Log("所有阶段完成!");
+    }
+    
     #endregion
     
     #region Public Methods
@@ -368,8 +406,6 @@ public class NewTrayQuest : MonoBehaviour
                         Debug.LogWarning("在选中物品中发现空的可交互对象或变换");
                     }
                 }
-                
-                #endregion
             }
             else
             {
@@ -377,4 +413,6 @@ public class NewTrayQuest : MonoBehaviour
             }
         }
     }
+    
+    #endregion
 }
