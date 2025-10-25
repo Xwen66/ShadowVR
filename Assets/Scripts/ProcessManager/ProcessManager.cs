@@ -17,7 +17,8 @@ public class ProcessManager : MonoBehaviour
     public GameManager gameManager;
     // public GameObject pressAUI;
 
-
+    // 跟踪当前对话编号
+    private int currentDialogueNumber = -1;
 
     // 单例实例
     private static ProcessManager _instance;
@@ -59,6 +60,12 @@ public class ProcessManager : MonoBehaviour
     {
         // 订阅对话事件
         GlobalEvent.nextDialogueEvent.AddListener(OnNextDialogue);
+        
+        // 订阅对话结束事件
+        if (DialogueManager.Instance != null)
+        {
+            DialogueManager.Instance.OnDialogueEnd.AddListener(OnDialogueEnd);
+        }
     }
 
     // Update is called once per frame
@@ -71,6 +78,12 @@ public class ProcessManager : MonoBehaviour
     {
         // 取消订阅事件
         GlobalEvent.nextDialogueEvent.RemoveListener(OnNextDialogue);
+        
+        // 取消订阅对话结束事件
+        if (DialogueManager.Instance != null)
+        {
+            DialogueManager.Instance.OnDialogueEnd.RemoveListener(OnDialogueEnd);
+        }
     }
 
     /// <summary>
@@ -80,6 +93,9 @@ public class ProcessManager : MonoBehaviour
     private void OnNextDialogue(int dialogueNumber)
     {
         Debug.Log($"ProcessManager: 收到对话事件，对话序号: {dialogueNumber}");
+        
+        // 更新当前对话编号
+        currentDialogueNumber = dialogueNumber;
 
         if (dialogueNumber == 1)
         {
@@ -89,7 +105,7 @@ public class ProcessManager : MonoBehaviour
 
         if (dialogueNumber == 4)
         {
-            //第二步  小刺猬说完“你睡着前，好像要带上托盘去厨房找狮子妈妈。”，后生成托盘上的任务UI
+            //第二步  小刺猬说完"你睡着前，好像要带上托盘去厨房找狮子妈妈。"，后生成托盘上的任务UI
             DialogueManager.Instance.SetNextButtonMode(false);
             QuestUIManager.Instance.SetItemQuest1Text();
             promptManager.ShowPrompt(1);
@@ -99,14 +115,29 @@ public class ProcessManager : MonoBehaviour
 
         if (dialogueNumber == 5)// 说完第五句时（切换到第六句）
         {
-            //第二步  小刺猬开始说“我体型小。。。”出现“按A切换视角”
+            //第二步  小刺猬开始说"我体型小。。。"出现"按A切换视角"
             Debug.LogError("按A切换视角");
             gameManager.canChangePerson = true;
-            // pressAUI.SetActive(true);            
+            // pressAUI.SetActive(true);
             GlobalEvent.OnPressAUIEvent.Invoke();
 
         }
 
+    }
+    
+    /// <summary>
+    /// 处理对话结束事件
+    /// </summary>
+    private void OnDialogueEnd()
+    {
+        // 检查当前对话是否是第七号对话
+        if (currentDialogueNumber == 7)
+        {
+            Debug.Log("哈哈哈");
+        }
+        
+        // 重置对话编号
+        currentDialogueNumber = -1;
     }
 
 
