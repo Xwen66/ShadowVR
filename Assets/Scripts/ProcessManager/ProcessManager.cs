@@ -66,6 +66,9 @@ public class ProcessManager : MonoBehaviour
         {
             DialogueManager.Instance.OnDialogueEnd.AddListener(OnDialogueEnd);
         }
+        
+        // 订阅台阶出现事件
+        GlobalEvent.OnStairAppearEvent.AddListener(OnStairAppear);
     }
 
     // Update is called once per frame
@@ -84,6 +87,9 @@ public class ProcessManager : MonoBehaviour
         {
             DialogueManager.Instance.OnDialogueEnd.RemoveListener(OnDialogueEnd);
         }
+        
+        // 取消订阅台阶出现事件
+        GlobalEvent.OnStairAppearEvent.RemoveListener(OnStairAppear);
     }
 
     /// <summary>
@@ -169,6 +175,7 @@ public class ProcessManager : MonoBehaviour
         {
             // 检查当前对话是否是第十三号对话，关闭执行的一瞬间
             Debug.Log("哈哈哈hahahahahaha");
+            QuestUIManager.Instance.SetShadowQuest2Text();
         }
         else
         {
@@ -177,6 +184,26 @@ public class ProcessManager : MonoBehaviour
 
         // 重置对话编号
         currentDialogueNumber = -1;
+    }
+    
+    /// <summary>
+    /// 处理台阶出现事件
+    /// </summary>
+    private void OnStairAppear()
+    {
+        Debug.Log("台阶出现事件被触发");
+        
+        // 直接开启第15条对白，并把按钮功能换成关闭
+        if (DialogueManager.Instance != null)
+        {
+            DialogueManager.Instance.GoToDialogue(15);
+            DialogueManager.Instance.SetNextButtonMode(true);
+            Debug.Log("正在显示第十五条对话内容，按钮模式设置为关闭");
+        }
+        else
+        {
+            Debug.LogWarning("DialogueManager实例未找到");
+        }
     }
 
 
@@ -224,6 +251,12 @@ public class ProcessManager : MonoBehaviour
     {
         QuestUIManager.Instance.SetItemQuest1Text();
 
+    }
+
+    [Button("台阶出现事件激活")]
+    public void Test2()
+    {
+        GlobalEvent.OnStairAppearEvent.Invoke();
     }
 
 }

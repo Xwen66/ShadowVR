@@ -340,6 +340,9 @@ public class NewTrayQuest : MonoBehaviour
     {
         Debug.Log("哈哈哈");
         
+        // 打开第16条对话，并设置按钮为关闭模式
+        StartCoroutine(OpenDialogue16AfterDelay());
+        
         StartCoroutine(SwitchToStageCompleteAfterDelay());
     }
     
@@ -593,6 +596,27 @@ public class NewTrayQuest : MonoBehaviour
             // 设置按钮为"下一步"模式（false表示下一句对话模式）
             DialogueManager.Instance.SetNextButtonMode(false);
             Debug.Log("正在显示第八句对话内容");
+        }
+        else
+        {
+            Debug.LogWarning("DialogueManager实例未找到");
+        }
+    }
+    
+    /// <summary>
+    /// 延迟打开第16句对白的协程
+    /// </summary>
+    private IEnumerator OpenDialogue16AfterDelay()
+    {
+        yield return new WaitForSeconds(1f);
+        
+        // 触发第16个对话条目
+        if (DialogueManager.Instance != null)
+        {
+            DialogueManager.Instance.GoToDialogue(16);
+            // 设置按钮为"关闭"模式（true表示关闭模式）
+            DialogueManager.Instance.SetNextButtonMode(true);
+            Debug.Log("正在显示第16句对话内容，按钮模式设置为关闭");
         }
         else
         {

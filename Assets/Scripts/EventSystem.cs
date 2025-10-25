@@ -33,6 +33,8 @@ public static class GlobalEvent
 
 
 
+    //台阶出现
+    public static UnityEvent OnStairAppearEvent = new UnityEvent();
 
 
 
