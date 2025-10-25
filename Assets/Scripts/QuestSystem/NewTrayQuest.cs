@@ -27,6 +27,9 @@ public class NewTrayQuest : MonoBehaviour
     public List<string> stage2Items = new List<string>() {"Item3"};
     public List<string> stage3Items = new List<string>() {"Item4"};
     
+    // 跟踪当前对话编号
+    private int currentDialogueNumber = -1;
+    
     #endregion
     
     #region Unity生命周期
@@ -47,6 +50,15 @@ public class NewTrayQuest : MonoBehaviour
             }
         }
         
+        // 订阅对话事件
+        GlobalEvent.nextDialogueEvent.AddListener(OnNextDialogue);
+        
+        // 订阅对话结束事件
+        if (DialogueManager.Instance != null)
+        {
+            DialogueManager.Instance.OnDialogueEnd.AddListener(OnDialogueEnd);
+        }
+        
         // 初始化提示显示
         UpdatePromptDisplay();
     }
@@ -64,6 +76,15 @@ public class NewTrayQuest : MonoBehaviour
                     socket.selectExited.RemoveListener(OnItemRemovedFromSocket);
                 }
             }
+        }
+        
+        // 取消订阅事件
+        GlobalEvent.nextDialogueEvent.RemoveListener(OnNextDialogue);
+        
+        // 取消订阅对话结束事件
+        if (DialogueManager.Instance != null)
+        {
+            DialogueManager.Instance.OnDialogueEnd.RemoveListener(OnDialogueEnd);
         }
     }
 
@@ -308,6 +329,9 @@ public class NewTrayQuest : MonoBehaviour
         // 立即更新提示显示为1/1
         UpdatePromptDisplay();
         
+        // 打开第八句对白，并设置按钮为下一步
+        StartCoroutine(OpenDialogue8AfterDelay());
+        
         StartCoroutine(SwitchToStage3AfterDelay());
     }
     
@@ -520,6 +544,59 @@ public class NewTrayQuest : MonoBehaviour
             {
                 Debug.Log("插槽为空");
             }
+        }
+    }
+    
+    #endregion
+    
+    #region 对话管理
+    
+    /// <summary>
+    /// 处理下一句对话事件
+    /// </summary>
+    /// <param name="dialogueNumber">对话序号</param>
+    private void OnNextDialogue(int dialogueNumber)
+    {
+        Debug.Log($"NewTrayQuest: 收到对话事件，对话序号: {dialogueNumber}");
+        
+        // 更新当前对话编号
+        currentDialogueNumber = dialogueNumber;
+    }
+    
+    /// <summary>
+    /// 处理对话结束事件
+    /// </summary>
+    private void OnDialogueEnd()
+    {
+        // 检查当前对话是否是第八号对话
+        if (currentDialogueNumber == 8)
+        {
+            Debug.Log("当前对话是第八号对话，对话结束");
+            // 可以在这里添加对话结束后的逻辑
+        }
+        
+        // 重置对话编号
+        currentDialogueNumber = -1;
+    }
+    
+    /// <summary>
+    /// 延迟打开第八句对白的协程
+    /// </summary>
+    private IEnumerator OpenDialogue8AfterDelay()
+    {
+        yield return new WaitForSeconds(1f);
+        
+        // 触发第八个对话条目
+        if (DialogueManager.Instance != null)
+        {
+            DialogueManager.Instance.GoToDialogue(8);
+            // 设置按钮为"下一步"模式（false表示下一句对话模式）
+            DialogueManager.Instance.SetNextButtonMode(false);
+            Debug.Log("正在显示第八句对话内容");
+        }
+        else
+        {
+            Debug.LogWarning("DialogueManager实例未找到");
         }
     }
     
