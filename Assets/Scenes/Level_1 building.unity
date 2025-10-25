@@ -4244,9 +4244,16 @@ MonoBehaviour:
   m_Script: {fileID: 11500000, guid: 4bd722f3bab2acc45882756980245608, type: 3}
   m_Name: 
   m_EditorClassIdentifier: 
+  currentMode: 0
   targetTransform: {fileID: 1460664845}
-  distanceFromTarget: 0.54
-  yOffset: 1.26
+  targetTransform1: {fileID: 1190451963}
+  Scale1: 0.38
+  distanceFromTarget1: 0.25
+  yOffset1: 0
+  targetTransform2: {fileID: 1460664845}
+  Scale2: 1
+  distanceFromTarget2: 0.55
+  yOffset2: 0
   positionSmoothTime: 0.1
   rotationSmoothTime: 0.1
 --- !u!114 &988508881 stripped
@@ -5363,6 +5370,10 @@ PrefabInstance:
       propertyPath: _smallPlayer
       value: 
       objectReference: {fileID: 952050763}
+    - target: {fileID: 2139932205667224776, guid: 01fb95f91f7fd674d98ef6dafb450313, type: 3}
+      propertyPath: dialogueMove
+      value: 
+      objectReference: {fileID: 984926117}
     - target: {fileID: 2139932205667224776, guid: 01fb95f91f7fd674d98ef6dafb450313, type: 3}
       propertyPath: canOpenToolBox
       value: 1
