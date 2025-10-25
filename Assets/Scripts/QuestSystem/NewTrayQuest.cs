@@ -15,18 +15,24 @@ public enum QuestStage
 
 public class NewTrayQuest : MonoBehaviour
 {
-    // define a list of XRSocketInteractor
+    #region 字段定义
+    
+    // 定义XRSocketInteractor列表
     public List<XRSocketInteractor> sockets;
     public QuestStage currentStage = QuestStage.Stage1;
-    // define list of string
+    // 定义字符串列表
     public List<string> stage1Items = new List<string>() {"Item1", "Item2", "Item3"};
     public List<string> stage2Items = new List<string>() {"Item2"};
     public List<string> stage3Items = new List<string>() {"Item7", "Item8", "Item9"};
     
-    // Start is called once before the first execution of Update after the MonoBehaviour is created
+    #endregion
+    
+    #region Unity生命周期
+    
+    // 在MonoBehaviour创建后第一次执行Update之前调用一次
     void Start()
     {
-        // Subscribe to selection events for all sockets
+        // 订阅所有插槽的选择事件
         if (sockets != null)
         {
             foreach (var socket in sockets)
@@ -42,7 +48,7 @@ public class NewTrayQuest : MonoBehaviour
     
     void OnDestroy()
     {
-        // Unsubscribe from events to prevent memory leaks
+        // 取消订阅事件以防止内存泄漏
         if (sockets != null)
         {
             foreach (var socket in sockets)
@@ -56,41 +62,49 @@ public class NewTrayQuest : MonoBehaviour
         }
     }
 
-    // Update is called once per frame
+    // 每帧调用一次
     void Update()
     {
 
     }
     
-    // Event handler for when an item is placed in a socket
+    #endregion
+    
+    #region 事件处理器
+    
+    // 物品放入插槽时的事件处理器
     private void OnItemPlacedInSocket(SelectEnterEventArgs args)
     {
         var socket = args.interactorObject as XRSocketInteractor;
         if (socket != null)
         {
-            Debug.Log($"Item placed in socket: {GetInteractableName(args.interactableObject)}");
+            Debug.Log($"物品放入插槽: {GetInteractableName(args.interactableObject)}");
             LogAllSocketContents();
             
-            // Check stage conditions when item is placed
+            // 物品放入时检查阶段条件
             CheckStageConditions();
         }
     }
     
-    // Event handler for when an item is removed from a socket
+    // 物品从插槽移除时的事件处理器
     private void OnItemRemovedFromSocket(SelectExitEventArgs args)
     {
         var socket = args.interactorObject as XRSocketInteractor;
         if (socket != null)
         {
-            Debug.Log($"Item removed from socket: {GetInteractableName(args.interactableObject)}");
+            Debug.Log($"物品从插槽移除: {GetInteractableName(args.interactableObject)}");
             LogAllSocketContents();
             
-            // Check stage conditions when item is removed
+            // 物品移除时检查阶段条件
             CheckStageConditions();
         }
     }
     
-    // Helper method to get all item names from a socket
+    #endregion
+    
+    #region 辅助方法
+    
+    // 获取插槽中所有物品名称的辅助方法
     private List<string> GetSocketItemNames(XRSocketInteractor socket)
     {
         var itemNames = new List<string>();
@@ -104,26 +118,26 @@ public class NewTrayQuest : MonoBehaviour
         return itemNames;
     }
     
-    // Helper method to get the name of an interactable
+    // 获取可交互对象名称的辅助方法
     private string GetInteractableName(IXRInteractable interactable)
     {
         if (interactable != null && interactable.transform != null)
         {
             return interactable.transform.gameObject.name;
         }
-        return "Unknown Item";
+        return "未知物品";
     }
     
-    // Method to log all socket contents
+    // 记录所有插槽内容的方法
     private void LogAllSocketContents()
     {
         if (sockets == null || sockets.Count == 0)
         {
-            Debug.Log("No sockets available");
+            Debug.Log("没有可用的插槽");
             return;
         }
         
-        Debug.Log("=== Current Socket Contents ===");
+        Debug.Log("=== 当前插槽内容 ===");
         
         int socketIndex = 0;
         foreach (var socket in sockets)
@@ -131,24 +145,28 @@ public class NewTrayQuest : MonoBehaviour
             socketIndex++;
             if (socket == null)
             {
-                Debug.Log($"Socket {socketIndex}: [NULL SOCKET]");
+                Debug.Log($"插槽 {socketIndex}: [空插槽]");
                 continue;
             }
             
             var currentItems = GetSocketItemNames(socket);
             if (currentItems.Count > 0)
             {
-                Debug.Log($"Socket {socketIndex}: {string.Join(", ", currentItems)}");
+                Debug.Log($"插槽 {socketIndex}: {string.Join(", ", currentItems)}");
             }
             else
             {
-                Debug.Log($"Socket {socketIndex}: [EMPTY]");
+                Debug.Log($"插槽 {socketIndex}: [空]");
             }
         }
         Debug.Log("==============================");
     }
     
-    // Method to check stage conditions based on current stage
+    #endregion
+    
+    #region 阶段管理
+    
+    // 根据当前阶段检查阶段条件的方法
     private void CheckStageConditions()
     {
         switch (currentStage)
@@ -157,21 +175,21 @@ public class NewTrayQuest : MonoBehaviour
                 CheckStage1Conditions();
                 break;
             case QuestStage.Stage2:
-                // TODO: Implement Stage2 conditions
+                CheckStage2Conditions();
                 break;
             case QuestStage.Stage3:
-                // TODO: Implement Stage3 conditions
+                // TODO: 实现阶段3条件
                 break;
         }
     }
     
-    // Method to check Stage1 conditions
+    // 检查阶段1条件的方法
     private void CheckStage1Conditions()
     {
-        // Get all current item names from all sockets
+        // 获取所有插槽中的当前物品名称
         var allCurrentItems = GetAllCurrentItemNames();
         
-        // Check if all required items are present (contains check, not exact match)
+        // 检查是否所有必需物品都存在（包含检查，不是精确匹配）
         bool hasItem1 = false;
         bool hasItem2 = false;
         bool hasItem3 = false;
@@ -186,14 +204,37 @@ public class NewTrayQuest : MonoBehaviour
                 hasItem3 = true;
         }
         
-        // If all three items are present, call the success method
+        // 如果三个物品都存在，调用成功方法
         if (hasItem1 && hasItem2 && hasItem3)
         {
             Hahaha();
         }
     }
     
-    // Helper method to get all current item names from all sockets
+    // 检查阶段2条件的方法
+    private void CheckStage2Conditions()
+    {
+        // 获取所有插槽中的当前物品名称
+        var allCurrentItems = GetAllCurrentItemNames();
+        
+        // 检查Item3是否存在
+        bool hasItem3 = false;
+        
+        foreach (string itemName in allCurrentItems)
+        {
+            if (itemName.Contains("Item3"))
+                hasItem3 = true;
+        }
+        
+        // 如果Item3不存在（已被移除），调用成功方法
+        if (!hasItem3)
+        {
+            Debug.Log("阶段2完成: Item3已从插槽中移除!");
+            HahahaStage2();
+        }
+    }
+    
+    // 获取所有插槽中当前物品名称的辅助方法
     private List<string> GetAllCurrentItemNames()
     {
         var allItems = new List<string>();
@@ -213,19 +254,27 @@ public class NewTrayQuest : MonoBehaviour
         return allItems;
     }
     
-    // Success method called when Stage1 conditions are met
+    // 阶段1条件满足时调用的成功方法
     private void Hahaha()
     {
         Debug.Log("哈哈哈");
         
-        // Disable Item1 and Item2 grab interaction from sockets
+        // 禁用插槽中Item1和Item2的抓取交互
         DisableItemGrabInteractionInSockets("Item1");
         DisableItemGrabInteractionInSockets("Item2");
 
         StartCoroutine(SwitchToStage2AfterDelay());
     }
     
-    // Helper method to disable grab interaction of items with specific name from sockets
+    // 阶段2条件满足时调用的成功方法
+    private void HahahaStage2()
+    {
+        Debug.Log("哈哈哈");
+        
+        StartCoroutine(SwitchToStage3AfterDelay());
+    }
+    
+    // 禁用插槽中特定名称物品抓取交互的辅助方法
     private void DisableItemGrabInteractionInSockets(string itemName)
     {
         if (sockets != null)
@@ -241,9 +290,9 @@ public class NewTrayQuest : MonoBehaviour
                             GameObject obj = interactable.transform.gameObject;
                             if (obj.name.Contains(itemName))
                             {
-                                // Set Unity layer to 4 for this object and all its children
+                                // 为此对象及其所有子对象设置Unity层级为4
                                 SetLayersForObjectAndChildren(obj, 4);
-                                Debug.Log($"Disabled grab interaction on {obj.name} and all its children by setting Unity layer to 4");
+                                Debug.Log($"通过设置Unity层级为4禁用了 {obj.name} 及其所有子对象的抓取交互");
                             }
                         }
                     }
@@ -252,13 +301,13 @@ public class NewTrayQuest : MonoBehaviour
         }
     }
     
-    // Helper method to set Unity layers for an object and all its children
+    // 为对象及其所有子对象设置Unity层级的辅助方法
     private void SetLayersForObjectAndChildren(GameObject obj, int layerValue)
     {
-        // Set layer for the main object
+        // 为主对象设置层级
         obj.layer = layerValue;
         
-        // Set layer for all child objects
+        // 为所有子对象设置层级
         Transform[] children = obj.GetComponentsInChildren<Transform>();
         foreach (Transform child in children)
         {
@@ -266,21 +315,33 @@ public class NewTrayQuest : MonoBehaviour
         }
     }
     
-    // Coroutine to wait 3 seconds then switch to Stage2
+    // 等待3秒后切换到阶段2的协程
     private IEnumerator SwitchToStage2AfterDelay()
     {
         yield return new WaitForSeconds(3f);
         currentStage = QuestStage.Stage2;
-        Debug.Log("Switched to Stage2");
+        Debug.Log("已切换到阶段2");
     }
-
-    // Method to log names of all items in sockets
-    [Button("Log Items In Sockets")]
+    
+    // 等待3秒后切换到阶段3的协程
+    private IEnumerator SwitchToStage3AfterDelay()
+    {
+        yield return new WaitForSeconds(3f);
+        currentStage = QuestStage.Stage3;
+        Debug.Log("已切换到阶段3");
+    }
+    
+    #endregion
+    
+    #region Public Methods
+    
+    // 记录插槽中所有物品名称的方法
+    [Button("记录插槽中的物品")]
     public void LogItemsInSockets()
     {
         if (sockets == null || sockets.Count == 0)
         {
-            Debug.Log("No sockets available or sockets list is empty");
+            Debug.Log("没有可用的插槽或插槽列表为空");
             return;
         }
 
@@ -288,29 +349,31 @@ public class NewTrayQuest : MonoBehaviour
         {
             if (socket == null)
             {
-                Debug.LogWarning("Found null socket in sockets list");
+                Debug.LogWarning("在插槽列表中发现空插槽");
                 continue;
             }
 
             if (socket.hasSelection)
             {
-                // Get all selected interactables in this socket
+                // 获取此插槽中所有选中的可交互对象
                 foreach (var interactable in socket.interactablesSelected)
                 {
                     if (interactable != null && interactable.transform != null)
                     {
                         string itemName = interactable.transform.gameObject.name;
-                        Debug.Log($"Socket has item: {itemName}");
+                        Debug.Log($"插槽中有物品: {itemName}");
                     }
                     else
                     {
-                        Debug.LogWarning("Found null interactable or transform in selected items");
+                        Debug.LogWarning("在选中物品中发现空的可交互对象或变换");
                     }
                 }
+                
+                #endregion
             }
             else
             {
-                Debug.Log("Socket is empty");
+                Debug.Log("插槽为空");
             }
         }
     }
