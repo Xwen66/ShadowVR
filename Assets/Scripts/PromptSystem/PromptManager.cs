@@ -305,6 +305,60 @@ public class PromptManager : MonoBehaviour
         }
     }
     
+    /// <summary>
+    /// 直接设置提示文字内容
+    /// </summary>
+    /// <param name="text">要显示的文字内容</param>
+    /// <param name="autoHideAfter">自动隐藏的时间（秒），0表示不自动隐藏</param>
+    public void SetPromptText(string text, float autoHideAfter = 0f)
+    {
+        if (TextContent == null)
+        {
+            Debug.LogError("PromptManager: TextContent component not assigned!");
+            return;
+        }
+        
+        // 直接设置文字内容
+        TextContent.text = text;
+        
+        // 显示画布
+        if (PromptCanvas != null)
+        {
+            PromptCanvas.gameObject.SetActive(true);
+        }
+        
+        // 设置状态
+        isPromptActive = true;
+        currentPrompt = null; // 清除当前提示条目，因为这是直接设置的文字
+        
+        // 设置自动隐藏
+        if (autoHideAfter > 0f)
+        {
+            hideTimer = autoHideAfter;
+            autoHide = true;
+        }
+        else
+        {
+            autoHide = false;
+            hideTimer = 0f;
+        }
+        
+        Debug.Log($"Prompt text set: {text}");
+    }
+    
+    /// <summary>
+    /// 清除提示文字内容
+    /// </summary>
+    public void ClearPromptText()
+    {
+        if (TextContent != null)
+        {
+            TextContent.text = "";
+        }
+        
+        HidePrompt();
+    }
+    
     #region Inspector Test Functions
     
     [Header("Testing & Debug")]

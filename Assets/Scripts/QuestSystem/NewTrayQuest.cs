@@ -17,6 +17,8 @@ public class NewTrayQuest : MonoBehaviour
 {
     #region 字段定义
     
+    // 定义提示管理器
+    public PromptManager promptManager;
     // 定义XRSocketInteractor列表
     public List<XRSocketInteractor> sockets;
     public QuestStage currentStage = QuestStage.Stage1;
@@ -44,6 +46,9 @@ public class NewTrayQuest : MonoBehaviour
                 }
             }
         }
+        
+        // 初始化提示显示
+        UpdatePromptDisplay();
     }
     
     void OnDestroy()
@@ -83,6 +88,9 @@ public class NewTrayQuest : MonoBehaviour
             
             // 物品放入时检查阶段条件
             CheckStageConditions();
+            
+            // 更新提示显示
+            UpdatePromptDisplay();
         }
     }
     
@@ -97,6 +105,9 @@ public class NewTrayQuest : MonoBehaviour
             
             // 物品移除时检查阶段条件
             CheckStageConditions();
+            
+            // 更新提示显示
+            UpdatePromptDisplay();
         }
     }
     
@@ -352,6 +363,9 @@ public class NewTrayQuest : MonoBehaviour
         yield return new WaitForSeconds(3f);
         currentStage = QuestStage.Stage2;
         Debug.Log("已切换到阶段2");
+        
+        // 切换阶段后更新提示显示
+        UpdatePromptDisplay();
     }
     
     // 等待3秒后切换到阶段3的协程
@@ -360,6 +374,9 @@ public class NewTrayQuest : MonoBehaviour
         yield return new WaitForSeconds(3f);
         currentStage = QuestStage.Stage3;
         Debug.Log("已切换到阶段3");
+        
+        // 切换阶段后更新提示显示
+        UpdatePromptDisplay();
     }
     
     // 等待3秒后切换到阶段完成的协程
@@ -367,6 +384,88 @@ public class NewTrayQuest : MonoBehaviour
     {
         yield return new WaitForSeconds(3f);
         Debug.Log("所有阶段完成!");
+    }
+    
+    #endregion
+    
+    #region 提示显示管理
+    
+    // 更新提示显示的方法
+    private void UpdatePromptDisplay()
+    {
+        if (promptManager == null)
+        {
+            Debug.LogWarning("PromptManager未分配，无法更新提示显示");
+            return;
+        }
+        
+        switch (currentStage)
+        {
+            case QuestStage.Stage1:
+                UpdateStage1Prompt();
+                break;
+            case QuestStage.Stage2:
+                UpdateStage2Prompt();
+                break;
+            case QuestStage.Stage3:
+                UpdateStage3Prompt();
+                break;
+        }
+    }
+    
+    // 更新阶段1的提示显示
+    private void UpdateStage1Prompt()
+    {
+        var allCurrentItems = GetAllCurrentItemNames();
+        
+        // 计算当前收集的进度
+        int collectedCount = 0;
+        foreach (string itemName in allCurrentItems)
+        {
+            if (itemName.Contains("Item1") || itemName.Contains("Item2") || itemName.Contains("Item3"))
+                collectedCount++;
+        }
+        
+        string promptText = $"当前收集的进度，然后是一个{collectedCount}分之3";
+        promptManager.SetPromptText(promptText);
+    }
+    
+    // 更新阶段2的提示显示
+    private void UpdateStage2Prompt()
+    {
+        var allCurrentItems = GetAllCurrentItemNames();
+        
+        // 检查Item2是否还在插槽中
+        bool hasItem2 = false;
+        foreach (string itemName in allCurrentItems)
+        {
+            if (itemName.Contains("Item2"))
+                hasItem2 = true;
+        }
+        
+        // 如果Item2还在插槽中，显示0/1，如果已移除，显示1/1
+        int removedCount = hasItem2 ? 0 : 1;
+        string promptText = $"拿出指定的对象，然后是一个{removedCount}分之1";
+        promptManager.SetPromptText(promptText);
+    }
+    
+    // 更新阶段3的提示显示
+    private void UpdateStage3Prompt()
+    {
+        var allCurrentItems = GetAllCurrentItemNames();
+        
+        // 检查Item4是否在插槽中
+        bool hasItem4 = false;
+        foreach (string itemName in allCurrentItems)
+        {
+            if (itemName.Contains("Item4"))
+                hasItem4 = true;
+        }
+        
+        // 如果Item4在插槽中，显示1/1，否则显示0/1
+        int placedCount = hasItem4 ? 1 : 0;
+        string promptText = $"指定的东西进入的提示，然后是一个{placedCount}分之1";
+        promptManager.SetPromptText(promptText);
     }
     
     #endregion
