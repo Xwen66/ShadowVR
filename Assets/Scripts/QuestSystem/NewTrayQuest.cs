@@ -26,9 +26,12 @@ public class NewTrayQuest : MonoBehaviour
     public List<string> stage1Items = new List<string>() {"Item1", "Item2", "Item3"};
     public List<string> stage2Items = new List<string>() {"Item3"};
     public List<string> stage3Items = new List<string>() {"Item4"};
-    
+
     // 跟踪当前对话编号
     private int currentDialogueNumber = -1;
+    
+    // 厨房解锁UI
+    public GameObject kitchenUnlockUI;
     
     #endregion
     
@@ -547,6 +550,35 @@ public class NewTrayQuest : MonoBehaviour
             {
                 Debug.Log("插槽为空");
             }
+        }
+    }
+    
+    /// <summary>
+    /// 检查第三个阶段的任务是否完成
+    /// </summary>
+    [Button("检查第三阶段是否完成")]
+    public void CheckStage3Completion()
+    {
+        // 获取所有插槽中的当前物品名称
+        var allCurrentItems = GetAllCurrentItemNames();
+        
+        // 检查阶段3条件：Item4存在
+        bool hasItem4 = false;
+        foreach (string itemName in allCurrentItems)
+        {
+            if (itemName.Contains("Item4"))
+                hasItem4 = true;
+        }
+        
+        // 输出结果
+        if (hasItem4)
+        {
+            Debug.Log("都完成");
+            kitchenUnlockUI.SetActive(true);
+        }
+        else
+        {
+            Debug.Log("没有完成");
         }
     }
     
