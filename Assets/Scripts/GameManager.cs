@@ -33,6 +33,9 @@ public class GameManager : MonoBehaviour
     public bool canChangePerson = false;
     public bool canOpenToolBox = false;
 
+    [Header("玩家状态")]
+    public bool isLargePlayer = true;  // 记录当前是否是大型玩家状态（人类形态），true为人类形态，false为动物形态
+
     /// <summary>
     /// 游戏开始时调用，初始化单例实例
     /// </summary>
@@ -76,6 +79,7 @@ public class GameManager : MonoBehaviour
                 _largePlayer.SetActive(false);    // 禁用大型玩家
                 FoxPrefab.SetActive(true);        // 启用狐狸预制体
                 _smallPlayer.SetActive(true);     // 启用小型玩家
+                isLargePlayer = false;            // 更新状态为非大型玩家（动物形态）
                 _cooldownTimer = 0f;              // 重置冷却计时器
                 Debug.LogError("GameManager: 触发角色切换事件，参数为true，代表刺猬模式");
                 GlobalEvent.OnChangePersonEvent.Invoke(true);  // 触发角色切换事件，参数为true，代表刺猬模式
@@ -86,6 +90,7 @@ public class GameManager : MonoBehaviour
                 _largePlayer.SetActive(true);     // 启用大型玩家
                 FoxPrefab.SetActive(false);       // 禁用狐狸预制体
                 _smallPlayer.SetActive(false);    // 禁用小型玩家
+                isLargePlayer = true;             // 更新状态为大型玩家（人类形态）
                 _cooldownTimer = 0f;              // 重置冷却计时器
                 Debug.LogError("GameManager: 触发角色切换事件，参数为false，代表狐狸模式");
                 GlobalEvent.OnChangePersonEvent.Invoke(false);  // 触发角色切换事件，参数为false，代表狐狸模式

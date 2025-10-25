@@ -1,5 +1,6 @@
 using UnityEngine;
 using System.Collections;
+using VInspector;
 
 
 public class ProcessManager : MonoBehaviour
@@ -90,6 +91,7 @@ public class ProcessManager : MonoBehaviour
         {
             //第二步  小刺猬说完“你睡着前，好像要带上托盘去厨房找狮子妈妈。”，后生成托盘上的任务UI
             DialogueManager.Instance.SetNextButtonMode(false);
+            QuestUIManager.Instance.SetItemQuest1Text();
             promptManager.ShowPrompt(1);
             promptMove.EnterFollowingState();
 
@@ -144,5 +146,14 @@ public class ProcessManager : MonoBehaviour
         }
     }
 
+
+
+    //test
+    [Button("Test")]
+    public void Test()
+    {
+        QuestUIManager.Instance.SetItemQuest1Text();
+
+    }
 
 }
