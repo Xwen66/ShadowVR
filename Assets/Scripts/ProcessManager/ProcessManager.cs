@@ -130,6 +130,13 @@ public class ProcessManager : MonoBehaviour
             Debug.Log("第六条对话开始，按钮模式设置为关闭");
         }
 
+        if (dialogueNumber == 13)// 第十四条对话开始时
+        {
+            // 将按钮功能从"跳到下一页"变成"关闭"
+            DialogueManager.Instance.SetNextButtonMode(true);
+            Debug.Log("第十四条对话开始，按钮模式设置为关闭");
+        }
+
     }
     
     /// <summary>
