@@ -1,34 +1,49 @@
 using System;
 using UnityEngine;
+using VInspector;
 
 public class GorillaReset : MonoBehaviour
 {
     public Transform resetPosition1;
     public Transform resetPosition2;
     public Transform resetPosition3;
-    
+
     private bool hasTriggeredFirstReset = false;
-    
+    private Rigidbody rb;
+
     // Start is called once before the first execution of Update after the MonoBehaviour is created
     void Start()
     {
-        this.transform.position = resetPosition1.position;
-        this.transform.rotation = resetPosition1.rotation;
+        rb = GetComponent<Rigidbody>();
+        ResetToPosition(resetPosition1);
         GlobalEvent.OnWhiteFlashEndEvent.AddListener(ResetPosition1);
     }
 
     private void ResetPosition1()
     {
-        this.transform.position = resetPosition1.position;
-        this.transform.rotation = resetPosition1.rotation;
-        
+        ResetToPosition(resetPosition1);
+
         if (!hasTriggeredFirstReset)
         {
             OnFirstReset();
             hasTriggeredFirstReset = true;
         }
     }
-    
+
+    private void ResetToPosition(Transform targetPosition)
+    {
+        if (rb != null)
+        {
+            rb.MovePosition(targetPosition.position);
+            rb.MoveRotation(targetPosition.rotation);
+        }
+        else
+        {
+            this.transform.position = targetPosition.position;
+            this.transform.rotation = targetPosition.rotation;
+        }
+    }
+
     private void OnFirstReset()
     {
         // 触发第七条对话
@@ -44,7 +59,7 @@ public class GorillaReset : MonoBehaviour
             Debug.LogWarning("DialogueManager实例未找到");
         }
     }
-    
+
     void OnDestroy()
     {
         GlobalEvent.OnWhiteFlashEndEvent.RemoveListener(ResetPosition1);
@@ -53,6 +68,12 @@ public class GorillaReset : MonoBehaviour
     // Update is called once per frame
     void Update()
     {
-        
+
+    }
+
+    [Button("Test First Reset")]
+    public void Reset()
+    {
+        ResetPosition1();
     }
 }
