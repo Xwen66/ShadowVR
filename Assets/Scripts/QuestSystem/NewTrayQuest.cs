@@ -29,9 +29,13 @@ public class NewTrayQuest : MonoBehaviour
 
     // 跟踪当前对话编号
     private int currentDialogueNumber = -1;
-    
+
+    // shadow line的虚线图
+    public GameObject shadowLine;
+
     // 厨房解锁UI
     public GameObject kitchenUnlockUI;
+    
     
     #endregion
     
@@ -627,6 +631,7 @@ public class NewTrayQuest : MonoBehaviour
             DialogueManager.Instance.GoToDialogue(8);
             // 设置按钮为"下一步"模式（false表示下一句对话模式）
             DialogueManager.Instance.SetNextButtonMode(false);
+            shadowLine.SetActive(true);
             Debug.Log("正在显示第八句对话内容");
         }
         else
