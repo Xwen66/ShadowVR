@@ -110,6 +110,17 @@
 
         private void Update()
         {
+            // 如果正在重置位置，跳过移动检测
+            if (GorillaReset.IsResetting)
+            {
+                // 更新最后位置记录，避免重置后出现跳跃
+                lastLeftHandPosition = CurrentLeftHandPosition();
+                lastRightHandPosition = CurrentRightHandPosition();
+                lastHeadPosition = headCollider.transform.position;
+                lastPosition = transform.position;
+                return;
+            }
+            
             bool leftHandColliding = false;
             bool rightHandColliding = false;
             Vector3 finalPosition;

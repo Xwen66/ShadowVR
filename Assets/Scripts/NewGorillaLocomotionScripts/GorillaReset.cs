@@ -10,6 +10,7 @@ public class GorillaReset : MonoBehaviour
 
     private bool hasTriggeredFirstReset = false;
     private Rigidbody rb;
+    public static bool IsResetting { get; private set; } = false;
 
     // Start is called once before the first execution of Update after the MonoBehaviour is created
     void Start()
@@ -32,6 +33,8 @@ public class GorillaReset : MonoBehaviour
 
     private void ResetToPosition(Transform targetPosition)
     {
+        IsResetting = true;
+        
         if (rb != null)
         {
             rb.MovePosition(targetPosition.position);
@@ -42,6 +45,15 @@ public class GorillaReset : MonoBehaviour
             this.transform.position = targetPosition.position;
             this.transform.rotation = targetPosition.rotation;
         }
+        
+        // 延迟一帧后重置标志，确保位置更新完成
+        StartCoroutine(ResetComplete());
+    }
+    
+    private System.Collections.IEnumerator ResetComplete()
+    {
+        yield return null; // 等待一帧
+        IsResetting = false;
     }
 
     private void OnFirstReset()
