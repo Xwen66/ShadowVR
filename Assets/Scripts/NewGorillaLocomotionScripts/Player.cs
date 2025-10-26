@@ -30,9 +30,9 @@
         public float velocityLimit;
         public float maxJumpSpeed;
         public float jumpMultiplier;
-        public float minimumRaycastDistance = 0.01f;
-        public float defaultSlideFactor = 0.03f;
-        public float defaultPrecision = 0.995f;
+        public float minimumRaycastDistance = 0.0001f;
+        public float defaultSlideFactor = 0.0003f;
+        public float defaultPrecision = 0.00995f;
 
         private Vector3[] velocityHistory;
         private int velocityIndex;

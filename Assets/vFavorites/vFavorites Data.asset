@@ -41,6 +41,15 @@ MonoBehaviour:
       isFolder: 1
       isAsset: 0
       _id: 1053993742
+    - globalId:
+        globalObjectIdString: GlobalObjectId_V1-1-a5f8cc04d5c75c84dbca24b781b152b9-102900000-0
+      _typeString: UnityEditor.DefaultAsset, UnityEditor.CoreModule, Version=0.0.0.0,
+        Culture=neutral, PublicKeyToken=null
+      _obj: {fileID: 102900000, guid: a5f8cc04d5c75c84dbca24b781b152b9, type: 3}
+      isSceneGameObject: 0
+      isFolder: 1
+      isAsset: 0
+      _id: 1047606410
     name: Page 1
     _id: 1020056258
   - items: []
