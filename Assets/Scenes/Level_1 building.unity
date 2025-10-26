@@ -22610,6 +22610,10 @@ PrefabInstance:
       propertyPath: QuestName
       value: Tray Quest
       objectReference: {fileID: 0}
+    - target: {fileID: 1355686395013171783, guid: ce833d5e4a42f5c4e8abb7040d842633, type: 3}
+      propertyPath: m_Layer
+      value: 0
+      objectReference: {fileID: 0}
     - target: {fileID: 1374443403092936399, guid: ce833d5e4a42f5c4e8abb7040d842633, type: 3}
       propertyPath: m_Name
       value: Tray
@@ -22621,6 +22625,14 @@ PrefabInstance:
     - target: {fileID: 1742555101049720341, guid: ce833d5e4a42f5c4e8abb7040d842633, type: 3}
       propertyPath: m_HoverSocketSnapping
       value: 1
+      objectReference: {fileID: 0}
+    - target: {fileID: 2016337802456061280, guid: ce833d5e4a42f5c4e8abb7040d842633, type: 3}
+      propertyPath: m_Layer
+      value: 0
+      objectReference: {fileID: 0}
+    - target: {fileID: 4921168419673234237, guid: ce833d5e4a42f5c4e8abb7040d842633, type: 3}
+      propertyPath: m_Layer
+      value: 0
       objectReference: {fileID: 0}
     - target: {fileID: 5058786288246898987, guid: ce833d5e4a42f5c4e8abb7040d842633, type: 3}
       propertyPath: m_LocalPosition.x
@@ -22660,6 +22672,10 @@ PrefabInstance:
       objectReference: {fileID: 0}
     - target: {fileID: 5058786288246898987, guid: ce833d5e4a42f5c4e8abb7040d842633, type: 3}
       propertyPath: m_LocalEulerAnglesHint.z
+      value: 0
+      objectReference: {fileID: 0}
+    - target: {fileID: 5215946446006420646, guid: ce833d5e4a42f5c4e8abb7040d842633, type: 3}
+      propertyPath: m_Layer
       value: 0
       objectReference: {fileID: 0}
     - target: {fileID: 5842527963831548600, guid: ce833d5e4a42f5c4e8abb7040d842633, type: 3}
@@ -22794,9 +22810,25 @@ PrefabInstance:
       propertyPath: m_IsKinematic
       value: 1
       objectReference: {fileID: 0}
+    - target: {fileID: 7860227818275093154, guid: ce833d5e4a42f5c4e8abb7040d842633, type: 3}
+      propertyPath: m_Layer
+      value: 0
+      objectReference: {fileID: 0}
+    - target: {fileID: 8305043215170614550, guid: ce833d5e4a42f5c4e8abb7040d842633, type: 3}
+      propertyPath: m_Layer
+      value: 0
+      objectReference: {fileID: 0}
     - target: {fileID: 8338104311619390642, guid: ce833d5e4a42f5c4e8abb7040d842633, type: 3}
       propertyPath: m_HoverSocketSnapping
       value: 1
+      objectReference: {fileID: 0}
+    - target: {fileID: 8546253478508050923, guid: ce833d5e4a42f5c4e8abb7040d842633, type: 3}
+      propertyPath: m_Layer
+      value: 0
+      objectReference: {fileID: 0}
+    - target: {fileID: 8612144659721903500, guid: ce833d5e4a42f5c4e8abb7040d842633, type: 3}
+      propertyPath: m_Layer
+      value: 0
       objectReference: {fileID: 0}
     - target: {fileID: 9042250812432550163, guid: ce833d5e4a42f5c4e8abb7040d842633, type: 3}
       propertyPath: m_HoverSocketSnapping

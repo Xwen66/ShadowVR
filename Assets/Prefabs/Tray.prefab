@@ -18,26 +18,22 @@ GameObject:
   m_NavMeshLayer: 0
   m_StaticEditorFlags: 0
   m_IsActive: 1
---- !u!224 &4086479730320744624
-RectTransform:
+--- !u!4 &4086479730320744624
+Transform:
   m_ObjectHideFlags: 0
   m_CorrespondingSourceObject: {fileID: 0}
   m_PrefabInstance: {fileID: 0}
   m_PrefabAsset: {fileID: 0}
   m_GameObject: {fileID: 1355686395013171783}
+  serializedVersion: 2
   m_LocalRotation: {x: 0, y: -0.63114065, z: 0, w: 0.7756684}
-  m_LocalPosition: {x: 0, y: 0, z: -0.127}
+  m_LocalPosition: {x: -0.164, y: -44.9, z: -0.127}
   m_LocalScale: {x: 0.25239724, y: -56.19397, z: 0.25239724}
   m_ConstrainProportionsScale: 0
   m_Children:
   - {fileID: 6217035284719215356}
   m_Father: {fileID: 5058786288246898987}
   m_LocalEulerAnglesHint: {x: 0, y: 0, z: 0}
-  m_AnchorMin: {x: 0.5, y: 0.5}
-  m_AnchorMax: {x: 0.5, y: 0.5}
-  m_AnchoredPosition: {x: -0.164, y: -44.9}
-  m_SizeDelta: {x: 100, y: 100}
-  m_Pivot: {x: 0.5, y: 0.5}
 --- !u!114 &8338104311619390642
 MonoBehaviour:
   m_ObjectHideFlags: 0
@@ -54,7 +50,7 @@ MonoBehaviour:
   m_InteractionLayers:
     m_Bits: 1
   m_Handedness: 0
-  m_AttachTransform: {fileID: 6217035284719215356}
+  m_AttachTransform: {fileID: 0}
   m_KeepSelectedTargetValid: 1
   m_DisableVisualsWhenBlockedInGroup: 1
   m_StartingSelectedInteractable: {fileID: 0}
@@ -384,6 +380,27 @@ MonoBehaviour:
   m_Script: {fileID: 11500000, guid: 1ebb0fece27b5224991c8078c1d6c7d9, type: 3}
   m_Name: 
   m_EditorClassIdentifier: 
+  QuestName: New Quest
+  QuestDescription: Complete this quest to progress.
+  startActiveOnAwake: 0
+  canBeRepeated: 0
+  _currentState: 0
+  _questProgress: 0
+  OnQuestStarted:
+    m_PersistentCalls:
+      m_Calls: []
+  OnQuestCompleted:
+    m_PersistentCalls:
+      m_Calls: []
+  OnQuestFailed:
+    m_PersistentCalls:
+      m_Calls: []
+  OnProgressChanged:
+    m_PersistentCalls:
+      m_Calls: []
+  itemRequirements: []
+  requireAllItems: 0
+  totalItemsRequired: 4
   sockets: []
   pickupables: []
   GoalFinishedCanvas: {fileID: 1972741762337018528}
@@ -406,7 +423,7 @@ GameObject:
   m_Icon: {fileID: 0}
   m_NavMeshLayer: 0
   m_StaticEditorFlags: 0
-  m_IsActive: 1
+  m_IsActive: 0
 --- !u!224 &5205906212540790652
 RectTransform:
   m_ObjectHideFlags: 0
@@ -508,26 +525,22 @@ GameObject:
   m_NavMeshLayer: 0
   m_StaticEditorFlags: 0
   m_IsActive: 1
---- !u!224 &6063866808576514602
-RectTransform:
+--- !u!4 &6063866808576514602
+Transform:
   m_ObjectHideFlags: 0
   m_CorrespondingSourceObject: {fileID: 0}
   m_PrefabInstance: {fileID: 0}
   m_PrefabAsset: {fileID: 0}
   m_GameObject: {fileID: 2016337802456061280}
+  serializedVersion: 2
   m_LocalRotation: {x: 0, y: -0.63114065, z: 0, w: 0.7756684}
-  m_LocalPosition: {x: 0, y: 0, z: -0.132}
+  m_LocalPosition: {x: 0.047, y: -31.8, z: -0.132}
   m_LocalScale: {x: 0.25239724, y: -56.19397, z: 0.25239724}
   m_ConstrainProportionsScale: 0
   m_Children:
   - {fileID: 7491126339069384536}
   m_Father: {fileID: 5058786288246898987}
   m_LocalEulerAnglesHint: {x: 0, y: 0, z: 0}
-  m_AnchorMin: {x: 0.5, y: 0.5}
-  m_AnchorMax: {x: 0.5, y: 0.5}
-  m_AnchoredPosition: {x: 0.047, y: -31.8}
-  m_SizeDelta: {x: 100, y: 100}
-  m_Pivot: {x: 0.5, y: 0.5}
 --- !u!114 &5945666237954379284
 MonoBehaviour:
   m_ObjectHideFlags: 0
@@ -544,7 +557,7 @@ MonoBehaviour:
   m_InteractionLayers:
     m_Bits: 1
   m_Handedness: 0
-  m_AttachTransform: {fileID: 7491126339069384536}
+  m_AttachTransform: {fileID: 0}
   m_KeepSelectedTargetValid: 1
   m_DisableVisualsWhenBlockedInGroup: 1
   m_StartingSelectedInteractable: {fileID: 0}
@@ -692,6 +705,27 @@ MonoBehaviour:
   m_Script: {fileID: 11500000, guid: 1ebb0fece27b5224991c8078c1d6c7d9, type: 3}
   m_Name: 
   m_EditorClassIdentifier: 
+  QuestName: New Quest
+  QuestDescription: Complete this quest to progress.
+  startActiveOnAwake: 0
+  canBeRepeated: 0
+  _currentState: 0
+  _questProgress: 0
+  OnQuestStarted:
+    m_PersistentCalls:
+      m_Calls: []
+  OnQuestCompleted:
+    m_PersistentCalls:
+      m_Calls: []
+  OnQuestFailed:
+    m_PersistentCalls:
+      m_Calls: []
+  OnProgressChanged:
+    m_PersistentCalls:
+      m_Calls: []
+  itemRequirements: []
+  requireAllItems: 0
+  totalItemsRequired: 4
   sockets: []
   pickupables: []
   GoalFinishedCanvas: {fileID: 0}
@@ -712,13 +746,14 @@ GameObject:
   m_NavMeshLayer: 0
   m_StaticEditorFlags: 0
   m_IsActive: 1
---- !u!224 &6217035284719215356
-RectTransform:
+--- !u!4 &6217035284719215356
+Transform:
   m_ObjectHideFlags: 0
   m_CorrespondingSourceObject: {fileID: 0}
   m_PrefabInstance: {fileID: 0}
   m_PrefabAsset: {fileID: 0}
   m_GameObject: {fileID: 4921168419673234237}
+  serializedVersion: 2
   m_LocalRotation: {x: 0, y: 0, z: 0, w: 1}
   m_LocalPosition: {x: 0, y: 0, z: 0.146}
   m_LocalScale: {x: 1, y: 1, z: 1}
@@ -726,11 +761,6 @@ RectTransform:
   m_Children: []
   m_Father: {fileID: 4086479730320744624}
   m_LocalEulerAnglesHint: {x: 0, y: 0, z: 0}
-  m_AnchorMin: {x: 0.5, y: 0.5}
-  m_AnchorMax: {x: 0.5, y: 0.5}
-  m_AnchoredPosition: {x: 0, y: 0}
-  m_SizeDelta: {x: 100, y: 100}
-  m_Pivot: {x: 0.5, y: 0.5}
 --- !u!1 &5215946446006420646
 GameObject:
   m_ObjectHideFlags: 0
@@ -747,13 +777,14 @@ GameObject:
   m_NavMeshLayer: 0
   m_StaticEditorFlags: 0
   m_IsActive: 1
---- !u!224 &6397051273450903266
-RectTransform:
+--- !u!4 &6397051273450903266
+Transform:
   m_ObjectHideFlags: 0
   m_CorrespondingSourceObject: {fileID: 0}
   m_PrefabInstance: {fileID: 0}
   m_PrefabAsset: {fileID: 0}
   m_GameObject: {fileID: 5215946446006420646}
+  serializedVersion: 2
   m_LocalRotation: {x: 0, y: 0, z: 0, w: 1}
   m_LocalPosition: {x: 0, y: 0, z: 0.146}
   m_LocalScale: {x: 1, y: 1, z: 1}
@@ -761,11 +792,6 @@ RectTransform:
   m_Children: []
   m_Father: {fileID: 6737620686894914271}
   m_LocalEulerAnglesHint: {x: 0, y: 0, z: 0}
-  m_AnchorMin: {x: 0.5, y: 0.5}
-  m_AnchorMax: {x: 0.5, y: 0.5}
-  m_AnchoredPosition: {x: 0, y: 0}
-  m_SizeDelta: {x: 100, y: 100}
-  m_Pivot: {x: 0.5, y: 0.5}
 --- !u!1 &7853742267082974253
 GameObject:
   m_ObjectHideFlags: 0
@@ -859,26 +885,22 @@ GameObject:
   m_NavMeshLayer: 0
   m_StaticEditorFlags: 0
   m_IsActive: 1
---- !u!224 &6737620686894914271
-RectTransform:
+--- !u!4 &6737620686894914271
+Transform:
   m_ObjectHideFlags: 0
   m_CorrespondingSourceObject: {fileID: 0}
   m_PrefabInstance: {fileID: 0}
   m_PrefabAsset: {fileID: 0}
   m_GameObject: {fileID: 7860227818275093154}
+  serializedVersion: 2
   m_LocalRotation: {x: 0, y: -0.63114065, z: 0, w: 0.7756684}
-  m_LocalPosition: {x: 0, y: 0, z: 0.215}
+  m_LocalPosition: {x: -0.18, y: -46.7, z: 0.215}
   m_LocalScale: {x: 0.25239724, y: -56.19397, z: 0.25239724}
   m_ConstrainProportionsScale: 0
   m_Children:
   - {fileID: 6397051273450903266}
   m_Father: {fileID: 5058786288246898987}
   m_LocalEulerAnglesHint: {x: 0, y: 0, z: 0}
-  m_AnchorMin: {x: 0.5, y: 0.5}
-  m_AnchorMax: {x: 0.5, y: 0.5}
-  m_AnchoredPosition: {x: -0.18, y: -46.7}
-  m_SizeDelta: {x: 100, y: 100}
-  m_Pivot: {x: 0.5, y: 0.5}
 --- !u!114 &9042250812432550163
 MonoBehaviour:
   m_ObjectHideFlags: 0
@@ -895,7 +917,7 @@ MonoBehaviour:
   m_InteractionLayers:
     m_Bits: 1
   m_Handedness: 0
-  m_AttachTransform: {fileID: 6397051273450903266}
+  m_AttachTransform: {fileID: 0}
   m_KeepSelectedTargetValid: 1
   m_DisableVisualsWhenBlockedInGroup: 1
   m_StartingSelectedInteractable: {fileID: 0}
@@ -962,13 +984,14 @@ GameObject:
   m_NavMeshLayer: 0
   m_StaticEditorFlags: 0
   m_IsActive: 1
---- !u!224 &6447598060242774833
-RectTransform:
+--- !u!4 &6447598060242774833
+Transform:
   m_ObjectHideFlags: 0
   m_CorrespondingSourceObject: {fileID: 0}
   m_PrefabInstance: {fileID: 0}
   m_PrefabAsset: {fileID: 0}
   m_GameObject: {fileID: 8305043215170614550}
+  serializedVersion: 2
   m_LocalRotation: {x: 0, y: 0, z: 0, w: 1}
   m_LocalPosition: {x: 0, y: 0, z: 0.146}
   m_LocalScale: {x: 1, y: 1, z: 1}
@@ -976,11 +999,6 @@ RectTransform:
   m_Children: []
   m_Father: {fileID: 1572054561011623230}
   m_LocalEulerAnglesHint: {x: 0, y: 0, z: 0}
-  m_AnchorMin: {x: 0.5, y: 0.5}
-  m_AnchorMax: {x: 0.5, y: 0.5}
-  m_AnchoredPosition: {x: 0, y: 0}
-  m_SizeDelta: {x: 100, y: 100}
-  m_Pivot: {x: 0.5, y: 0.5}
 --- !u!1 &8546253478508050923
 GameObject:
   m_ObjectHideFlags: 0
@@ -997,13 +1015,14 @@ GameObject:
   m_NavMeshLayer: 0
   m_StaticEditorFlags: 0
   m_IsActive: 1
---- !u!224 &7491126339069384536
-RectTransform:
+--- !u!4 &7491126339069384536
+Transform:
   m_ObjectHideFlags: 0
   m_CorrespondingSourceObject: {fileID: 0}
   m_PrefabInstance: {fileID: 0}
   m_PrefabAsset: {fileID: 0}
   m_GameObject: {fileID: 8546253478508050923}
+  serializedVersion: 2
   m_LocalRotation: {x: 0, y: 0, z: 0, w: 1}
   m_LocalPosition: {x: 0, y: 0, z: 0.146}
   m_LocalScale: {x: 1, y: 1, z: 1}
@@ -1011,11 +1030,6 @@ RectTransform:
   m_Children: []
   m_Father: {fileID: 6063866808576514602}
   m_LocalEulerAnglesHint: {x: 0, y: 0, z: 0}
-  m_AnchorMin: {x: 0.5, y: 0.5}
-  m_AnchorMax: {x: 0.5, y: 0.5}
-  m_AnchoredPosition: {x: 0, y: 0}
-  m_SizeDelta: {x: 100, y: 100}
-  m_Pivot: {x: 0.5, y: 0.5}
 --- !u!1 &8612144659721903500
 GameObject:
   m_ObjectHideFlags: 0
@@ -1034,26 +1048,22 @@ GameObject:
   m_NavMeshLayer: 0
   m_StaticEditorFlags: 0
   m_IsActive: 1
---- !u!224 &1572054561011623230
-RectTransform:
+--- !u!4 &1572054561011623230
+Transform:
   m_ObjectHideFlags: 0
   m_CorrespondingSourceObject: {fileID: 0}
   m_PrefabInstance: {fileID: 0}
   m_PrefabAsset: {fileID: 0}
   m_GameObject: {fileID: 8612144659721903500}
+  serializedVersion: 2
   m_LocalRotation: {x: 0, y: -0.63114065, z: 0, w: 0.7756684}
-  m_LocalPosition: {x: 0, y: 0, z: 0.216}
+  m_LocalPosition: {x: 0.12, y: -31.8, z: 0.216}
   m_LocalScale: {x: 0.25239724, y: -56.19397, z: 0.25239724}
   m_ConstrainProportionsScale: 0
   m_Children:
   - {fileID: 6447598060242774833}
   m_Father: {fileID: 5058786288246898987}
   m_LocalEulerAnglesHint: {x: 0, y: 0, z: 0}
-  m_AnchorMin: {x: 0.5, y: 0.5}
-  m_AnchorMax: {x: 0.5, y: 0.5}
-  m_AnchoredPosition: {x: 0.12, y: -31.8}
-  m_SizeDelta: {x: 100, y: 100}
-  m_Pivot: {x: 0.5, y: 0.5}
 --- !u!114 &1742555101049720341
 MonoBehaviour:
   m_ObjectHideFlags: 0
@@ -1070,7 +1080,7 @@ MonoBehaviour:
   m_InteractionLayers:
     m_Bits: 1
   m_Handedness: 0
-  m_AttachTransform: {fileID: 6447598060242774833}
+  m_AttachTransform: {fileID: 0}
   m_KeepSelectedTargetValid: 1
   m_DisableVisualsWhenBlockedInGroup: 1
   m_StartingSelectedInteractable: {fileID: 0}
