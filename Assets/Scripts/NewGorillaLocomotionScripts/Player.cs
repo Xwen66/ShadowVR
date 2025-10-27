@@ -8,6 +8,15 @@
 
         public static Player Instance { get { return _instance; } }
 
+        public Transform rotateCenter;
+        
+        [Header("旋转控制设置")]
+        public float rotationAngle = 30f; // 每次旋转的角度
+        public float rotationThreshold = 0.5f; // 摇杆输入阈值，超过此值才触发旋转
+        private bool lastFrameWasRotating = false; // 记录上一帧是否在旋转
+        private float lastRotationTime = 0f; // 上次旋转的时间
+        public float rotationCooldown = 0.5f; // 旋转冷却时间（秒）
+
         public SphereCollider headCollider;
         public CapsuleCollider bodyCollider;
 
@@ -269,6 +278,9 @@
             wasLeftHandTouching = leftHandColliding;
             wasRightHandTouching = rightHandColliding;
             
+            // 处理左摇杆旋转控制
+            HandleJoystickRotation();
+            
             // 绘制调试可视化
             if (showHandColliders)
             {
@@ -290,6 +302,75 @@
             Gizmos.color = Color.yellow;
             Gizmos.DrawWireSphere(CurrentLeftHandPosition(), minimumRaycastDistance * 0.5f);
             Gizmos.DrawWireSphere(CurrentRightHandPosition(), minimumRaycastDistance * 0.5f);
+        }
+        
+        /// <summary>
+        /// 处理左摇杆旋转控制
+        /// </summary>
+        private void HandleJoystickRotation()
+        {
+            // 检查是否在冷却时间内
+            if (Time.time - lastRotationTime < rotationCooldown)
+                return;
+                
+            // 获取左手设备的摇杆输入
+            if (UnityEngine.XR.InputDevices.GetDeviceAtXRNode(UnityEngine.XR.XRNode.LeftHand)
+                .TryGetFeatureValue(UnityEngine.XR.CommonUsages.primary2DAxis, out Vector2 joystickInput))
+            {
+                // 检查摇杆是否向左或向右推动超过阈值
+                if (Mathf.Abs(joystickInput.x) > rotationThreshold)
+                {
+                    // 确定旋转方向：左为负，右为正
+                    float rotationDirection = joystickInput.x > 0 ? rotationAngle : -rotationAngle;
+                    
+                    // 执行旋转
+                    if (rotateCenter != null)
+                    {
+                        // 计算旋转后的位置和旋转
+                        Vector3 currentPosition = transform.position;
+                        Quaternion currentRotation = transform.rotation;
+                        
+                        // 计算相对于旋转中心的偏移
+                        Vector3 offset = currentPosition - rotateCenter.position;
+                        
+                        // 创建旋转
+                        Quaternion rotation = Quaternion.Euler(0, rotationDirection, 0);
+                        
+                        // 旋转偏移向量
+                        Vector3 rotatedOffset = rotation * offset;
+                        
+                        // 计算新位置
+                        Vector3 newPosition = rotateCenter.position + rotatedOffset;
+                        
+                        // 计算新旋转
+                        Quaternion newRotation = rotation * currentRotation;
+                        
+                        // 使用Rigidbody进行位置和旋转设置
+                        playerRigidBody.MovePosition(newPosition);
+                        playerRigidBody.MoveRotation(newRotation);
+                        
+                        // 同时更新速度历史记录，保持物理一致性
+                        denormalizedVelocityAverage = rotation * denormalizedVelocityAverage;
+                        for (int i = 0; i < velocityHistory.Length; i++)
+                        {
+                            velocityHistory[i] = rotation * velocityHistory[i];
+                        }
+                    }
+                    else
+                    {
+                        // 如果没有设置rotateCenter，使用默认的Turn方法
+                        Turn(rotationDirection);
+                    }
+                    
+                    // 更新冷却时间
+                    lastRotationTime = Time.time;
+                    lastFrameWasRotating = true;
+                }
+                else
+                {
+                    lastFrameWasRotating = false;
+                }
+            }
         }
         
         private void OnDrawGizmos()
