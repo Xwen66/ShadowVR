@@ -4809,7 +4809,7 @@ PrefabInstance:
       objectReference: {fileID: 0}
     - target: {fileID: 1340857787106649673, guid: 05b5f60bd9215a34084800c2ef089954, type: 3}
       propertyPath: m_IsActive
-      value: 1
+      value: 0
       objectReference: {fileID: 0}
     - target: {fileID: 1860126975645891827, guid: 05b5f60bd9215a34084800c2ef089954, type: 3}
       propertyPath: m_LocalScale.x
@@ -7487,6 +7487,14 @@ PrefabInstance:
       propertyPath: canChangePerson
       value: 1
       objectReference: {fileID: 0}
+    - target: {fileID: 2139932205667224776, guid: 01fb95f91f7fd674d98ef6dafb450313, type: 3}
+      propertyPath: _largePlayerModel
+      value: 
+      objectReference: {fileID: 1118104398}
+    - target: {fileID: 2139932205667224776, guid: 01fb95f91f7fd674d98ef6dafb450313, type: 3}
+      propertyPath: _smallPlayerModel
+      value: 
+      objectReference: {fileID: 1422363078}
     - target: {fileID: 5425353839482379707, guid: 01fb95f91f7fd674d98ef6dafb450313, type: 3}
       propertyPath: m_Name
       value: GameManager
@@ -8283,6 +8291,10 @@ PrefabInstance:
       propertyPath: m_Enabled
       value: 1
       objectReference: {fileID: 0}
+    - target: {fileID: 1110453573734618458, guid: 57a9bb4f1c700464cb0ee8e5b6295992, type: 3}
+      propertyPath: rotateCenter
+      value: 
+      objectReference: {fileID: 1190451963}
     - target: {fileID: 1622000467507648373, guid: 57a9bb4f1c700464cb0ee8e5b6295992, type: 3}
       propertyPath: m_IsActive
       value: 0

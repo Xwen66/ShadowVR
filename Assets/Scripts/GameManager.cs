@@ -8,7 +8,8 @@ using UnityEngine;
 public class GameManager : MonoBehaviour
 {
     [Header("玩家角色设置")]
-    [SerializeField] private GameObject _largePlayer;      // 大型玩家角色（人类形态）
+    [SerializeField] private GameObject _largePlayerModel;      // 大型玩家角色（人类形态）
+    [SerializeField] private GameObject _smallPlayerModel;      // 大型玩家角色（人类形态）
     [SerializeField] public GameObject FoxPrefab;          // 狐狸预制体（可能用于特效或动画）
     public Transform FoxLeftHand;                         // 狐狸左手位置
     public Transform FoxRightHand;                        // 狐狸右手位置
@@ -77,16 +78,17 @@ public class GameManager : MonoBehaviour
             && canChangePerson)  // 只有在允许切换形态时才执行
         {
             // 小型玩家模式（动物形态）
-            if (_largePlayer.activeSelf)
+            if (_largePlayerModel.activeSelf)
             {
-                _largePlayer.SetActive(false);    // 禁用大型玩家
+                _largePlayerModel.SetActive(false);    // 禁用大型玩家
                 FoxPrefab.SetActive(true);        // 启用狐狸预制体
                 _smallPlayer.SetActive(true);     // 启用小型玩家
+                _smallPlayerModel.SetActive(false);     // 启用小型玩家
                 isLargePlayer = false;            // 更新状态为非大型玩家（动物形态）
                 _cooldownTimer = 0f;              // 重置冷却计时器
                 Debug.LogError("GameManager: 触发角色切换事件，参数为true，代表刺猬模式");
                 GlobalEvent.OnChangePersonEvent.Invoke(true);  // 触发角色切换事件，参数为true，代表刺猬模式
-                
+
                 // 主动设置DialogueMove的模式为狐狸模式（Mode2）
                 if (dialogueMove != null)
                 {
@@ -96,14 +98,15 @@ public class GameManager : MonoBehaviour
             else
             {
                 // 大型玩家模式（人类形态）
-                _largePlayer.SetActive(true);     // 启用大型玩家
+                _largePlayerModel.SetActive(true);     // 启用大型玩家
                 FoxPrefab.SetActive(false);       // 禁用狐狸预制体
                 _smallPlayer.SetActive(false);    // 禁用小型玩家
+                _smallPlayerModel.SetActive(true);    // 禁用小型玩家
                 isLargePlayer = true;             // 更新状态为大型玩家（人类形态）
                 _cooldownTimer = 0f;              // 重置冷却计时器
                 Debug.LogError("GameManager: 触发角色切换事件，参数为false，代表狐狸模式");
                 GlobalEvent.OnChangePersonEvent.Invoke(false);  // 触发角色切换事件，参数为false，代表狐狸模式
-                
+
                 // 主动设置DialogueMove的模式为刺猬模式（Mode1）
                 if (dialogueMove != null)
                 {
@@ -116,7 +119,7 @@ public class GameManager : MonoBehaviour
         if (UnityEngine.XR.InputDevices.GetDeviceAtXRNode(UnityEngine.XR.XRNode.RightHand)
             .TryGetFeatureValue(UnityEngine.XR.CommonUsages.triggerButton, out bool isPressedRight) && isPressedRight)
         {
-            if (_largePlayer.activeSelf)
+            if (_largePlayerModel.activeSelf)
             {
                 // 大型玩家模式下切换UI画布到模式0
                 UIManager.Instance.ToggleUICanvas(0);
