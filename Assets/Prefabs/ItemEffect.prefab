@@ -123,3 +123,4 @@ MonoBehaviour:
   m_EditorClassIdentifier: 
   moveTarget: {fileID: 0}
   offset: {x: 0, y: 0.8, z: 0}
+  effectVFX: {fileID: 3747049761071503699, guid: 49b63cb7ecfb5344fb573387cb033fa4, type: 3}

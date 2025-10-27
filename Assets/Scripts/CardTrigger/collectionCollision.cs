@@ -1,4 +1,5 @@
 using UnityEngine;
+using VInspector;
 
 public class collectionCollision : MonoBehaviour
 {
@@ -71,7 +72,7 @@ public class collectionCollision : MonoBehaviour
         {
             instantiatedEffectObject.GetComponent<ItemEffectObject>().OnGet();
         }
-        
+
         // 将当前物品插入到插槽中
         SetSelfToSock();
 
@@ -109,5 +110,14 @@ public class collectionCollision : MonoBehaviour
         {
             Debug.LogWarning($"无法将 {this.gameObject.name} 插入到collection插槽中，可能没有可用插槽");
         }
+    }
+
+
+    [Button("test")]
+    public void Test()
+    {
+        Debug.LogError("collider碰到东西了");
+        TransferItemToUIManager();
+
     }
 }

@@ -1,4 +1,5 @@
 using UnityEngine;
+using VInspector;
 
 public class MemoryCollision : MonoBehaviour
 {
@@ -109,5 +110,13 @@ public class MemoryCollision : MonoBehaviour
         {
             Debug.LogWarning($"无法将 {this.gameObject.name} 插入到memory插槽中，可能没有可用插槽");
         }
+    }
+
+    [Button("test")]
+    public void Test()
+    {
+        Debug.LogError("collider碰到东西了");
+        TransferItemToUIManager();
+
     }
 }

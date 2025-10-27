@@ -16,16 +16,16 @@ public enum QuestStage
 public class NewTrayQuest : MonoBehaviour
 {
     #region 字段定义
-    
+
     // 定义提示管理器
     public PromptManager promptManager;
     // 定义XRSocketInteractor列表
     public List<XRSocketInteractor> sockets;
     public QuestStage currentStage = QuestStage.Stage1;
     // 定义字符串列表
-    public List<string> stage1Items = new List<string>() {"Item1", "Item2", "Item3"};
-    public List<string> stage2Items = new List<string>() {"Item3"};
-    public List<string> stage3Items = new List<string>() {"Item4"};
+    public List<string> stage1Items = new List<string>() { "Item1", "Item2", "Item3" };
+    public List<string> stage2Items = new List<string>() { "Item3" };
+    public List<string> stage3Items = new List<string>() { "Item4" };
 
     // 跟踪当前对话编号
     private int currentDialogueNumber = -1;
@@ -35,12 +35,12 @@ public class NewTrayQuest : MonoBehaviour
 
     // 厨房解锁UI
     public GameObject kitchenUnlockUI;
-    
-    
+
+
     #endregion
-    
+
     #region Unity生命周期
-    
+
     // 在MonoBehaviour创建后第一次执行Update之前调用一次
     void Start()
     {
@@ -56,20 +56,25 @@ public class NewTrayQuest : MonoBehaviour
                 }
             }
         }
-        
+
         // 订阅对话事件
         GlobalEvent.nextDialogueEvent.AddListener(OnNextDialogue);
-        
+
         // 订阅对话结束事件
         if (DialogueManager.Instance != null)
         {
             DialogueManager.Instance.OnDialogueEnd.AddListener(OnDialogueEnd);
         }
-        
-        // 初始化提示显示
+
+
+    }
+
+    void OnEnable()
+    {
+        // // 初始化提示显示
         UpdatePromptDisplay();
     }
-    
+
     void OnDestroy()
     {
         // 取消订阅事件以防止内存泄漏
@@ -84,10 +89,10 @@ public class NewTrayQuest : MonoBehaviour
                 }
             }
         }
-        
+
         // 取消订阅事件
         GlobalEvent.nextDialogueEvent.RemoveListener(OnNextDialogue);
-        
+
         // 取消订阅对话结束事件
         if (DialogueManager.Instance != null)
         {
@@ -100,11 +105,11 @@ public class NewTrayQuest : MonoBehaviour
     {
 
     }
-    
+
     #endregion
-    
+
     #region 事件处理器
-    
+
     // 物品放入插槽时的事件处理器
     private void OnItemPlacedInSocket(SelectEnterEventArgs args)
     {
@@ -113,15 +118,15 @@ public class NewTrayQuest : MonoBehaviour
         {
             Debug.Log($"物品放入插槽: {GetInteractableName(args.interactableObject)}");
             LogAllSocketContents();
-            
+
             // 物品放入时检查阶段条件
             CheckStageConditions();
-            
+
             // 更新提示显示
             UpdatePromptDisplay();
         }
     }
-    
+
     // 物品从插槽移除时的事件处理器
     private void OnItemRemovedFromSocket(SelectExitEventArgs args)
     {
@@ -130,19 +135,19 @@ public class NewTrayQuest : MonoBehaviour
         {
             Debug.Log($"物品从插槽移除: {GetInteractableName(args.interactableObject)}");
             LogAllSocketContents();
-            
+
             // 物品移除时检查阶段条件
             CheckStageConditions();
-            
+
             // 更新提示显示
             UpdatePromptDisplay();
         }
     }
-    
+
     #endregion
-    
+
     #region 辅助方法
-    
+
     // 获取插槽中所有物品名称的辅助方法
     private List<string> GetSocketItemNames(XRSocketInteractor socket)
     {
@@ -156,7 +161,7 @@ public class NewTrayQuest : MonoBehaviour
         }
         return itemNames;
     }
-    
+
     // 获取可交互对象名称的辅助方法
     private string GetInteractableName(IXRInteractable interactable)
     {
@@ -166,7 +171,7 @@ public class NewTrayQuest : MonoBehaviour
         }
         return "未知物品";
     }
-    
+
     // 记录所有插槽内容的方法
     private void LogAllSocketContents()
     {
@@ -175,9 +180,9 @@ public class NewTrayQuest : MonoBehaviour
             Debug.Log("没有可用的插槽");
             return;
         }
-        
+
         Debug.Log("=== 当前插槽内容 ===");
-        
+
         int socketIndex = 0;
         foreach (var socket in sockets)
         {
@@ -187,7 +192,7 @@ public class NewTrayQuest : MonoBehaviour
                 Debug.Log($"插槽 {socketIndex}: [空插槽]");
                 continue;
             }
-            
+
             var currentItems = GetSocketItemNames(socket);
             if (currentItems.Count > 0)
             {
@@ -200,11 +205,11 @@ public class NewTrayQuest : MonoBehaviour
         }
         Debug.Log("==============================");
     }
-    
+
     #endregion
-    
+
     #region 阶段管理
-    
+
     // 根据当前阶段检查阶段条件的方法
     private void CheckStageConditions()
     {
@@ -221,18 +226,18 @@ public class NewTrayQuest : MonoBehaviour
                 break;
         }
     }
-    
+
     // 检查阶段1条件的方法
     private void CheckStage1Conditions()
     {
         // 获取所有插槽中的当前物品名称
         var allCurrentItems = GetAllCurrentItemNames();
-        
+
         // 检查是否所有必需物品都存在（包含检查，不是精确匹配）
         bool hasItem1 = false;
         bool hasItem2 = false;
         bool hasItem3 = false;
-        
+
         foreach (string itemName in allCurrentItems)
         {
             if (itemName.Contains("Item1"))
@@ -242,29 +247,29 @@ public class NewTrayQuest : MonoBehaviour
             if (itemName.Contains("Item3"))
                 hasItem3 = true;
         }
-        
+
         // 如果三个物品都存在，调用成功方法
         if (hasItem1 && hasItem2 && hasItem3)
         {
             Hahaha();
         }
     }
-    
+
     // 检查阶段2条件的方法
     private void CheckStage2Conditions()
     {
         // 获取所有插槽中的当前物品名称
         var allCurrentItems = GetAllCurrentItemNames();
-        
+
         // 检查Item3是否存在
         bool hasItem3 = false;
-        
+
         foreach (string itemName in allCurrentItems)
         {
             if (itemName.Contains("Item3"))
                 hasItem3 = true;
         }
-        
+
         // 如果Item3不存在（已被移除），调用成功方法
         if (!hasItem3)
         {
@@ -272,22 +277,22 @@ public class NewTrayQuest : MonoBehaviour
             HahahaStage2();
         }
     }
-    
+
     // 检查阶段3条件的方法
     private void CheckStage3Conditions()
     {
         // 获取所有插槽中的当前物品名称
         var allCurrentItems = GetAllCurrentItemNames();
-        
+
         // 检查Item4是否存在
         bool hasItem4 = false;
-        
+
         foreach (string itemName in allCurrentItems)
         {
             if (itemName.Contains("Item4"))
                 hasItem4 = true;
         }
-        
+
         // 如果Item4存在，调用成功方法
         if (hasItem4)
         {
@@ -295,12 +300,12 @@ public class NewTrayQuest : MonoBehaviour
             HahahaStage3();
         }
     }
-    
+
     // 获取所有插槽中当前物品名称的辅助方法
     private List<string> GetAllCurrentItemNames()
     {
         var allItems = new List<string>();
-        
+
         if (sockets != null)
         {
             foreach (var socket in sockets)
@@ -312,47 +317,47 @@ public class NewTrayQuest : MonoBehaviour
                 }
             }
         }
-        
+
         return allItems;
     }
-    
+
     // 阶段1条件满足时调用的成功方法
     private void Hahaha()
     {
         Debug.Log("哈哈哈");
-        
+
         // 禁用插槽中Item1和Item2的抓取交互
         DisableItemGrabInteractionInSockets("Item1");
         DisableItemGrabInteractionInSockets("Item2");
 
         StartCoroutine(SwitchToStage2AfterDelay());
     }
-    
+
     // 阶段2条件满足时调用的成功方法
     private void HahahaStage2()
     {
         Debug.Log("哈哈哈");
-        
+
         // 立即更新提示显示为1/1
         UpdatePromptDisplay();
-        
+
         // 打开第八句对白，并设置按钮为下一步
         StartCoroutine(OpenDialogue8AfterDelay());
-        
+
         StartCoroutine(SwitchToStage3AfterDelay());
     }
-    
+
     // 阶段3条件满足时调用的成功方法
     private void HahahaStage3()
     {
         Debug.Log("哈哈哈");
-        
+
         // 打开第16条对话，并设置按钮为关闭模式
         StartCoroutine(OpenDialogue16AfterDelay());
-        
+
         StartCoroutine(SwitchToStageCompleteAfterDelay());
     }
-    
+
     // 禁用插槽中特定名称物品抓取交互的辅助方法
     private void DisableItemGrabInteractionInSockets(string itemName)
     {
@@ -379,13 +384,13 @@ public class NewTrayQuest : MonoBehaviour
             }
         }
     }
-    
+
     // 为对象及其所有子对象设置Unity层级的辅助方法
     private void SetLayersForObjectAndChildren(GameObject obj, int layerValue)
     {
         // 为主对象设置层级
         obj.layer = layerValue;
-        
+
         // 为所有子对象设置层级
         Transform[] children = obj.GetComponentsInChildren<Transform>();
         foreach (Transform child in children)
@@ -393,35 +398,35 @@ public class NewTrayQuest : MonoBehaviour
             child.gameObject.layer = layerValue;
         }
     }
-    
+
     // 等待3秒后切换到阶段2的协程
     private IEnumerator SwitchToStage2AfterDelay()
     {
         yield return new WaitForSeconds(3f);
         currentStage = QuestStage.Stage2;
         Debug.Log("已切换到阶段2");
-        
+
         // 切换阶段后更新提示显示
         UpdatePromptDisplay();
     }
-    
+
     // 等待3秒后切换到阶段3的协程
     private IEnumerator SwitchToStage3AfterDelay()
     {
         yield return new WaitForSeconds(3f);
         currentStage = QuestStage.Stage3;
         Debug.Log("已切换到阶段3");
-        
+
         // 切换阶段后更新提示显示
         UpdatePromptDisplay();
     }
-    
+
     // 等待3秒后切换到阶段完成的协程
     private IEnumerator SwitchToStageCompleteAfterDelay()
     {
         yield return new WaitForSeconds(3f);
         Debug.Log("所有阶段完成!");
-        
+
         // 显示完成消息
         if (promptManager != null)
         {
@@ -429,11 +434,11 @@ public class NewTrayQuest : MonoBehaviour
             Debug.Log("显示完成消息: 都已经完成");
         }
     }
-    
+
     #endregion
-    
+
     #region 提示显示管理
-    
+
     // 更新提示显示的方法
     private void UpdatePromptDisplay()
     {
@@ -442,7 +447,7 @@ public class NewTrayQuest : MonoBehaviour
             Debug.LogWarning("PromptManager未分配，无法更新提示显示");
             return;
         }
-        
+
         switch (currentStage)
         {
             case QuestStage.Stage1:
@@ -456,12 +461,12 @@ public class NewTrayQuest : MonoBehaviour
                 break;
         }
     }
-    
+
     // 更新阶段1的提示显示
     private void UpdateStage1Prompt()
     {
         var allCurrentItems = GetAllCurrentItemNames();
-        
+
         // 计算当前收集的进度
         int collectedCount = 0;
         foreach (string itemName in allCurrentItems)
@@ -469,16 +474,16 @@ public class NewTrayQuest : MonoBehaviour
             if (itemName.Contains("Item1") || itemName.Contains("Item2") || itemName.Contains("Item3"))
                 collectedCount++;
         }
-        
+
         string promptText = $"当前收集的进度，然后是一个{collectedCount}分之3";
         promptManager.SetPromptText(promptText);
     }
-    
+
     // 更新阶段2的提示显示
     private void UpdateStage2Prompt()
     {
         var allCurrentItems = GetAllCurrentItemNames();
-        
+
         // 检查Item3是否还在插槽中
         bool hasItem3 = false;
         foreach (string itemName in allCurrentItems)
@@ -486,18 +491,18 @@ public class NewTrayQuest : MonoBehaviour
             if (itemName.Contains("Item3"))
                 hasItem3 = true;
         }
-        
+
         // 如果Item3还在插槽中，显示0/1，如果已移除，显示1/1
         int removedCount = hasItem3 ? 0 : 1;
         string promptText = $"拿出指定的对象，然后是一个{removedCount}分之1";
         promptManager.SetPromptText(promptText);
     }
-    
+
     // 更新阶段3的提示显示
     private void UpdateStage3Prompt()
     {
         var allCurrentItems = GetAllCurrentItemNames();
-        
+
         // 检查Item4是否在插槽中
         bool hasItem4 = false;
         foreach (string itemName in allCurrentItems)
@@ -505,17 +510,17 @@ public class NewTrayQuest : MonoBehaviour
             if (itemName.Contains("Item4"))
                 hasItem4 = true;
         }
-        
+
         // 如果Item4在插槽中，显示1/1，否则显示0/1
         int placedCount = hasItem4 ? 1 : 0;
         string promptText = $"指定的东西进入的提示，然后是一个{placedCount}分之1";
         promptManager.SetPromptText(promptText);
     }
-    
+
     #endregion
-    
+
     #region Public Methods
-    
+
     // 记录插槽中所有物品名称的方法
     [Button("记录插槽中的物品")]
     public void LogItemsInSockets()
@@ -556,7 +561,7 @@ public class NewTrayQuest : MonoBehaviour
             }
         }
     }
-    
+
     /// <summary>
     /// 检查第三个阶段的任务是否完成
     /// </summary>
@@ -565,7 +570,7 @@ public class NewTrayQuest : MonoBehaviour
     {
         // 获取所有插槽中的当前物品名称
         var allCurrentItems = GetAllCurrentItemNames();
-        
+
         // 检查阶段3条件：Item4存在
         bool hasItem4 = false;
         foreach (string itemName in allCurrentItems)
@@ -573,7 +578,7 @@ public class NewTrayQuest : MonoBehaviour
             if (itemName.Contains("Item4"))
                 hasItem4 = true;
         }
-        
+
         // 输出结果
         if (hasItem4)
         {
@@ -585,11 +590,11 @@ public class NewTrayQuest : MonoBehaviour
             Debug.Log("没有完成");
         }
     }
-    
+
     #endregion
-    
+
     #region 对话管理
-    
+
     /// <summary>
     /// 处理下一句对话事件
     /// </summary>
@@ -597,11 +602,11 @@ public class NewTrayQuest : MonoBehaviour
     private void OnNextDialogue(int dialogueNumber)
     {
         Debug.Log($"NewTrayQuest: 收到对话事件，对话序号: {dialogueNumber}");
-        
+
         // 更新当前对话编号
         currentDialogueNumber = dialogueNumber;
     }
-    
+
     /// <summary>
     /// 处理对话结束事件
     /// </summary>
@@ -613,18 +618,18 @@ public class NewTrayQuest : MonoBehaviour
             Debug.Log("当前对话是第八号对话，对话结束");
             // 可以在这里添加对话结束后的逻辑
         }
-        
+
         // 重置对话编号
         currentDialogueNumber = -1;
     }
-    
+
     /// <summary>
     /// 延迟打开第八句对白的协程
     /// </summary>
     private IEnumerator OpenDialogue8AfterDelay()
     {
         yield return new WaitForSeconds(1f);
-        
+
         // 触发第八个对话条目
         if (DialogueManager.Instance != null)
         {
@@ -639,14 +644,14 @@ public class NewTrayQuest : MonoBehaviour
             Debug.LogWarning("DialogueManager实例未找到");
         }
     }
-    
+
     /// <summary>
     /// 延迟打开第16句对白的协程
     /// </summary>
     private IEnumerator OpenDialogue16AfterDelay()
     {
         yield return new WaitForSeconds(1f);
-        
+
         // 触发第16个对话条目
         if (DialogueManager.Instance != null)
         {
@@ -660,6 +665,6 @@ public class NewTrayQuest : MonoBehaviour
             Debug.LogWarning("DialogueManager实例未找到");
         }
     }
-    
+
     #endregion
 }
