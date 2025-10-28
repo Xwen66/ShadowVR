@@ -430,7 +430,7 @@ public class NewTrayQuest : MonoBehaviour
         // 显示完成消息
         if (promptManager != null)
         {
-            promptManager.SetPromptText("都已经完成");
+            promptManager.SetPromptText("所有已经完成");
             Debug.Log("显示完成消息: 都已经完成");
         }
     }
@@ -475,7 +475,7 @@ public class NewTrayQuest : MonoBehaviour
                 collectedCount++;
         }
 
-        string promptText = $"当前收集的进度，然后是一个{collectedCount}分之3";
+        string promptText = $"收集厨房提示卡  {collectedCount}/3";
         promptManager.SetPromptText(promptText);
     }
 
@@ -494,7 +494,7 @@ public class NewTrayQuest : MonoBehaviour
 
         // 如果Item3还在插槽中，显示0/1，如果已移除，显示1/1
         int removedCount = hasItem3 ? 0 : 1;
-        string promptText = $"拿出指定的对象，然后是一个{removedCount}分之1";
+        string promptText = $"拿出不参加发布会的人的卡片  {removedCount}/1";
         promptManager.SetPromptText(promptText);
     }
 
@@ -513,7 +513,7 @@ public class NewTrayQuest : MonoBehaviour
 
         // 如果Item4在插槽中，显示1/1，否则显示0/1
         int placedCount = hasItem4 ? 1 : 0;
-        string promptText = $"指定的东西进入的提示，然后是一个{placedCount}分之1";
+        string promptText = $"放入1个奖章{placedCount}/1";
         promptManager.SetPromptText(promptText);
     }
 

@@ -4469,11 +4469,11 @@ MonoBehaviour:
   questUIMove: {fileID: 1620491778}
   ItemTypeText: {fileID: 1012431114}
   questCanvas: {fileID: 1620491776}
-  ItemQuest1: 11111
+  ItemQuest1: "\u6536\u96C6\u53A8\u623F\u63D0\u793A\u5361"
   ItemQuest2: 22222
   ItemQuest3: 333333
-  shadowQuest1: 444444
-  shadowQuest2: 555555
+  shadowQuest1: "\u6321\u4F4F\u5149\u7EBF\uFF0C\u5E2E\u52A9\u5C0F\u523A\u732C\u5728\u5F71\u5B50\u4E2D\u524D\u884C\u3002"
+  shadowQuest2: "\u8BA9\u5899\u4E0A\u7684\u5F71\u5B50\u53D8\u6210\u9636\u68AF\u7684\u5F62\u72B6\u3002"
 --- !u!1001 &666221367
 PrefabInstance:
   m_ObjectHideFlags: 0
