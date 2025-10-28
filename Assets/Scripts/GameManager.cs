@@ -13,7 +13,6 @@ public class GameManager : MonoBehaviour
     [SerializeField] public GameObject FoxPrefab;          // 狐狸预制体（可能用于特效或动画）
     public Transform FoxLeftHand;                         // 狐狸左手位置
     public Transform FoxRightHand;                        // 狐狸右手位置
-    public ToolBoxMove toolBoxMove;
     [SerializeField] private GameObject _smallPlayer;      // 小型玩家角色（动物形态）
 
     [Header("冷却时间设置")]
@@ -27,12 +26,8 @@ public class GameManager : MonoBehaviour
     [Header("单例实例")]
     public static GameManager Instance;                    // 单例实例，用于全局访问
 
-    [Header("工具箱设置")]
-    public GameObject ToolBox;                             // 工具箱游戏对象
-
     [Header("按键启用设置")]
     public bool canChangePerson = false;
-    public bool canOpenToolBox = false;
 
     [Header("玩家状态")]
     public bool isLargePlayer = true;  // 记录当前是否是大型玩家状态（人类形态），true为人类形态，false为动物形态
@@ -133,22 +128,6 @@ public class GameManager : MonoBehaviour
             }
         }
 
-        // 检查左手控制器的Menu按钮是否按下（用于工具箱切换）
-        if (UnityEngine.XR.InputDevices.GetDeviceAtXRNode(UnityEngine.XR.XRNode.LeftHand)
-            .TryGetFeatureValue(UnityEngine.XR.CommonUsages.menuButton, out bool isPressedLeftMenu) && isPressedLeftMenu
-            && canOpenToolBox)  // 只有在允许打开工具箱时才执行
-        {
-            // 使用ToolBoxMove脚本切换工具箱状态
-            if (toolBoxMove != null)
-            {
-                toolBoxMove.ToggleState();
-                _cooldownTimer = 0f;              // 重置冷却计时器
-            }
-            else
-            {
-                Debug.LogWarning("ToolBoxMove脚本未设置，无法切换工具箱状态");
-            }
-        }
     }
 
     /// <summary>
