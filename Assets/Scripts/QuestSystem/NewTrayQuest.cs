@@ -20,6 +20,10 @@ public class NewTrayQuest : MonoBehaviour
     public AudioClip UIChange;
     public AudioClip UICompletely;
 
+    // 音效播放控制
+    private float scriptStartTime;
+    private const float AUDIO_DELAY_TIME = 3f; // 音效延迟时间（秒）
+
     // 定义提示管理器
     public PromptManager promptManager;
     // 定义XRSocketInteractor列表
@@ -50,6 +54,9 @@ public class NewTrayQuest : MonoBehaviour
     // 在MonoBehaviour创建后第一次执行Update之前调用一次
     void Start()
     {
+        // 记录脚本开始运行的时间
+        scriptStartTime = Time.time;
+
         // 订阅所有插槽的选择事件
         if (sockets != null)
         {
@@ -702,6 +709,13 @@ public class NewTrayQuest : MonoBehaviour
     /// </summary>
     private void PlayUIChangeSound()
     {
+        // 检查是否已经过了延迟时间
+        if (Time.time - scriptStartTime < AUDIO_DELAY_TIME)
+        {
+            Debug.Log($"音效播放被阻止：脚本运行时间不足 {AUDIO_DELAY_TIME} 秒");
+            return;
+        }
+
         if (audioSource != null && UIChange != null)
         {
             audioSource.PlayOneShot(UIChange);
@@ -718,6 +732,13 @@ public class NewTrayQuest : MonoBehaviour
     /// </summary>
     private void PlayUICompletelySound()
     {
+        // 检查是否已经过了延迟时间
+        if (Time.time - scriptStartTime < AUDIO_DELAY_TIME)
+        {
+            Debug.Log($"音效播放被阻止：脚本运行时间不足 {AUDIO_DELAY_TIME} 秒");
+            return;
+        }
+
         if (audioSource != null && UICompletely != null)
         {
             audioSource.PlayOneShot(UICompletely);
