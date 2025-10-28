@@ -9,6 +9,10 @@ public class DialogueManager : MonoBehaviour
     [SerializeField] private DialogueDatabase dialogueDatabase;
     [SerializeField] private bool useChinese = true;
 
+    [Header("Learn Image")]
+    [SerializeField] private GameObject learnImage;
+ 
+
 
     [Header("Events")]
     public UnityEvent<DialogueEntry> OnDialogueStart;
@@ -45,7 +49,7 @@ public class DialogueManager : MonoBehaviour
     public bool IsChinese => useChinese;
     public DialogueEntry CurrentDialogue => dialogueDatabase?.GetDialogueByNumber(currentDialogueNumber);
     public bool NextButtonClosesDialog => nextButtonClosesDialog; // 只读属性，获取当前按钮模式
-    
+
     private void Awake()
     {
         // 确保单例
@@ -86,21 +90,21 @@ public class DialogueManager : MonoBehaviour
             Debug.LogError("DialogueManager: No dialogue database assigned!");
             return;
         }
-        
+
         var dialogue = dialogueDatabase.GetDialogueByNumber(dialogNumber);
         if (dialogue == null)
         {
             Debug.LogError($"DialogueManager: Dialogue with number {dialogNumber} not found!");
             return;
         }
-        
+
         currentDialogueNumber = dialogNumber;
         isDialogueActive = true;
-        
+
         OnDialogueStart?.Invoke(dialogue);
         DisplayCurrentDialogue();
     }
-    
+
     /// <summary>
     /// 显示当前对话
     /// </summary>
@@ -125,6 +129,9 @@ public class DialogueManager : MonoBehaviour
         if (!isDialogueActive || dialogueDatabase == null)
             return;
 
+        // 隐藏学习图片
+        HideLearnImage();
+
         int nextDialogueNumber = dialogueDatabase.GetNextDialogueNumber(currentDialogueNumber);
 
         if (nextDialogueNumber != -1)
@@ -148,6 +155,9 @@ public class DialogueManager : MonoBehaviour
 
         isDialogueActive = false;
         currentDialogueNumber = -1;
+
+        // 隐藏学习图片
+        HideLearnImage();
 
         OnDialogueEnd?.Invoke();
         Debug.Log("Dialogue ended");
@@ -196,18 +206,18 @@ public class DialogueManager : MonoBehaviour
             Debug.LogError($"DialogueManager: Cannot go to dialogue {dialogNumber} - not found!");
             return;
         }
-        
+
         currentDialogueNumber = dialogNumber;
-        
+
         if (!isDialogueActive)
         {
             isDialogueActive = true;
             OnDialogueStart?.Invoke(dialogueDatabase.GetDialogueByNumber(dialogNumber));
         }
-        
+
         DisplayCurrentDialogue();
     }
-    
+
     /// <summary>
     /// 获取当前对话的角色图像
     /// </summary>
@@ -235,14 +245,14 @@ public class DialogueManager : MonoBehaviour
     public void SetNextButtonMode(bool closeDialogMode)
     {
         nextButtonClosesDialog = closeDialogMode;
-        
+
         // 通知UI更新按钮状态
         var dialogueUI = FindObjectOfType<DialogueUI>();
         if (dialogueUI != null)
         {
             dialogueUI.SetNextButtonMode(closeDialogMode);
         }
-        
+
         Debug.Log($"Next button mode set to: {(closeDialogMode ? "Close Dialog" : "Next Dialogue")}");
     }
 
@@ -261,6 +271,38 @@ public class DialogueManager : MonoBehaviour
     public bool GetNextButtonMode()
     {
         return nextButtonClosesDialog;
+    }
+
+    /// <summary>
+    /// 隐藏学习图片
+    /// </summary>
+    public void HideLearnImage()
+    {
+        if (learnImage != null)
+        {
+            learnImage.SetActive(false);
+            Debug.Log("Learn image hidden");
+        }
+        else
+        {
+            Debug.LogWarning("Learn image reference is null!");
+        }
+    }
+
+    /// <summary>
+    /// 显示学习图片
+    /// </summary>
+    public void ShowLearnImage()
+    {
+        if (learnImage != null)
+        {
+            learnImage.SetActive(true);
+            Debug.Log("Learn image shown");
+        }
+        else
+        {
+            Debug.LogWarning("Learn image reference is null!");
+        }
     }
 
     #region Inspector Test Functions
@@ -334,7 +376,7 @@ public class DialogueManager : MonoBehaviour
         if (showDebugLogs)
             Debug.Log($"[TEST] Dialogue ended manually");
     }
-    
+
     /// <summary>
     /// 测试功能：打印系统状态
     /// </summary>
