@@ -40,9 +40,9 @@ public class Fox : MonoBehaviour
         // 如果还在冷却中，直接返回
         if (_cooldownTimer < _cooldown) return;
 
-        // 检查左手控制器的Menu按钮是否按下（用于工具箱切换）
+        // 检查左手控制器的X按钮是否按下（用于工具箱切换）
         if (UnityEngine.XR.InputDevices.GetDeviceAtXRNode(UnityEngine.XR.XRNode.LeftHand)
-            .TryGetFeatureValue(UnityEngine.XR.CommonUsages.menuButton, out bool isPressedLeftMenu) && isPressedLeftMenu
+            .TryGetFeatureValue(UnityEngine.XR.CommonUsages.primaryButton, out bool isPressedLeftX) && isPressedLeftX
             && _canOpenToolBox)  // 只有在允许打开工具箱时才执行
         {
             // 使用ToolBoxMove脚本切换工具箱状态
