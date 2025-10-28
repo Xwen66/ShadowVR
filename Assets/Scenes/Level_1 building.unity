@@ -3583,7 +3583,7 @@ MonoBehaviour:
   m_Name: 
   m_EditorClassIdentifier: 
   hedgehogModel: {fileID: 1422363078}
-  hedgehogCreateVFXPrefab: {fileID: 2031695294858245857, guid: ba7e0fb900e1e9d48911e181d91ee1d1, type: 3}
+  hedgehogCreateVFXPrefab: {fileID: 3491401457035547118, guid: daa33bd374e076542971c6b9c6ec0eb9, type: 3}
   fox: {fileID: 0}
   promptManager: {fileID: 1182972482}
   promptMove: {fileID: 1182972484}

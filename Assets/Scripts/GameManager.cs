@@ -9,7 +9,7 @@ public class GameManager : MonoBehaviour
 {
     [Header("玩家角色设置")]
     [SerializeField] private GameObject _largePlayerModel;      // 大型玩家角色（人类形态）
-    [SerializeField] private GameObject _smallPlayerModel;      // 大型玩家角色（人类形态）
+    [SerializeField] private GameObject _smallPlayerModel;      // 小型玩家角色（刺猬形态）
     [SerializeField] public GameObject FoxPrefab;          // 狐狸预制体（可能用于特效或动画）
     public Transform FoxLeftHand;                         // 狐狸左手位置
     public Transform FoxRightHand;                        // 狐狸右手位置

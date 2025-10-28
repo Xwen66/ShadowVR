@@ -3,6 +3,7 @@ using System.Collections;
 using VInspector;
 
 
+
 public class ProcessManager : MonoBehaviour
 {
 
@@ -185,14 +186,14 @@ public class ProcessManager : MonoBehaviour
         // 重置对话编号
         currentDialogueNumber = -1;
     }
-    
+
     /// <summary>
     /// 处理台阶出现事件
     /// </summary>
     private void OnStairAppear()
     {
         Debug.Log("台阶出现事件被触发");
-        
+
         // 直接开启第15条对白，并把按钮功能换成关闭
         if (DialogueManager.Instance != null)
         {
@@ -208,8 +209,11 @@ public class ProcessManager : MonoBehaviour
 
 
 
-
-
+    [Button("生成小刺猬11")]
+    public void Test1()
+    {
+        StartCoroutine(DelayedSpawn(2f));
+    }
 
 
 
@@ -217,6 +221,7 @@ public class ProcessManager : MonoBehaviour
     /// 延迟生成物体的协程
     /// </summary>
     /// <param name="delay">延迟时间（秒）</param>
+    [Button("生成小刺猬")]
     private IEnumerator DelayedSpawn(float delay)
     {
         yield return new WaitForSeconds(delay);
@@ -224,6 +229,14 @@ public class ProcessManager : MonoBehaviour
         //active hedgehog model
         hedgehogModel.SetActive(true);
         GameObject hedgehogCreateVFX = Instantiate(hedgehogCreateVFXPrefab, hedgehogModel.transform.position, hedgehogModel.transform.rotation);
+        hedgehogCreateVFX.transform.position = new Vector3(hedgehogCreateVFX.transform.position.x, 3.46f, hedgehogCreateVFX.transform.position.z);
+
+        // 等待4秒后删除特效
+        yield return new WaitForSeconds(4f);
+        if (hedgehogCreateVFX != null)
+        {
+            Destroy(hedgehogCreateVFX);
+        }
 
         // 生成后再等待2秒
         yield return new WaitForSeconds(2f);
