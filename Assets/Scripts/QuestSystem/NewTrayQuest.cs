@@ -18,6 +18,7 @@ public class NewTrayQuest : MonoBehaviour
     #region 字段定义
     public AudioSource audioSource;
     public AudioClip UIChange;
+    public AudioClip UICompletely;
 
     // 定义提示管理器
     public PromptManager promptManager;
@@ -31,6 +32,9 @@ public class NewTrayQuest : MonoBehaviour
 
     // 跟踪当前对话编号
     private int currentDialogueNumber = -1;
+
+    // 跟踪任务进度变化
+    private string lastProgressText = "";
 
     // shadow line的虚线图
     public GameObject shadowLine;
@@ -328,6 +332,9 @@ public class NewTrayQuest : MonoBehaviour
     {
         Debug.Log("哈哈哈");
 
+        // 播放阶段完成音效
+        PlayUICompletelySound();
+
         // 禁用插槽中Item1和Item2的抓取交互
         DisableItemGrabInteractionInSockets("Item1");
         DisableItemGrabInteractionInSockets("Item2");
@@ -339,6 +346,9 @@ public class NewTrayQuest : MonoBehaviour
     private void HahahaStage2()
     {
         Debug.Log("哈哈哈");
+
+        // 播放阶段完成音效
+        PlayUICompletelySound();
 
         // 立即更新提示显示为1/1
         UpdatePromptDisplay();
@@ -353,6 +363,9 @@ public class NewTrayQuest : MonoBehaviour
     private void HahahaStage3()
     {
         Debug.Log("哈哈哈");
+
+        // 播放阶段完成音效
+        PlayUICompletelySound();
 
         // 打开第16条对话，并设置按钮为关闭模式
         StartCoroutine(OpenDialogue16AfterDelay());
@@ -450,22 +463,31 @@ public class NewTrayQuest : MonoBehaviour
             return;
         }
 
+        string newProgressText = "";
+        
         switch (currentStage)
         {
             case QuestStage.Stage1:
-                UpdateStage1Prompt();
+                newProgressText = UpdateStage1Prompt();
                 break;
             case QuestStage.Stage2:
-                UpdateStage2Prompt();
+                newProgressText = UpdateStage2Prompt();
                 break;
             case QuestStage.Stage3:
-                UpdateStage3Prompt();
+                newProgressText = UpdateStage3Prompt();
                 break;
+        }
+
+        // 检查进度是否发生变化
+        if (!string.IsNullOrEmpty(newProgressText) && newProgressText != lastProgressText)
+        {
+            PlayUIChangeSound();
+            lastProgressText = newProgressText;
         }
     }
 
     // 更新阶段1的提示显示
-    private void UpdateStage1Prompt()
+    private string UpdateStage1Prompt()
     {
         var allCurrentItems = GetAllCurrentItemNames();
 
@@ -479,10 +501,11 @@ public class NewTrayQuest : MonoBehaviour
 
         string promptText = $"收集厨房提示卡  {collectedCount}/3";
         promptManager.SetPromptText(promptText);
+        return promptText;
     }
 
     // 更新阶段2的提示显示
-    private void UpdateStage2Prompt()
+    private string UpdateStage2Prompt()
     {
         var allCurrentItems = GetAllCurrentItemNames();
 
@@ -498,10 +521,11 @@ public class NewTrayQuest : MonoBehaviour
         int removedCount = hasItem3 ? 0 : 1;
         string promptText = $"拿出不参加发布会的人的卡片  {removedCount}/1";
         promptManager.SetPromptText(promptText);
+        return promptText;
     }
 
     // 更新阶段3的提示显示
-    private void UpdateStage3Prompt()
+    private string UpdateStage3Prompt()
     {
         var allCurrentItems = GetAllCurrentItemNames();
 
@@ -517,6 +541,7 @@ public class NewTrayQuest : MonoBehaviour
         int placedCount = hasItem4 ? 1 : 0;
         string promptText = $"放入1个奖章{placedCount}/1";
         promptManager.SetPromptText(promptText);
+        return promptText;
     }
 
     #endregion
@@ -665,6 +690,42 @@ public class NewTrayQuest : MonoBehaviour
         else
         {
             Debug.LogWarning("DialogueManager实例未找到");
+        }
+    }
+
+    #endregion
+
+    #region 音效管理
+
+    /// <summary>
+    /// 播放任务进度变化音效
+    /// </summary>
+    private void PlayUIChangeSound()
+    {
+        if (audioSource != null && UIChange != null)
+        {
+            audioSource.PlayOneShot(UIChange);
+            Debug.Log("Playing UI change sound for quest progress update");
+        }
+        else
+        {
+            Debug.LogWarning("Cannot play UI change sound: AudioSource or UIChange AudioClip is missing");
+        }
+    }
+
+    /// <summary>
+    /// 播放阶段完全完成音效
+    /// </summary>
+    private void PlayUICompletelySound()
+    {
+        if (audioSource != null && UICompletely != null)
+        {
+            audioSource.PlayOneShot(UICompletely);
+            Debug.Log("Playing UI completely sound for stage completion");
+        }
+        else
+        {
+            Debug.LogWarning("Cannot play UI completely sound: AudioSource or UICompletely AudioClip is missing");
         }
     }
 
