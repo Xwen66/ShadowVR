@@ -3,6 +3,8 @@ using VInspector;
 
 public class collectionCollision : MonoBehaviour
 {
+    public AudioSource audioSource;
+    public AudioClip pickUpSound;
     public GameObject effectObject;
     private GameObject instantiatedEffectObject;
     public string ItemType;
@@ -52,6 +54,9 @@ public class collectionCollision : MonoBehaviour
     void TransferItemToUIManager()
     {
         GlobalEvent.OnPickUpThingEvent.Invoke();
+
+        // 播放捡起音效
+        PlayPickUpSound();
 
         Debug.LogError("正在传递物品信息到UI管理器");
         GetUIManager uiManager = GetUIManager.Instance;
@@ -121,5 +126,21 @@ public class collectionCollision : MonoBehaviour
         Debug.LogError("collider碰到东西了");
         TransferItemToUIManager();
 
+    }
+
+    /// <summary>
+    /// 播放捡起物品音效
+    /// </summary>
+    private void PlayPickUpSound()
+    {
+        if (audioSource != null && pickUpSound != null)
+        {
+            audioSource.PlayOneShot(pickUpSound);
+            Debug.Log("Playing pick up sound for collection item");
+        }
+        else
+        {
+            Debug.LogWarning("Cannot play pick up sound: AudioSource or pickUpSound AudioClip is missing");
+        }
     }
 }
