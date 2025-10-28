@@ -34,6 +34,7 @@ public class GameManager : MonoBehaviour
 
     [Header("临时方法")]
     public DialogueMove dialogueMove;
+    public DialogueMove dialogueMove2;
 
     /// <summary>
     /// 游戏开始时调用，初始化单例实例
@@ -89,6 +90,12 @@ public class GameManager : MonoBehaviour
                 {
                     dialogueMove.SwitchToMode1();
                 }
+                
+                // 主动设置DialogueMove2的模式为狐狸模式（Mode2）
+                if (dialogueMove2 != null)
+                {
+                    dialogueMove2.SwitchToMode1();
+                }
             }
             else
             {
@@ -106,6 +113,12 @@ public class GameManager : MonoBehaviour
                 if (dialogueMove != null)
                 {
                     dialogueMove.SwitchToMode2();
+                }
+                
+                // 主动设置DialogueMove2的模式为刺猬模式（Mode1）
+                if (dialogueMove2 != null)
+                {
+                    dialogueMove2.SwitchToMode2();
                 }
             }
         }

@@ -51,6 +51,8 @@ public class collectionCollision : MonoBehaviour
 
     void TransferItemToUIManager()
     {
+        GlobalEvent.OnPickUpThingEvent.Invoke();
+
         Debug.LogError("正在传递物品信息到UI管理器");
         GetUIManager uiManager = GetUIManager.Instance;
 

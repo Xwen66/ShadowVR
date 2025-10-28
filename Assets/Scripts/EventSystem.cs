@@ -36,8 +36,10 @@ public static class GlobalEvent
     //台阶出现
     public static UnityEvent OnStairAppearEvent = new UnityEvent();
 
+    //碰到了拾取物
+    public static UnityEvent OnPickUpThingEvent = new UnityEvent();
 
 
-    
-
+    //关闭工具UI
+    public static UnityEvent OnCloseToolUIEvent = new UnityEvent();
 }

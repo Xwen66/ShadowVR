@@ -51,6 +51,8 @@ public class ItemCollision : MonoBehaviour
 
     void TransferItemToUIManager()
     {
+        GlobalEvent.OnPickUpThingEvent.Invoke();
+
         Debug.LogError("正在传递物品信息到UI管理器");
         GetUIManager uiManager = GetUIManager.Instance;
 
@@ -72,7 +74,7 @@ public class ItemCollision : MonoBehaviour
         {
             instantiatedEffectObject.GetComponent<ItemEffectObject>().OnGet();
         }
-        
+
         // 将当前物品插入到插槽中
         SetSelfToSock();
 

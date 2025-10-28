@@ -51,6 +51,7 @@ public class Fox : MonoBehaviour
                 _toolBoxMove.ToggleState();
                 _cooldownTimer = 0f;              // 重置冷却计时器
                 Debug.Log("Fox: 工具箱状态已切换");
+                GlobalEvent.OnCloseToolUIEvent.Invoke();
             }
             else
             {
