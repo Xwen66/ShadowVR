@@ -6,12 +6,17 @@ using UnityEngine;
 /// </summary>
 public class Fox : MonoBehaviour
 {
+    [Header("声音设置")]
+    public AudioSource audioSource;
+    public AudioClip audioClipOpen;
+    public AudioClip audioClipClose;
+
     [Header("工具箱设置")]
     [SerializeField] private ToolBoxMove _toolBoxMove;        // 工具箱移动脚本引用
-    
+
     [Header("按键启用设置")]
     [SerializeField] private bool _canOpenToolBox = false;   // 是否允许打开工具箱
-    
+
     [Header("冷却时间设置")]
     [SerializeField] private float _cooldown = 1f;          // 操作冷却时间（秒）
     private float _cooldownTimer = 0f;                      // 冷却计时器
@@ -19,13 +24,13 @@ public class Fox : MonoBehaviour
     // Start is called once before the first execution of Update after the MonoBehaviour is created
     void Start()
     {
-        
+
     }
 
     // Update is called once per frame
     void Update()
     {
-        
+
     }
 
     /// <summary>
@@ -48,10 +53,16 @@ public class Fox : MonoBehaviour
             // 使用ToolBoxMove脚本切换工具箱状态
             if (_toolBoxMove != null)
             {
+                // 获取当前状态以决定播放哪个音效
+                bool wasFollowing = _toolBoxMove.GetCurrentState() == ToolBoxMove.ToolBoxState.Following;
+                
                 _toolBoxMove.ToggleState();
                 _cooldownTimer = 0f;              // 重置冷却计时器
                 Debug.Log("Fox: 工具箱状态已切换");
                 GlobalEvent.OnCloseToolUIEvent.Invoke();
+                
+                // 播放相应的音效
+                PlayToolBoxSound(wasFollowing);
             }
             else
             {
@@ -85,5 +96,32 @@ public class Fox : MonoBehaviour
     public void SetToolBoxMove(ToolBoxMove toolBoxMove)
     {
         _toolBoxMove = toolBoxMove;
+    }
+
+    /// <summary>
+    /// 播放工具箱音效
+    /// </summary>
+    /// <param name="wasFollowing">工具箱之前是否处于跟随状态</param>
+    private void PlayToolBoxSound(bool wasFollowing)
+    {
+        if (audioSource == null)
+        {
+            Debug.LogWarning("Fox: AudioSource未设置，无法播放音效");
+            return;
+        }
+
+        AudioClip clipToPlay = wasFollowing ? audioClipClose : audioClipOpen;
+        
+        if (clipToPlay != null)
+        {
+            audioSource.PlayOneShot(clipToPlay);
+            string action = wasFollowing ? "关闭" : "打开";
+            Debug.Log($"Fox: 播放工具箱{action}音效");
+        }
+        else
+        {
+            string action = wasFollowing ? "关闭" : "打开";
+            Debug.LogWarning($"Fox: 工具箱{action}音效未设置");
+        }
     }
 }
