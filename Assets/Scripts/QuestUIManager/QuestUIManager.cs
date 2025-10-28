@@ -5,6 +5,8 @@ using UnityEngine.UI;
 public class QuestUIManager : MonoBehaviour
 {
 
+    public AudioSource audioSource;
+    public AudioClip UIOut;
     public GameObject UIcanvas;
     public QuestUIMove questUIMove;
     public TextMeshProUGUI ItemTypeText;
@@ -93,6 +95,8 @@ public class QuestUIManager : MonoBehaviour
         if (questCanvas != null)
         {
             questCanvas.gameObject.SetActive(true);
+            // 播放UI出现音效
+            PlayUIOutSound();
         }
         
         if (ItemTypeText != null)
@@ -112,6 +116,8 @@ public class QuestUIManager : MonoBehaviour
         if (questCanvas != null)
         {
             questCanvas.gameObject.SetActive(true);
+            // 播放UI出现音效
+            PlayUIOutSound();
         }
         
         if (ItemTypeText != null)
@@ -131,6 +137,8 @@ public class QuestUIManager : MonoBehaviour
         if (questCanvas != null)
         {
             questCanvas.gameObject.SetActive(true);
+            // 播放UI出现音效
+            PlayUIOutSound();
         }
         
         if (ItemTypeText != null)
@@ -150,6 +158,8 @@ public class QuestUIManager : MonoBehaviour
         if (questCanvas != null)
         {
             questCanvas.gameObject.SetActive(true);
+            // 播放UI出现音效
+            PlayUIOutSound();
         }
         
         if (ItemTypeText != null)
@@ -169,6 +179,8 @@ public class QuestUIManager : MonoBehaviour
         if (questCanvas != null)
         {
             questCanvas.gameObject.SetActive(true);
+            // 播放UI出现音效
+            PlayUIOutSound();
         }
         
         if (ItemTypeText != null)
@@ -209,6 +221,22 @@ public class QuestUIManager : MonoBehaviour
                     questUIMove.SwitchToMode1(); // 动物形态 -> Mode1
                 }
             }
+        }
+    }
+
+    /// <summary>
+    /// 播放UI出现音效
+    /// </summary>
+    private void PlayUIOutSound()
+    {
+        if (audioSource != null && UIOut != null)
+        {
+            audioSource.PlayOneShot(UIOut);
+            Debug.Log("Playing UI out sound for Quest UI");
+        }
+        else
+        {
+            Debug.LogWarning("Cannot play UI out sound: AudioSource or UIOut AudioClip is missing");
         }
     }
 }

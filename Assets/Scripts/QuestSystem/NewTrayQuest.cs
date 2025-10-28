@@ -16,6 +16,8 @@ public enum QuestStage
 public class NewTrayQuest : MonoBehaviour
 {
     #region 字段定义
+    public AudioSource audioSource;
+    public AudioClip UIChange;
 
     // 定义提示管理器
     public PromptManager promptManager;

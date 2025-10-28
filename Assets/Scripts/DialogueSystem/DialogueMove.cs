@@ -8,6 +8,11 @@ public class DialogueMove : MonoBehaviour
         Mode2 //狐狸模式
     }
 
+    [Header("Sound About")]
+    public AudioSource audioSource;
+    public AudioClip audioClipThisActive;
+    public AudioClip audioClipNext;
+
     [Header("Mode Selection")]
     public UIMode currentMode = UIMode.Mode1;
 
@@ -35,6 +40,7 @@ public class DialogueMove : MonoBehaviour
 
     private Vector3 positionVelocity = Vector3.zero;
     private float rotationVelocity = 0f;
+    private bool wasDialogueActive = false; // 用于跟踪对话状态变化
 
     void Awake()
     {
@@ -46,6 +52,25 @@ public class DialogueMove : MonoBehaviour
     {
         // 每次启用时传送到目标位置
         TeleportToTarget();
+        
+        // 订阅对话管理器事件
+        if (DialogueManager.Instance != null)
+        {
+            DialogueManager.Instance.OnDialogueStart.AddListener(OnDialogueStart);
+            DialogueManager.Instance.OnDialogueDisplay.AddListener(OnDialogueDisplay);
+            DialogueManager.Instance.OnDialogueEnd.AddListener(OnDialogueEnd);
+        }
+    }
+
+    void OnDisable()
+    {
+        // 取消订阅对话管理器事件
+        if (DialogueManager.Instance != null)
+        {
+            DialogueManager.Instance.OnDialogueStart.RemoveListener(OnDialogueStart);
+            DialogueManager.Instance.OnDialogueDisplay.RemoveListener(OnDialogueDisplay);
+            DialogueManager.Instance.OnDialogueEnd.RemoveListener(OnDialogueEnd);
+        }
     }
 
     // Update is called once per frame
@@ -53,7 +78,7 @@ public class DialogueMove : MonoBehaviour
     {
         // 根据当前模式获取相应的目标
         Transform currentTarget = currentMode == UIMode.Mode1 ? targetTransform1 : targetTransform2;
-        
+
         // 更新UI位置和朝向
         if (currentTarget != null)
         {
@@ -118,7 +143,7 @@ public class DialogueMove : MonoBehaviour
     {
         // 根据当前模式获取相应的目标
         Transform currentTarget = currentMode == UIMode.Mode1 ? targetTransform1 : targetTransform2;
-        
+
         if (currentTarget != null)
         {
             // 根据当前模式获取相应的参数
@@ -241,4 +266,70 @@ public class DialogueMove : MonoBehaviour
         else
             yOffset2 = offset;
     }
+
+    #region 音效事件处理
+
+    /// <summary>
+    /// 对话开始事件处理 - 播放激活音效
+    /// </summary>
+    private void OnDialogueStart(DialogueEntry dialogue)
+    {
+        PlayActiveSound();
+    }
+
+    /// <summary>
+    /// 对话显示事件处理 - 播放下一句音效（仅在对话已激活时）
+    /// </summary>
+    private void OnDialogueDisplay(DialogueEntry dialogue)
+    {
+        // 只有在对话已经激活的情况下才播放下一句音效
+        // 这样可以避免在对话开始时同时播放两个音效
+        if (wasDialogueActive)
+        {
+            PlayNextSound();
+        }
+        wasDialogueActive = true;
+    }
+
+    /// <summary>
+    /// 对话结束事件处理 - 重置状态
+    /// </summary>
+    private void OnDialogueEnd()
+    {
+        wasDialogueActive = false;
+    }
+
+    /// <summary>
+    /// 播放UI激活音效
+    /// </summary>
+    private void PlayActiveSound()
+    {
+        if (audioSource != null && audioClipThisActive != null)
+        {
+            audioSource.PlayOneShot(audioClipThisActive);
+            Debug.Log("Playing active sound for dialogue UI");
+        }
+        else
+        {
+            Debug.LogWarning("Cannot play active sound: AudioSource or AudioClip is missing");
+        }
+    }
+
+    /// <summary>
+    /// 播放下一句对话音效
+    /// </summary>
+    private void PlayNextSound()
+    {
+        if (audioSource != null && audioClipNext != null)
+        {
+            audioSource.PlayOneShot(audioClipNext);
+            Debug.Log("Playing next sound for dialogue");
+        }
+        else
+        {
+            Debug.LogWarning("Cannot play next sound: AudioSource or AudioClip is missing");
+        }
+    }
+
+    #endregion
 }
