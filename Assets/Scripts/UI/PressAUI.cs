@@ -4,24 +4,26 @@ using VInspector;
 
 public class PressAUI : MonoBehaviour
 {
+    public AudioSource audioSource;
     public Transform pressAUIChinese;
     public Transform pressAUIEnglish;
     public Vector3 offset;
     public Transform lookTarget;
     public Transform followTarget;
     public bool isFoxMode;
-    
+
     private bool useChinese = true; // 默认使用中文
     private bool isInitialized = false; // 标记是否已初始化
     private bool changePersonEventValue = false; // 存储OnChangePersonEvent传入的值
-    
+    private bool hasPlayedAudio = false; // 标记是否已播放过音频
+
     void Start()
     {
         // 监听语言切换事件
         GlobalEvent.OnLanguageChangeEvent.AddListener(OnLanguageChanged);
         GlobalEvent.OnPressAUIEvent.AddListener(OnPressAUIEvent);
         GlobalEvent.OnChangePersonEvent.AddListener(OnChangePersonEvent);
-        
+
         // 游戏开始时，确保两个UI都是不显示的
         if (pressAUIChinese != null)
             pressAUIChinese.gameObject.SetActive(false);
@@ -47,6 +49,7 @@ public class PressAUI : MonoBehaviour
         {
             isInitialized = true;
             UpdateUIVisibility();
+            audioSource.Play();
         }
     }
 
@@ -68,7 +71,7 @@ public class PressAUI : MonoBehaviour
             activeUI.LookAt(lookTarget);
         }
     }
-    
+
     /// <summary>
     /// 语言切换事件处理函数
     /// </summary>
@@ -82,7 +85,7 @@ public class PressAUI : MonoBehaviour
             UpdateUIVisibility();
         }
     }
-    
+
     /// <summary>
     /// 更新UI显示状态
     /// </summary>
@@ -90,12 +93,19 @@ public class PressAUI : MonoBehaviour
     {
         // 判断是否应该显示UI
         bool shouldShowUI = (changePersonEventValue != isFoxMode);
-        
+
         if (pressAUIChinese != null)
             pressAUIChinese.gameObject.SetActive(shouldShowUI && useChinese);
-            
+
         if (pressAUIEnglish != null)
             pressAUIEnglish.gameObject.SetActive(shouldShowUI && !useChinese);
+
+        // // 如果UI应该显示且还未播放过音频，则播放音频
+        // if (shouldShowUI && !hasPlayedAudio && audioSource != null)
+        // {
+        //     audioSource.Play();
+        //     hasPlayedAudio = true;
+        // }
     }
 
 

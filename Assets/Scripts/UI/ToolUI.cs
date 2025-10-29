@@ -5,6 +5,7 @@ using UnityEngine;
 public class ToolUI : MonoBehaviour
 {
     public Transform uiImage;
+    public AudioSource audioSource;
     // Start is called once before the first execution of Update after the MonoBehaviour is created
     void Start()
     {
@@ -26,6 +27,7 @@ public class ToolUI : MonoBehaviour
     {
         yield return new WaitForSeconds(7f);
         uiImage.gameObject.SetActive(true);
+        audioSource.Play();
     }
 
     // Update is called once per frame

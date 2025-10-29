@@ -6,7 +6,8 @@ public class QuestUIManager : MonoBehaviour
 {
 
     public AudioSource audioSource;
-    public AudioClip UIOut;
+    public AudioClip ItemUIOut;
+    public AudioClip ShadowUIOut;
     public GameObject UIcanvas;
     public QuestUIMove questUIMove;
     public TextMeshProUGUI ItemTypeText;
@@ -96,7 +97,7 @@ public class QuestUIManager : MonoBehaviour
         {
             questCanvas.gameObject.SetActive(true);
             // 播放UI出现音效
-            PlayUIOutSound();
+            PlayUIOutSound(1);
         }
         
         if (ItemTypeText != null)
@@ -117,7 +118,7 @@ public class QuestUIManager : MonoBehaviour
         {
             questCanvas.gameObject.SetActive(true);
             // 播放UI出现音效
-            PlayUIOutSound();
+            PlayUIOutSound(2);
         }
         
         if (ItemTypeText != null)
@@ -138,7 +139,7 @@ public class QuestUIManager : MonoBehaviour
         {
             questCanvas.gameObject.SetActive(true);
             // 播放UI出现音效
-            PlayUIOutSound();
+            PlayUIOutSound(3);
         }
         
         if (ItemTypeText != null)
@@ -159,7 +160,7 @@ public class QuestUIManager : MonoBehaviour
         {
             questCanvas.gameObject.SetActive(true);
             // 播放UI出现音效
-            PlayUIOutSound();
+            PlayUIOutSound(4);
         }
         
         if (ItemTypeText != null)
@@ -180,7 +181,7 @@ public class QuestUIManager : MonoBehaviour
         {
             questCanvas.gameObject.SetActive(true);
             // 播放UI出现音效
-            PlayUIOutSound();
+            PlayUIOutSound(5);
         }
         
         if (ItemTypeText != null)
@@ -227,16 +228,37 @@ public class QuestUIManager : MonoBehaviour
     /// <summary>
     /// 播放UI出现音效
     /// </summary>
-    private void PlayUIOutSound()
+    /// <param name="questNumber">任务编号（1-5）</param>
+    private void PlayUIOutSound(int questNumber)
     {
-        if (audioSource != null && UIOut != null)
+        if (audioSource != null)
         {
-            audioSource.PlayOneShot(UIOut);
-            Debug.Log("Playing UI out sound for Quest UI");
+            AudioClip clipToPlay = null;
+            
+            // 如果是第4个或第5个任务，播放ShadowUIOut，否则播放ItemUIOut
+            if (questNumber == 4 || questNumber == 5)
+            {
+                clipToPlay = ShadowUIOut;
+                Debug.Log($"Playing Shadow UI out sound for Quest {questNumber}");
+            }
+            else
+            {
+                clipToPlay = ItemUIOut;
+                Debug.Log($"Playing Item UI out sound for Quest {questNumber}");
+            }
+            
+            if (clipToPlay != null)
+            {
+                audioSource.PlayOneShot(clipToPlay);
+            }
+            else
+            {
+                Debug.LogWarning($"Cannot play UI out sound: AudioClip for Quest {questNumber} is missing");
+            }
         }
         else
         {
-            Debug.LogWarning("Cannot play UI out sound: AudioSource or UIOut AudioClip is missing");
+            Debug.LogWarning("Cannot play UI out sound: AudioSource is missing");
         }
     }
 }
