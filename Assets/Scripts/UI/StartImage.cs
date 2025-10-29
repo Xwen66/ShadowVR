@@ -1,6 +1,7 @@
 using Microsoft.Unity.VisualStudio.Editor;
 using UnityEngine;
 using UnityEngine.UI;
+using UnityEngine.SceneManagement;
 using System.Collections;
 
 
@@ -55,6 +56,19 @@ public class StartImage : MonoBehaviour
 
         // 第二张图淡出（2秒）
         yield return StartCoroutine(FadeOut(startImage2, 2f));
+
+        // 等待2秒后跳转到下一个场景
+        yield return new WaitForSeconds(2f);
+        LoadNextScene();
+    }
+
+    private void LoadNextScene()
+    {
+        // 获取当前场景的索引
+        int currentSceneIndex = SceneManager.GetActiveScene().buildIndex;
+        // 加载下一个场景（如果当前是最后一个场景，则循环到第一个）
+        int nextSceneIndex = (currentSceneIndex + 1) % SceneManager.sceneCountInBuildSettings;
+        SceneManager.LoadScene(nextSceneIndex);
     }
 
     private IEnumerator FadeIn(SpriteRenderer renderer, float duration)
