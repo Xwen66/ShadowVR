@@ -1,0 +1,131 @@
+using Microsoft.Unity.VisualStudio.Editor;
+using UnityEngine;
+using UnityEngine.UI;
+using System.Collections;
+
+
+public class StartImage : MonoBehaviour
+{
+    public SpriteRenderer startImage;
+    public SpriteRenderer startImageText;
+    public SpriteRenderer startImage2;
+
+    private void Awake()
+    {
+        // 将所有图片的透明度设置为0（完全透明）
+        SetAlpha(startImage, 0f);
+        SetAlpha(startImageText, 0f);
+        SetAlpha(startImage2, 0f);
+    }
+
+    void Start()
+    {
+        // 启动图片序列协程
+        StartCoroutine(ImageSequenceCoroutine());
+    }
+
+    private IEnumerator ImageSequenceCoroutine()
+    {
+        // 等待5秒
+        yield return new WaitForSeconds(2f);
+
+        // 显示第一张图（2秒淡入）
+        yield return StartCoroutine(FadeIn(startImage, 2f));
+
+        // 等待2秒
+        yield return new WaitForSeconds(2f);
+
+        // 显示文字图片（2秒淡入）
+        yield return StartCoroutine(FadeIn(startImageText, 2f));
+
+        // 等待3秒
+        yield return new WaitForSeconds(3f);
+
+        // 第一张图和文字图片一起淡出（2秒）
+        yield return StartCoroutine(FadeOutMultiple(new SpriteRenderer[] { startImage, startImageText }, 2f));
+
+        // 等待2秒
+        yield return new WaitForSeconds(2f);
+
+        // 显示第二张图（2秒淡入）
+        yield return StartCoroutine(FadeIn(startImage2, 2f));
+
+        // 等待3秒
+        yield return new WaitForSeconds(3f);
+
+        // 第二张图淡出（2秒）
+        yield return StartCoroutine(FadeOut(startImage2, 2f));
+    }
+
+    private IEnumerator FadeIn(SpriteRenderer renderer, float duration)
+    {
+        float elapsedTime = 0f;
+        Color startColor = renderer.color;
+        Color targetColor = new Color(startColor.r, startColor.g, startColor.b, 1f);
+
+        while (elapsedTime < duration)
+        {
+            elapsedTime += Time.deltaTime;
+            float t = elapsedTime / duration;
+            renderer.color = Color.Lerp(startColor, targetColor, t);
+            yield return null;
+        }
+
+        renderer.color = targetColor;
+    }
+
+    private IEnumerator FadeOut(SpriteRenderer renderer, float duration)
+    {
+        float elapsedTime = 0f;
+        Color startColor = renderer.color;
+        Color targetColor = new Color(startColor.r, startColor.g, startColor.b, 0f);
+
+        while (elapsedTime < duration)
+        {
+            elapsedTime += Time.deltaTime;
+            float t = elapsedTime / duration;
+            renderer.color = Color.Lerp(startColor, targetColor, t);
+            yield return null;
+        }
+
+        renderer.color = targetColor;
+    }
+
+    private IEnumerator FadeOutMultiple(SpriteRenderer[] renderers, float duration)
+    {
+        float elapsedTime = 0f;
+        Color[] startColors = new Color[renderers.Length];
+        
+        for (int i = 0; i < renderers.Length; i++)
+        {
+            startColors[i] = renderers[i].color;
+        }
+
+        while (elapsedTime < duration)
+        {
+            elapsedTime += Time.deltaTime;
+            float t = elapsedTime / duration;
+            
+            for (int i = 0; i < renderers.Length; i++)
+            {
+                Color targetColor = new Color(startColors[i].r, startColors[i].g, startColors[i].b, 0f);
+                renderers[i].color = Color.Lerp(startColors[i], targetColor, t);
+            }
+            
+            yield return null;
+        }
+
+        for (int i = 0; i < renderers.Length; i++)
+        {
+            Color targetColor = new Color(startColors[i].r, startColors[i].g, startColors[i].b, 0f);
+            renderers[i].color = targetColor;
+        }
+    }
+
+    private void SetAlpha(SpriteRenderer renderer, float alpha)
+    {
+        Color color = renderer.color;
+        color.a = alpha;
+        renderer.color = color;
+    }
+}
