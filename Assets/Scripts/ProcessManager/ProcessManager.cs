@@ -125,12 +125,13 @@ public class ProcessManager : MonoBehaviour
             //第二步  小刺猬开始说"我体型小。。。"出现"按A切换视角"
             Debug.LogError("按A切换视角");
             gameManager.canChangePerson = true;
+            DialogueManager.Instance.SetNextButtonMode(true);
             // pressAUI.SetActive(true);
             GlobalEvent.OnPressAUIEvent.Invoke();
 
         }
 
-        if (dialogueNumber == 5)// 第六条对话开始时
+        if (dialogueNumber == 6)// 第六条对话开始时
         {
             // 将按钮功能从"跳到下一页"变成"关闭"
             DialogueManager.Instance.SetNextButtonMode(true);

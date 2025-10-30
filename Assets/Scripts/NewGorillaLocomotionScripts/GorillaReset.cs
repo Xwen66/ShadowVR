@@ -17,12 +17,12 @@ public class GorillaReset : MonoBehaviour
     {
         rb = GetComponent<Rigidbody>();
         ResetToPosition(resetPosition1);
-        GlobalEvent.OnWhiteFlashEndEvent.AddListener(ResetPosition1);
+        GlobalEvent.OnWhiteFlashEndEvent.AddListener(ResetPosition2);
     }
 
-    private void ResetPosition1()
+    private void ResetPosition2()
     {
-        ResetToPosition(resetPosition1);
+        ResetToPosition(resetPosition2);
 
         if (!hasTriggeredFirstReset)
         {
@@ -74,7 +74,7 @@ public class GorillaReset : MonoBehaviour
 
     void OnDestroy()
     {
-        GlobalEvent.OnWhiteFlashEndEvent.RemoveListener(ResetPosition1);
+        GlobalEvent.OnWhiteFlashEndEvent.RemoveListener(ResetPosition2);
     }
 
     // Update is called once per frame
@@ -86,6 +86,6 @@ public class GorillaReset : MonoBehaviour
     [Button("Test First Reset")]
     public void Reset()
     {
-        ResetPosition1();
+        ResetPosition2();
     }
 }
