@@ -230,7 +230,7 @@ public class ProcessManager : MonoBehaviour
         //active hedgehog model
         hedgehogModel.SetActive(true);
         GameObject hedgehogCreateVFX = Instantiate(hedgehogCreateVFXPrefab, hedgehogModel.transform.position, hedgehogModel.transform.rotation);
-        hedgehogCreateVFX.transform.position = new Vector3(hedgehogCreateVFX.transform.position.x, 3.46f, hedgehogCreateVFX.transform.position.z);
+        hedgehogCreateVFX.transform.position = new Vector3(hedgehogCreateVFX.transform.position.x, 1.9f, hedgehogCreateVFX.transform.position.z);
 
         // 等待4秒后删除特效
         yield return new WaitForSeconds(4f);

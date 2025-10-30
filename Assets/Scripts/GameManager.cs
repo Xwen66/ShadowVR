@@ -14,6 +14,7 @@ public class GameManager : MonoBehaviour
     public Transform FoxLeftHand;                         // 狐狸左手位置
     public Transform FoxRightHand;                        // 狐狸右手位置
     [SerializeField] private GameObject _smallPlayer;      // 小型玩家角色（动物形态）
+    [SerializeField] private GameObject _smallPlayerHead;      // 小型玩家相机位置
 
     [Header("冷却时间设置")]
     [SerializeField] private float _cooldown = 1f;         // 操作冷却时间（秒）
@@ -104,6 +105,13 @@ public class GameManager : MonoBehaviour
                 FoxPrefab.SetActive(false);       // 禁用狐狸预制体
                 _smallPlayer.SetActive(false);    // 禁用小型玩家
                 _smallPlayerModel.SetActive(true);    // 禁用小型玩家
+                
+                // 将小型玩家模型位置设置到小型玩家相机位置
+                if (_smallPlayerModel != null && _smallPlayerHead != null)
+                {
+                    _smallPlayerModel.transform.position = _smallPlayerHead.transform.position + new Vector3(0,2f, 0);
+                }
+                
                 isLargePlayer = true;             // 更新状态为大型玩家（人类形态）
                 _cooldownTimer = 0f;              // 重置冷却计时器
                 Debug.LogError("GameManager: 触发角色切换事件，参数为false，代表狐狸模式");

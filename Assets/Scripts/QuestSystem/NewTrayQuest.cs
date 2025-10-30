@@ -19,6 +19,8 @@ public class NewTrayQuest : MonoBehaviour
     public AudioSource audioSource;
     public AudioClip UIChange;
     public AudioClip UICompletely;
+    public AudioClip gameEnd;
+    public AudioClip kitchenUIShow;
 
     // 音效播放控制
     private float scriptStartTime;
@@ -618,6 +620,8 @@ public class NewTrayQuest : MonoBehaviour
         {
             Debug.Log("都完成");
             kitchenUnlockUI.SetActive(true);
+            PlayKitchenUIShowSound();
+            StartCoroutine(RestartGameAfterDelay());
         }
         else
         {
@@ -748,6 +752,42 @@ public class NewTrayQuest : MonoBehaviour
         {
             Debug.LogWarning("Cannot play UI completely sound: AudioSource or UICompletely AudioClip is missing");
         }
+    }
+
+    /// <summary>
+    /// 播放厨房UI显示音效
+    /// </summary>
+    private void PlayKitchenUIShowSound()
+    {
+        // 检查是否已经过了延迟时间
+        if (Time.time - scriptStartTime < AUDIO_DELAY_TIME)
+        {
+            Debug.Log($"音效播放被阻止：脚本运行时间不足 {AUDIO_DELAY_TIME} 秒");
+            return;
+        }
+
+        if (audioSource != null && kitchenUIShow != null)
+        {
+            audioSource.PlayOneShot(kitchenUIShow);
+            Debug.Log("Playing kitchen UI show sound");
+        }
+        else
+        {
+            Debug.LogWarning("Cannot play kitchen UI show sound: AudioSource or kitchenUIShow AudioClip is missing");
+        }
+    }
+
+    /// <summary>
+    /// 延迟5秒后重新开始游戏的协程
+    /// </summary>
+    private IEnumerator RestartGameAfterDelay()
+    {
+        yield return new WaitForSeconds(10f);
+
+        Debug.Log("10秒后重新开始游戏，回到第一个场景");
+
+        // 使用Unity的SceneManager加载第一个场景（索引为0的场景）
+        UnityEngine.SceneManagement.SceneManager.LoadScene(0);
     }
 
     #endregion

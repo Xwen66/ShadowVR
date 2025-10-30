@@ -278,7 +278,7 @@
             wasLeftHandTouching = leftHandColliding;
             wasRightHandTouching = rightHandColliding;
             
-            // 处理左摇杆旋转控制
+            // 处理右摇杆旋转控制
             HandleJoystickRotation();
             
             // 绘制调试可视化
@@ -305,7 +305,7 @@
         }
         
         /// <summary>
-        /// 处理左摇杆旋转控制
+        /// 处理右摇杆旋转控制
         /// </summary>
         private void HandleJoystickRotation()
         {
@@ -313,8 +313,8 @@
             if (Time.time - lastRotationTime < rotationCooldown)
                 return;
                 
-            // 获取左手设备的摇杆输入
-            if (UnityEngine.XR.InputDevices.GetDeviceAtXRNode(UnityEngine.XR.XRNode.LeftHand)
+            // 获取右手设备的摇杆输入
+            if (UnityEngine.XR.InputDevices.GetDeviceAtXRNode(UnityEngine.XR.XRNode.RightHand)
                 .TryGetFeatureValue(UnityEngine.XR.CommonUsages.primary2DAxis, out Vector2 joystickInput))
             {
                 // 检查摇杆是否向左或向右推动超过阈值
