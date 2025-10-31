@@ -10,6 +10,11 @@ public class StartImage : MonoBehaviour
     public SpriteRenderer startImageText;
     public SpriteRenderer startImage2;
 
+    public AudioSource audioSource;
+    public AudioClip backgroundMusic;
+    public AudioClip backgroundMusic2;
+
+
     private void Awake()
     {
         // 将所有图片的透明度设置为0（完全透明）
@@ -29,7 +34,12 @@ public class StartImage : MonoBehaviour
         // 等待5秒
         yield return new WaitForSeconds(2f);
 
-        // 显示第一张图（2秒淡入）
+        // 显示第一张图（2秒淡入）并播放背景音乐
+        if (audioSource != null && backgroundMusic != null)
+        {
+            audioSource.clip = backgroundMusic;
+            audioSource.Play();
+        }
         yield return StartCoroutine(FadeIn(startImage, 2f));
 
         // 等待2秒
@@ -47,7 +57,12 @@ public class StartImage : MonoBehaviour
         // 等待2秒
         yield return new WaitForSeconds(2f);
 
-        // 显示第二张图（2秒淡入）
+        // 显示第二张图（2秒淡入）并播放第二首背景音乐
+        if (audioSource != null && backgroundMusic2 != null)
+        {
+            audioSource.clip = backgroundMusic2;
+            audioSource.Play();
+        }
         yield return StartCoroutine(FadeIn(startImage2, 2f));
 
         // 等待3秒
