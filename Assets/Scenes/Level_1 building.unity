@@ -530,6 +530,7 @@ GameObject:
   m_Component:
   - component: {fileID: 156855754}
   - component: {fileID: 156855755}
+  - component: {fileID: 156855756}
   m_Layer: 0
   m_Name: ShadowFloorManager
   m_TagString: Untagged
@@ -573,6 +574,105 @@ MonoBehaviour:
   - {fileID: 271737551}
   - {fileID: 856681052}
   floorMesh: {fileID: 1594141557}
+  audioSource: {fileID: 156855756}
+  floorOutSound: {fileID: 8300000, guid: 57c218f30f05cb848a7466b5bd3da7b6, type: 3}
+--- !u!82 &156855756
+AudioSource:
+  m_ObjectHideFlags: 0
+  m_CorrespondingSourceObject: {fileID: 0}
+  m_PrefabInstance: {fileID: 0}
+  m_PrefabAsset: {fileID: 0}
+  m_GameObject: {fileID: 156855753}
+  m_Enabled: 1
+  serializedVersion: 4
+  OutputAudioMixerGroup: {fileID: 0}
+  m_audioClip: {fileID: 0}
+  m_Resource: {fileID: 0}
+  m_PlayOnAwake: 1
+  m_Volume: 1
+  m_Pitch: 1
+  Loop: 0
+  Mute: 0
+  Spatialize: 0
+  SpatializePostEffects: 0
+  Priority: 128
+  DopplerLevel: 1
+  MinDistance: 1
+  MaxDistance: 500
+  Pan2D: 0
+  rolloffMode: 0
+  BypassEffects: 0
+  BypassListenerEffects: 0
+  BypassReverbZones: 0
+  rolloffCustomCurve:
+    serializedVersion: 2
+    m_Curve:
+    - serializedVersion: 3
+      time: 0
+      value: 1
+      inSlope: 0
+      outSlope: 0
+      tangentMode: 0
+      weightedMode: 0
+      inWeight: 0.33333334
+      outWeight: 0.33333334
+    - serializedVersion: 3
+      time: 1
+      value: 0
+      inSlope: 0
+      outSlope: 0
+      tangentMode: 0
+      weightedMode: 0
+      inWeight: 0.33333334
+      outWeight: 0.33333334
+    m_PreInfinity: 2
+    m_PostInfinity: 2
+    m_RotationOrder: 4
+  panLevelCustomCurve:
+    serializedVersion: 2
+    m_Curve:
+    - serializedVersion: 3
+      time: 0
+      value: 0
+      inSlope: 0
+      outSlope: 0
+      tangentMode: 0
+      weightedMode: 0
+      inWeight: 0.33333334
+      outWeight: 0.33333334
+    m_PreInfinity: 2
+    m_PostInfinity: 2
+    m_RotationOrder: 4
+  spreadCustomCurve:
+    serializedVersion: 2
+    m_Curve:
+    - serializedVersion: 3
+      time: 0
+      value: 0
+      inSlope: 0
+      outSlope: 0
+      tangentMode: 0
+      weightedMode: 0
+      inWeight: 0.33333334
+      outWeight: 0.33333334
+    m_PreInfinity: 2
+    m_PostInfinity: 2
+    m_RotationOrder: 4
+  reverbZoneMixCustomCurve:
+    serializedVersion: 2
+    m_Curve:
+    - serializedVersion: 3
+      time: 0
+      value: 1
+      inSlope: 0
+      outSlope: 0
+      tangentMode: 0
+      weightedMode: 0
+      inWeight: 0.33333334
+      outWeight: 0.33333334
+    m_PreInfinity: 2
+    m_PostInfinity: 2
+    m_RotationOrder: 4
 --- !u!4 &158667750 stripped
 Transform:
   m_CorrespondingSourceObject: {fileID: 734996079564348568, guid: aec71f91a8da27d418aa44bd0c543f9b, type: 3}
@@ -2102,13 +2202,14 @@ GameObject:
   - component: {fileID: 271737553}
   - component: {fileID: 271737552}
   - component: {fileID: 271737551}
+  - component: {fileID: 271737556}
   m_Layer: 0
   m_Name: BookSock (1)
   m_TagString: Untagged
   m_Icon: {fileID: 0}
   m_NavMeshLayer: 0
   m_StaticEditorFlags: 0
-  m_IsActive: 1
+  m_IsActive: 0
 --- !u!114 &271737551
 MonoBehaviour:
   m_ObjectHideFlags: 0
@@ -2244,6 +2345,19 @@ Transform:
   m_Children: []
   m_Father: {fileID: 156855754}
   m_LocalEulerAnglesHint: {x: 0, y: -90, z: 90}
+--- !u!114 &271737556
+MonoBehaviour:
+  m_ObjectHideFlags: 0
+  m_CorrespondingSourceObject: {fileID: 0}
+  m_PrefabInstance: {fileID: 0}
+  m_PrefabAsset: {fileID: 0}
+  m_GameObject: {fileID: 271737550}
+  m_Enabled: 1
+  m_EditorHideFlags: 0
+  m_Script: {fileID: 11500000, guid: c1a70e389879f56419d9b1042c78e4f4, type: 3}
+  m_Name: 
+  m_EditorClassIdentifier: 
+  breathFrequency: 1
 --- !u!1001 &287353607
 PrefabInstance:
   m_ObjectHideFlags: 0
@@ -3902,13 +4016,14 @@ GameObject:
   - component: {fileID: 391372738}
   - component: {fileID: 391372737}
   - component: {fileID: 391372736}
+  - component: {fileID: 391372740}
   m_Layer: 0
   m_Name: BookSock
   m_TagString: Untagged
   m_Icon: {fileID: 0}
   m_NavMeshLayer: 0
   m_StaticEditorFlags: 0
-  m_IsActive: 1
+  m_IsActive: 0
 --- !u!4 &391372735
 Transform:
   m_ObjectHideFlags: 0
@@ -4044,6 +4159,19 @@ MeshFilter:
   m_PrefabAsset: {fileID: 0}
   m_GameObject: {fileID: 391372734}
   m_Mesh: {fileID: 10202, guid: 0000000000000000e000000000000000, type: 0}
+--- !u!114 &391372740
+MonoBehaviour:
+  m_ObjectHideFlags: 0
+  m_CorrespondingSourceObject: {fileID: 0}
+  m_PrefabInstance: {fileID: 0}
+  m_PrefabAsset: {fileID: 0}
+  m_GameObject: {fileID: 391372734}
+  m_Enabled: 1
+  m_EditorHideFlags: 0
+  m_Script: {fileID: 11500000, guid: c1a70e389879f56419d9b1042c78e4f4, type: 3}
+  m_Name: 
+  m_EditorClassIdentifier: 
+  breathFrequency: 1
 --- !u!1 &403743596
 GameObject:
   m_ObjectHideFlags: 0
@@ -5528,15 +5656,15 @@ PrefabInstance:
       objectReference: {fileID: 0}
     - target: {fileID: -8679921383154817045, guid: 4f6d006eb48a7b14cbb7d648c2ee55cd, type: 3}
       propertyPath: m_LocalPosition.x
-      value: -0.235
+      value: -0.3295
       objectReference: {fileID: 0}
     - target: {fileID: -8679921383154817045, guid: 4f6d006eb48a7b14cbb7d648c2ee55cd, type: 3}
       propertyPath: m_LocalPosition.y
-      value: 0.193
+      value: 0.1906
       objectReference: {fileID: 0}
     - target: {fileID: -8679921383154817045, guid: 4f6d006eb48a7b14cbb7d648c2ee55cd, type: 3}
       propertyPath: m_LocalPosition.z
-      value: 1.959
+      value: 1.8248
       objectReference: {fileID: 0}
     - target: {fileID: -8679921383154817045, guid: 4f6d006eb48a7b14cbb7d648c2ee55cd, type: 3}
       propertyPath: m_LocalRotation.w
@@ -8502,13 +8630,14 @@ GameObject:
   - component: {fileID: 856681054}
   - component: {fileID: 856681053}
   - component: {fileID: 856681052}
+  - component: {fileID: 856681057}
   m_Layer: 0
   m_Name: BookSock (2)
   m_TagString: Untagged
   m_Icon: {fileID: 0}
   m_NavMeshLayer: 0
   m_StaticEditorFlags: 0
-  m_IsActive: 1
+  m_IsActive: 0
 --- !u!114 &856681052
 MonoBehaviour:
   m_ObjectHideFlags: 0
@@ -8644,6 +8773,19 @@ Transform:
   m_Children: []
   m_Father: {fileID: 156855754}
   m_LocalEulerAnglesHint: {x: 0, y: -90, z: 90}
+--- !u!114 &856681057
+MonoBehaviour:
+  m_ObjectHideFlags: 0
+  m_CorrespondingSourceObject: {fileID: 0}
+  m_PrefabInstance: {fileID: 0}
+  m_PrefabAsset: {fileID: 0}
+  m_GameObject: {fileID: 856681051}
+  m_Enabled: 1
+  m_EditorHideFlags: 0
+  m_Script: {fileID: 11500000, guid: c1a70e389879f56419d9b1042c78e4f4, type: 3}
+  m_Name: 
+  m_EditorClassIdentifier: 
+  breathFrequency: 1
 --- !u!1 &868690578
 GameObject:
   m_ObjectHideFlags: 0
@@ -14314,6 +14456,11 @@ MonoBehaviour:
   UICompletely: {fileID: 8300000, guid: cc281d6e9129b784c85f5588710e2715, type: 3}
   gameEnd: {fileID: 8300000, guid: f7076687f4260754bacb6328da2de229, type: 3}
   kitchenUIShow: {fileID: 8300000, guid: 610670d9cc7fe994c8f38011564a1e6e, type: 3}
+  floorOutSound: {fileID: 8300000, guid: 57c218f30f05cb848a7466b5bd3da7b6, type: 3}
+  blocks:
+  - {fileID: 391372734}
+  - {fileID: 271737550}
+  - {fileID: 856681051}
   promptManager: {fileID: 1182972482}
   sockets:
   - {fileID: 1348561829}
@@ -25026,6 +25173,10 @@ PrefabInstance:
       propertyPath: m_Name
       value: UIManager
       objectReference: {fileID: 0}
+    - target: {fileID: 5968896790434345508, guid: c3797a9dcee42bb43abb1a18f61b74e4, type: 3}
+      propertyPath: m_IsActive
+      value: 0
+      objectReference: {fileID: 0}
     m_RemovedComponents: []
     m_RemovedGameObjects: []
     m_AddedGameObjects: []
@@ -27316,6 +27467,10 @@ PrefabInstance:
     - target: {fileID: 8221807365772985117, guid: 70984e026f4a80f4cbf61a1931606eb4, type: 3}
       propertyPath: OnPuzzleSolved.m_PersistentCalls.m_Calls.Array.data[0].m_Arguments.m_ObjectArgumentAssemblyTypeName
       value: UnityEngine.Object, UnityEngine
+      objectReference: {fileID: 0}
+    - target: {fileID: 9045139184760644432, guid: 70984e026f4a80f4cbf61a1931606eb4, type: 3}
+      propertyPath: m_IsKinematic
+      value: 1
       objectReference: {fileID: 0}
     m_RemovedComponents: []
     m_RemovedGameObjects: []

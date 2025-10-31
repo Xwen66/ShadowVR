@@ -11,6 +11,8 @@ public class ShadowFloorManager : MonoBehaviour
 {
     public List<XRSocketInteractor> sockets;
     public GameObject floorMesh;
+    public AudioSource audioSource;
+    public AudioClip floorOutSound;
     
     void Start()
     {
@@ -75,6 +77,7 @@ public class ShadowFloorManager : MonoBehaviour
         {
             Debug.Log("哈哈哈");
             floorMesh.SetActive(true);
+            audioSource.PlayOneShot(floorOutSound);
         }
     }
 }

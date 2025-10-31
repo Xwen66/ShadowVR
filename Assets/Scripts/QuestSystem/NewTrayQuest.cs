@@ -21,6 +21,8 @@ public class NewTrayQuest : MonoBehaviour
     public AudioClip UICompletely;
     public AudioClip gameEnd;
     public AudioClip kitchenUIShow;
+    public AudioClip floorOutSound;
+    public List<GameObject> blocks;
 
     // 音效播放控制
     private float scriptStartTime;
@@ -473,7 +475,7 @@ public class NewTrayQuest : MonoBehaviour
         }
 
         string newProgressText = "";
-        
+
         switch (currentStage)
         {
             case QuestStage.Stage1:
@@ -675,6 +677,12 @@ public class NewTrayQuest : MonoBehaviour
             // 设置按钮为"下一步"模式（false表示下一句对话模式）
             DialogueManager.Instance.SetNextButtonMode(false);
             shadowLine.SetActive(true);
+            blocks.ForEach(block => block.SetActive(true));
+            if (audioSource != null && floorOutSound != null)
+            {
+                audioSource.PlayOneShot(floorOutSound);
+                Debug.Log("Playing floor out  sound for stage completion");
+            }
             Debug.Log("正在显示第八句对话内容");
         }
         else
@@ -817,7 +825,7 @@ public class NewTrayQuest : MonoBehaviour
     public void ComploetelyStage3()
     {
         Debug.Log("强制完成第三阶段任务");
-        
+
         // 显示厨房解锁UI
         if (kitchenUnlockUI != null)
         {
@@ -828,10 +836,10 @@ public class NewTrayQuest : MonoBehaviour
         {
             Debug.LogWarning("厨房解锁UI对象未分配");
         }
-        
+
         // 播放游戏结束音效
         PlayGameEndSound();
-        
+
         // 启动重新开始游戏的协程
         StartCoroutine(RestartGameAfterDelay());
     }
