@@ -2396,7 +2396,7 @@ MonoBehaviour:
   audioSource: {fileID: 287353615}
   pickUpSound: {fileID: 8300000, guid: a19651e3d490b934e8574e5f5eb96a75, type: 3}
   effectObject: {fileID: 2463147306559144600, guid: 47485c50557b05644a27b3d76df337f2, type: 3}
-  memoryModelObject: {fileID: 0}
+  memoryModelObject: {fileID: 986557531}
   ItemType: "\u8BB0\u5FC6\u788E\u7247"
   ItemName: "\u72FC\u5976\u5976"
   ItemDescription: "\u201C\u5C0F\u72D0\u72F8\uFF0C\u7956\u5C4B\u5C31\u7531\u4F60\u6765\u4FDD\u62A4\u597D\u5417\uFF1F\u72FC\u5976\u5976\u4E0D\u5728\u4E86\uFF0C\u4F60\u8FD8\u53EF\u4EE5\u7EE7\u7EED\u4F4F\u5728\u9601\u697C\u91CC\uFF0C\u5C31\u50CF\u4ECE\u524D\u4E00\u6837\u3002\u201D"
@@ -3786,7 +3786,7 @@ MonoBehaviour:
   audioSource: {fileID: 390692120}
   pickUpSound: {fileID: 8300000, guid: a19651e3d490b934e8574e5f5eb96a75, type: 3}
   effectObject: {fileID: 2463147306559144600, guid: 47485c50557b05644a27b3d76df337f2, type: 3}
-  memoryModelObject: {fileID: 0}
+  memoryModelObject: {fileID: 1695153191}
   ItemType: "\u8BB0\u5FC6\u788E\u7247"
   ItemName: "\u72FC\u5976\u5976"
   ItemDescription: "\u201C\u5C0F\u72D0\u72F8\uFF0C\u7956\u5C4B\u5C31\u7531\u4F60\u6765\u4FDD\u62A4\u597D\u5417\uFF1F\u72FC\u5976\u5976\u4E0D\u5728\u4E86\uFF0C\u4F60\u8FD8\u53EF\u4EE5\u7EE7\u7EED\u4F4F\u5728\u9601\u697C\u91CC\uFF0C\u5C31\u50CF\u4ECE\u524D\u4E00\u6837\u3002\u201D"
@@ -23062,7 +23062,7 @@ GameObject:
   m_Icon: {fileID: 0}
   m_NavMeshLayer: 0
   m_StaticEditorFlags: 0
-  m_IsActive: 1
+  m_IsActive: 0
 --- !u!224 &2137704762
 RectTransform:
   m_ObjectHideFlags: 0
