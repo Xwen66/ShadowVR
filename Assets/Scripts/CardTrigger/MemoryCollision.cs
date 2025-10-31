@@ -6,6 +6,7 @@ public class MemoryCollision : MonoBehaviour
     public AudioSource audioSource;
     public AudioClip pickUpSound;
     public GameObject effectObject;
+    public GameObject memoryModelObject;
     private GameObject instantiatedEffectObject;
     public string ItemType;
     public string ItemName;
@@ -80,6 +81,9 @@ public class MemoryCollision : MonoBehaviour
             instantiatedEffectObject.GetComponent<ItemEffectObject>().OnGet();
         }
         
+        // 处理记忆模型对象
+        HandleMemoryModelObject();
+        
         // 将当前物品插入到插槽中
         SetSelfToSock();
 
@@ -140,6 +144,27 @@ public class MemoryCollision : MonoBehaviour
         else
         {
             Debug.LogWarning("Cannot play pick up sound: AudioSource or pickUpSound AudioClip is missing");
+        }
+    }
+    
+    /// <summary>
+    /// 处理记忆模型对象，将其从父物体中移出并激活
+    /// </summary>
+    private void HandleMemoryModelObject()
+    {
+        if (memoryModelObject != null)
+        {
+            // 将模型对象从父物体中移出
+            memoryModelObject.transform.SetParent(null);
+            
+            // 激活模型对象
+            memoryModelObject.SetActive(true);
+            
+            Debug.Log($"记忆模型对象 {memoryModelObject.name} 已从父物体中移出并激活");
+        }
+        else
+        {
+            Debug.LogWarning("memoryModelObject 为空，无法处理记忆模型对象");
         }
     }
 }

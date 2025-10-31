@@ -620,7 +620,7 @@ public class NewTrayQuest : MonoBehaviour
         {
             Debug.Log("都完成");
             kitchenUnlockUI.SetActive(true);
-            PlayKitchenUIShowSound();
+            PlayGameEndSound();
             StartCoroutine(RestartGameAfterDelay());
         }
         else
@@ -778,6 +778,29 @@ public class NewTrayQuest : MonoBehaviour
     }
 
     /// <summary>
+    /// 播放游戏结束音效
+    /// </summary>
+    private void PlayGameEndSound()
+    {
+        // 检查是否已经过了延迟时间
+        if (Time.time - scriptStartTime < AUDIO_DELAY_TIME)
+        {
+            Debug.Log($"音效播放被阻止：脚本运行时间不足 {AUDIO_DELAY_TIME} 秒");
+            return;
+        }
+
+        if (audioSource != null && gameEnd != null)
+        {
+            audioSource.PlayOneShot(gameEnd);
+            Debug.Log("Playing game end sound");
+        }
+        else
+        {
+            Debug.LogWarning("Cannot play game end sound: AudioSource or gameEnd AudioClip is missing");
+        }
+    }
+
+    /// <summary>
     /// 延迟5秒后重新开始游戏的协程
     /// </summary>
     private IEnumerator RestartGameAfterDelay()
@@ -788,6 +811,29 @@ public class NewTrayQuest : MonoBehaviour
 
         // 使用Unity的SceneManager加载第一个场景（索引为0的场景）
         UnityEngine.SceneManagement.SceneManager.LoadScene(0);
+    }
+
+    [Button]
+    public void ComploetelyStage3()
+    {
+        Debug.Log("强制完成第三阶段任务");
+        
+        // 显示厨房解锁UI
+        if (kitchenUnlockUI != null)
+        {
+            kitchenUnlockUI.SetActive(true);
+            Debug.Log("显示厨房解锁UI");
+        }
+        else
+        {
+            Debug.LogWarning("厨房解锁UI对象未分配");
+        }
+        
+        // 播放游戏结束音效
+        PlayGameEndSound();
+        
+        // 启动重新开始游戏的协程
+        StartCoroutine(RestartGameAfterDelay());
     }
 
     #endregion
