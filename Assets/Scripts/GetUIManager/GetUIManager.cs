@@ -29,12 +29,14 @@ public class GetUIManager : MonoBehaviour
     public string ItemDescription;
     public string ItemDescription2;
     public Sprite ItemImage;
+    public Sprite ItemImage2;
     [Header("UI Components")]
     public TextMeshProUGUI ItemTypeText;
     public TextMeshProUGUI ItemNameText;
     public TextMeshProUGUI ItemDescriptionText;
     public TextMeshProUGUI ItemDescription2Text;
     public Image ItemImageUI;
+    public Image ItemImageUI2;
 
     [Header("UI Components Canvas")]
     public GameObject GetUICanvas;
@@ -80,7 +82,30 @@ public class GetUIManager : MonoBehaviour
             ItemDescription2Text.text = ItemDescription2;
 
         if (ItemImageUI != null)
-            ItemImageUI.sprite = ItemImage;
+        {
+            if (ItemImage != null)
+            {
+                ItemImageUI.sprite = ItemImage;
+                ItemImageUI.gameObject.SetActive(true);
+            }
+            else
+            {
+                ItemImageUI.gameObject.SetActive(false);
+            }
+        }
+            
+        if (ItemImageUI2 != null)
+        {
+            if (ItemImage2 != null)
+            {
+                ItemImageUI2.sprite = ItemImage2;
+                ItemImageUI2.gameObject.SetActive(true);
+            }
+            else
+            {
+                ItemImageUI2.gameObject.SetActive(false);
+            }
+        }
     }
     
     /// <summary>

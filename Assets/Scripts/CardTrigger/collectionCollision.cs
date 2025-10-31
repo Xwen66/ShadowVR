@@ -12,6 +12,7 @@ public class collectionCollision : MonoBehaviour
     public string ItemDescription;
     public string ItemDescription2;
     public Sprite ItemImage;
+    public Sprite ItemImage2;
     // Start is called once before the first execution of Update after the MonoBehaviour is created
     void Start()
     {
@@ -67,6 +68,7 @@ public class collectionCollision : MonoBehaviour
         uiManager.ItemDescription = this.ItemDescription;
         uiManager.ItemDescription2 = this.ItemDescription2;
         uiManager.ItemImage = this.ItemImage;
+        uiManager.ItemImage2 = this.ItemImage2;
 
         // 刷新UI显示
         uiManager.UpdateUI();
